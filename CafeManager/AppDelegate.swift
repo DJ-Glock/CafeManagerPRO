@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import CoreData
-import CloudKit
 import UserNotifications
+import Firebase
+import FirebaseUI
 
 // Global constants
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -17,9 +17,14 @@ let appDelegate = UIApplication.shared.delegate as! AppDelegate
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
-
+    var auth: Auth?
+    var db: Firestore!
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        FirebaseApp.configure()
+        self.db = Firestore.firestore()
+        self.auth = Auth.auth()
         
         // AppRater for rating app
         let _ = AppRater.sharedInstance
@@ -33,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
+    // Handle Google Authentication URL
+    func application(_ app: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication ?? "") ?? false
+    }
     
     // Remote notification
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

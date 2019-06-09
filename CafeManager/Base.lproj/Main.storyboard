@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QWR-rw-F0f">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QWR-rw-F0f">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -250,16 +250,23 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FW-vT-GDc">
+                                <rect key="frame" x="8" y="584" width="183" height="50"/>
+                                <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="38"/>
+                                <state key="normal" title="Sign out"/>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XL1-Aa-mtc" secondAttribute="trailing" constant="20" symbolic="YES" id="71B-rf-FSe"/>
                             <constraint firstItem="Utw-pR-M9m" firstAttribute="top" secondItem="XL1-Aa-mtc" secondAttribute="bottom" constant="8" id="7NA-ir-J5F"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qXH-vN-8uk" secondAttribute="trailing" constant="20" symbolic="YES" id="ET5-ia-3eX"/>
+                            <constraint firstItem="8FW-vT-GDc" firstAttribute="leading" secondItem="ziI-3M-uSA" secondAttribute="leading" constant="8" id="Q6m-i6-bWc"/>
                             <constraint firstItem="qXH-vN-8uk" firstAttribute="leading" secondItem="ziI-3M-uSA" secondAttribute="leading" constant="25" id="QRt-q1-9d2"/>
                             <constraint firstItem="qXH-vN-8uk" firstAttribute="top" secondItem="Qw4-bW-4NA" secondAttribute="bottom" constant="10" id="SWQ-5b-kdL"/>
                             <constraint firstItem="ekA-Ae-msW" firstAttribute="top" secondItem="qXH-vN-8uk" secondAttribute="bottom" constant="4.5" id="bzr-6V-Mfk"/>
                             <constraint firstItem="ekA-Ae-msW" firstAttribute="leading" secondItem="ziI-3M-uSA" secondAttribute="leading" constant="8" id="f3d-DQ-F2C"/>
                             <constraint firstItem="XL1-Aa-mtc" firstAttribute="leading" secondItem="ziI-3M-uSA" secondAttribute="leading" constant="8" id="hJ6-8v-9Lh"/>
+                            <constraint firstItem="Utw-pR-M9m" firstAttribute="top" secondItem="8FW-vT-GDc" secondAttribute="bottom" constant="33" id="x3o-4i-aEU"/>
                         </constraints>
                     </view>
                     <connections>
