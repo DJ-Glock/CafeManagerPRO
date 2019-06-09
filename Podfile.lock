@@ -2,25 +2,21 @@ PODS:
   - Charts (3.2.1):
     - Charts/Core (= 3.2.1)
   - Charts/Core (3.2.1)
-  - Seam3 (1.4.6)
   - SearchTextField (1.2.2)
 
 DEPENDENCIES:
   - Charts
-  - Seam3
   - SearchTextField
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Charts
-    - Seam3
     - SearchTextField
 
 SPEC CHECKSUMS:
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
-  Seam3: 63a2defea7e3985c8974aa202c2321ed4f749b81
   SearchTextField: a0992739d4b05dcbb40fb3a5cc6526bd991bdd23
 
-PODFILE CHECKSUM: cae30715b1b332a2693bfd9baa2bf385dfa74ccd
+PODFILE CHECKSUM: 0c9d0a8df06979ed2a099045b9b79392908c0bf0
 
 COCOAPODS: 1.6.0

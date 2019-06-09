@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import CafeManager
+//@testable import CafeManager
 
 class CafeManagerTests: XCTestCase {
     

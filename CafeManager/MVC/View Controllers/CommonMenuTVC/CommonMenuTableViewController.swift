@@ -15,7 +15,7 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
     @IBOutlet weak var searchBar: UISearchBar!
     
     // MARK: variables
-    private var fetchedResultsController: NSFetchedResultsController<CommonMenuItemsTable>?
+//    private var fetchedResultsController: NSFetchedResultsController<CommonMenuItemsTable>?
     private var isSearchActive : Bool = false
     private var filtered:[CommonMenuItemsTable] = []
     private var selectedIndexPaths: Set<IndexPath> = []
@@ -32,16 +32,16 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
             [ weak self ] in
             guard self != nil else { return }
             //Get data
-            let request = NSFetchRequest<CommonMenuItemsTable>(entityName: "CommonMenuItemsTable")
-            let predicate = NSPredicate(format: "itemLanguage = %@", self!.selectedLanguage.rawValue as CVarArg)
-            request.predicate = predicate
-            let theFirstSortDescriptor = NSSortDescriptor(key: "itemCategory", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
-            let theSecondSortDescriptor = NSSortDescriptor(key: "itemName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
-            request.sortDescriptors = [theFirstSortDescriptor, theSecondSortDescriptor]
-            self!.fetchedResultsController = NSFetchedResultsController<CommonMenuItemsTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: "itemCategory", cacheName: nil)
-            self!.fetchedResultsController?.delegate = self
-            
-            try? self!.fetchedResultsController?.performFetch()
+//            let request = NSFetchRequest<CommonMenuItemsTable>(entityName: "CommonMenuItemsTable")
+//            let predicate = NSPredicate(format: "itemLanguage = %@", self!.selectedLanguage.rawValue as CVarArg)
+//            request.predicate = predicate
+//            let theFirstSortDescriptor = NSSortDescriptor(key: "itemCategory", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
+//            let theSecondSortDescriptor = NSSortDescriptor(key: "itemName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
+//            request.sortDescriptors = [theFirstSortDescriptor, theSecondSortDescriptor]
+//            self!.fetchedResultsController = NSFetchedResultsController<CommonMenuItemsTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: "itemCategory", cacheName: nil)
+//            self!.fetchedResultsController?.delegate = self
+//
+//            try? self!.fetchedResultsController?.performFetch()
             
             //Back to MainQueue to update GUI
             DispatchQueue.main.async {
@@ -92,10 +92,10 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
             } else {
                 for index in selectedIndexPaths {
                     if let price = pricesForSelectedMenuItems[index] {
-                        if let commonMenuItem = fetchedResultsController?.object(at: index) {
-                            let menuItem = Menu(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
-                            menuItems.append(menuItem)
-                        }
+//                        if let commonMenuItem = fetchedResultsController?.object(at: index) {
+//                            let menuItem = Menu(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
+//                            menuItems.append(menuItem)
+//                        }
                     } else {
                         self.invalidSelectedIndexPaths.insert(index)
                     }
@@ -133,7 +133,7 @@ extension CommonMenuTableViewController {
         if isSearchActive {
             menuItem = filtered[indexPath.row]
         } else {
-            menuItem = fetchedResultsController?.object(at: indexPath)
+//            menuItem = fetchedResultsController?.object(at: indexPath)
         }
         
         cell.currentIndexPath = indexPath
@@ -173,7 +173,8 @@ extension CommonMenuTableViewController {
             return 1
         }
         
-        return fetchedResultsController?.sections?.count ?? 1
+//        return fetchedResultsController?.sections?.count ?? 1
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -181,9 +182,9 @@ extension CommonMenuTableViewController {
             return filtered.count
         }
         
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].numberOfObjects
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].numberOfObjects
+//        }
         return 0
     }
     
@@ -192,9 +193,9 @@ extension CommonMenuTableViewController {
             return nil
         }
         
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].name
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].name
+//        }
         return nil
     }
 }
@@ -237,19 +238,19 @@ extension CommonMenuTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.filtered = []
-        if let objects = self.fetchedResultsController?.fetchedObjects {
-            for object in objects {
-                let tmp: String = object.itemName!
-                if tmp.range(of: searchText, options: String.CompareOptions.caseInsensitive, range: nil, locale: nil) != nil {
-                    self.filtered.append(object)
-                }
-            }
-            if self.filtered.count == 0 {
-                self.isSearchActive = false
-            } else {
-                self.isSearchActive = true
-            }
-        }
+//        if let objects = self.fetchedResultsController?.fetchedObjects {
+//            for object in objects {
+//                let tmp: String = object.itemName!
+//                if tmp.range(of: searchText, options: String.CompareOptions.caseInsensitive, range: nil, locale: nil) != nil {
+//                    self.filtered.append(object)
+//                }
+//            }
+//            if self.filtered.count == 0 {
+//                self.isSearchActive = false
+//            } else {
+//                self.isSearchActive = true
+//            }
+//        }
         self.tableView.reloadData()
     }
 }

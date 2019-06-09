@@ -99,7 +99,6 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         configureViewDidLoad()
         self.addGestureRecognizer()
-        addSyncObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -487,17 +486,5 @@ extension TableUIViewController: CheckoutDelegate {
         }
         self.updateGUI()
         self.navigationController?.popViewController(animated: true)
-    }
-}
-
-// Observer to check that sync was performed to update GUI
-extension TableUIViewController {
-    private func addSyncObserver () {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) {
-            [weak self] notification in
-            DispatchQueue.main.async {
-                self?.updateGUI()
-            }
-        }
     }
 }

@@ -13,7 +13,7 @@ import SearchTextField
 
 class MenuTableViewController: FetchedResultsTableViewController {
     // MARK: variables
-    private var fetchedResultsController: NSFetchedResultsController<MenuTable>?
+//    private var fetchedResultsController: NSFetchedResultsController<MenuTable>?
     private var itemNameTextField: UITextField!
     private var itemDescriptionTextField: UITextField!
     private var itemPriceTextField: UITextField!
@@ -107,9 +107,6 @@ class MenuTableViewController: FetchedResultsTableViewController {
         // To dismiss keyboard
         self.addGestureRecognizer()
         
-        // Add sync observer
-        self.addSyncObserver()
-        
         // Configure refresh control for TableView
         configureRefreshControl()
         
@@ -159,13 +156,13 @@ class MenuTableViewController: FetchedResultsTableViewController {
             [ weak self ] in
             guard self != nil else { return }
             //Get data
-            let request : NSFetchRequest<MenuTable> = MenuTable.fetchRequest()
-            let theFirstSortDescriptor = NSSortDescriptor(key: "category.categoryName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
-            let theSecondSortDescriptor = NSSortDescriptor(key: "itemName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
-            request.sortDescriptors = [theFirstSortDescriptor, theSecondSortDescriptor]
-            self!.fetchedResultsController = NSFetchedResultsController<MenuTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: "category.categoryName", cacheName: nil)
-            self!.fetchedResultsController?.delegate = self
-            try? self!.fetchedResultsController?.performFetch()
+//            let request : NSFetchRequest<MenuTable> = MenuTable.fetchRequest()
+//            let theFirstSortDescriptor = NSSortDescriptor(key: "category.categoryName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
+//            let theSecondSortDescriptor = NSSortDescriptor(key: "itemName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
+//            request.sortDescriptors = [theFirstSortDescriptor, theSecondSortDescriptor]
+//            self!.fetchedResultsController = NSFetchedResultsController<MenuTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: "category.categoryName", cacheName: nil)
+//            self!.fetchedResultsController?.delegate = self
+//            try? self!.fetchedResultsController?.performFetch()
             
             //Back to MainQueue to update GUI
             DispatchQueue.main.async {
@@ -184,7 +181,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         if isSearchActive {
             menuItem = filtered[indexPath.row]
         } else {
-            menuItem = fetchedResultsController!.object(at: indexPath)
+//            menuItem = fetchedResultsController!.object(at: indexPath)
         }
         
         if menuItem.isHidden {
@@ -212,7 +209,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         if self.isSearchActive {
             menuItem = self.filtered[editActionsForRowAt.row]
         } else {
-            menuItem = self.fetchedResultsController?.object(at: editActionsForRowAt)
+//            menuItem = self.fetchedResultsController?.object(at: editActionsForRowAt)
         }
         
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
@@ -257,7 +254,8 @@ extension MenuTableViewController {
         if isSearchActive {
             return 1
         }
-        return fetchedResultsController?.sections?.count ?? 1
+//        return fetchedResultsController?.sections?.count ?? 1
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -265,12 +263,13 @@ extension MenuTableViewController {
             return filtered.count
         }
         
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].numberOfObjects
-        }
-        else {
-            return 0
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].numberOfObjects
+//        }
+//        else {
+//            return 0
+//        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -278,16 +277,18 @@ extension MenuTableViewController {
             return nil
         }
         
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].name
-        }
-        else {
-            return nil
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].name
+//        }
+//        else {
+//            return nil
+//        }
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
+//        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
+        return 1
     }
 }
 
@@ -320,20 +321,20 @@ extension MenuTableViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.filtered = []
-        if let objects = self.fetchedResultsController?.fetchedObjects {
-            for object in objects {
-                let tmp: String = object.itemName!
-                if tmp.range(of: searchText, options: String.CompareOptions.caseInsensitive, range: nil, locale: nil) != nil {
-                    self.filtered.append(object)
-                }
-            }
-            if self.filtered.count == 0 {
-                self.isSearchActive = false
-            } else {
-                self.isSearchActive = true
-            }
-        }
+//        self.filtered = []
+//        if let objects = self.fetchedResultsController?.fetchedObjects {
+//            for object in objects {
+//                let tmp: String = object.itemName!
+//                if tmp.range(of: searchText, options: String.CompareOptions.caseInsensitive, range: nil, locale: nil) != nil {
+//                    self.filtered.append(object)
+//                }
+//            }
+//            if self.filtered.count == 0 {
+//                self.isSearchActive = false
+//            } else {
+//                self.isSearchActive = true
+//            }
+//        }
         self.tableView.reloadData()
     }
 }
@@ -344,14 +345,14 @@ extension MenuTableViewController {
         if isSearchActive {
             items = self.filtered
         } else {
-            items = fetchedResultsController?.fetchedObjects ?? []
+//            items = fetchedResultsController?.fetchedObjects ?? []
         }
-        
+
         let originalFileName = "iCafeManager_MenuExport_\(Date().convertToString()).csv"
         // Replace slashes to dots to avoid issues with saving file path.
         let fileName = originalFileName.replacingOccurrences(of: "/", with: ".")
         let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-        
+
         var csvFile = ""
         // Adding Byte Order Mark / separator for Excel. Excel is unable to handle both marks
         //let BOM = "\u{FEFF}"
@@ -359,15 +360,15 @@ extension MenuTableViewController {
         let header = "Item name;Description;Category;Price\n"
         csvFile.append(BOM)
         csvFile.append(header)
-        
-        for item in items {
-            let itemName = item.itemName!
-            let description = item.itemDescription ?? ""
-            let category = item.category?.categoryName ?? ""
-            let price = item.itemPrice
-            csvFile.append("\(itemName);\(description);\(category);\(price)\n")
-        }
-        
+
+//        for item in items {
+//            let itemName = item.itemName!
+//            let description = item.itemDescription ?? ""
+//            let category = item.category?.categoryName ?? ""
+//            let price = item.itemPrice
+//            csvFile.append("\(itemName);\(description);\(category);\(price)\n")
+//        }
+
         do {
             try csvFile.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
             return path!
@@ -669,18 +670,6 @@ extension MenuTableViewController {
         let alertNoCanDo = UIAlertController(title: NSLocalizedString("alertNoCanDo", comment: ""), message: NSLocalizedString("paramsNotFilledProperly", comment: ""), preferredStyle: .alert)
         alertNoCanDo.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .cancel, handler: nil))
         self.presentAlert(alert: alertNoCanDo, animated: true)
-    }
-}
-
-// Observer to check that sync was performed to update GUI
-extension MenuTableViewController {
-    private func addSyncObserver () {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) {
-            [weak self] notification in
-                DispatchQueue.main.async {
-                self?.updateGUI()
-            }
-        }
     }
 }
 

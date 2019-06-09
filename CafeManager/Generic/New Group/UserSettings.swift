@@ -34,18 +34,6 @@ class UserSettings {
         }
     }
     
-    /// Is autosync enabled is taken from app settings (user defaults).
-    /// Can be set or get. Set is used only in settings.
-    static var isAutosyncEnabled: Bool {
-        get {
-            return UserSettings.defaults.bool(forKey: "isAutosyncEnabled")
-        }
-        set {
-            defaults.set(newValue, forKey: "isAutosyncEnabled")
-            appDelegate.smStore?.syncAutomatically = newValue
-        }
-    }
-    
     /// Price per minute is taken from app settings (user defaults).
     /// Can be set or get. Set is used only in settings.
     static var pricePerMinute: Float {

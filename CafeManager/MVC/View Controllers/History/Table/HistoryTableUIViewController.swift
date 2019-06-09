@@ -133,7 +133,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewDidLoad()
-        addSyncObserver()
+//        addSyncObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -451,17 +451,5 @@ extension HistoryTableUIViewController:CheckoutDelegate {
         }
         self.updateGUI()
         self.navigationController?.popViewController(animated: true)
-    }
-}
-
-// Observer to check that sync was performed to update GUI
-extension HistoryTableUIViewController {
-    private func addSyncObserver () {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) {
-            [weak self] notification in
-            DispatchQueue.main.async {
-                self?.updateGUI()
-            }
-        }
     }
 }

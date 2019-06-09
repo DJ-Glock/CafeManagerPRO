@@ -11,7 +11,7 @@ import CoreData
 
 class HistoryTablesTableViewController: FetchedResultsTableViewController {
     //MARK: variables
-    private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
+    //private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
     private var currentTable: TablesTable?
     private var tableNameTextField: UITextField!
     
@@ -19,7 +19,6 @@ class HistoryTablesTableViewController: FetchedResultsTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sideMenu()
-        addSyncObserver()
     }
     override func viewWillAppear(_ animated: Bool) {
         updateGUI()
@@ -41,27 +40,27 @@ class HistoryTablesTableViewController: FetchedResultsTableViewController {
     
     //MARK: functions for table update
     private func updateGUI () {
-        let request : NSFetchRequest<TablesTable> = TablesTable.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "tableName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))]
-        fetchedResultsController = NSFetchedResultsController<TablesTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        try? fetchedResultsController?.performFetch()
+//        let request : NSFetchRequest<TablesTable> = TablesTable.fetchRequest()
+//        request.sortDescriptors = [NSSortDescriptor(key: "tableName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))]
+//        fetchedResultsController = NSFetchedResultsController<TablesTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: nil, cacheName: nil)
+//        try? fetchedResultsController?.performFetch()
         tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! HistoryTablesTableViewCell
-        if let tablesTable = fetchedResultsController?.object(at: indexPath) {
-            cell.tableNameLabel.text = tablesTable.tableName
-            cell.cellDelegate = self
-            cell.table = tablesTable
-        }
+//        if let tablesTable = fetchedResultsController?.object(at: indexPath) {
+//            cell.tableNameLabel.text = tablesTable.tableName
+//            cell.cellDelegate = self
+//            cell.table = tablesTable
+//        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath as IndexPath)
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        currentTable = fetchedResultsController?.object(at: indexPath)
+//        currentTable = fetchedResultsController?.object(at: indexPath)
         performSegue(withIdentifier: "showTableSessions", sender: cell)
     }
     
@@ -86,44 +85,37 @@ extension HistoryTablesTableViewController: HistoryTablesTableViewCellDelegate {
 // Common extension for fetchedResultsController
 extension HistoryTablesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController?.sections?.count ?? 1
+//        return fetchedResultsController?.sections?.count ?? 1
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].numberOfObjects
-        }
-        else {
-            return 0
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].numberOfObjects
+//        }
+//        else {
+//            return 0
+//        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].name
-        }
-        else {
-            return nil
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].name
+//        }
+//        else {
+//            return nil
+//        }
+        return nil
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return fetchedResultsController?.sectionIndexTitles
+//        return fetchedResultsController?.sectionIndexTitles
+        return []
     }
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
-    }
-}
-
-// Observer to check that sync was performed to update GUI
-extension HistoryTablesTableViewController {
-    private func addSyncObserver () {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) {
-            [weak self] notification in
-            DispatchQueue.main.async {
-                self?.updateGUI()
-            }
-        }
+//        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
+        return 0
     }
 }

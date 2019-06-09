@@ -11,7 +11,7 @@ import CoreData
 
 class TablesTableViewController: FetchedResultsTableViewController {
     // MARK: variables
-    private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
+//    private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
     private var currentTable: TablesTable?
     private var currentTableSession: TableSessionTable?
     private var tableNameTextField: UITextField!
@@ -35,7 +35,6 @@ class TablesTableViewController: FetchedResultsTableViewController {
         super.viewDidLoad()
         sideMenu()
         configureRefreshControl()
-        addSyncObserver()
     }
     
     // Menu
@@ -147,48 +146,48 @@ class TablesTableViewController: FetchedResultsTableViewController {
     
     //MARK: functions for table update
     @objc private func updateGUI () {
-        let request : NSFetchRequest<TablesTable> = TablesTable.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "tableName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))]
-        fetchedResultsController = NSFetchedResultsController<TablesTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        try? fetchedResultsController?.performFetch()
+//        let request : NSFetchRequest<TablesTable> = TablesTable.fetchRequest()
+//        request.sortDescriptors = [NSSortDescriptor(key: "tableName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))]
+//        fetchedResultsController = NSFetchedResultsController<TablesTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: nil, cacheName: nil)
+//        try? fetchedResultsController?.performFetch()
         tableView.reloadData()
         self.tableViewRefreshControl?.endRefreshing()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TablesTableViewCell
-        if let tablesTable = fetchedResultsController?.object(at: indexPath) {
-            currentTableSession = TableSessionTable.getCurrentTableSession(table: tablesTable)
-            cell.tableNameLabel.text = tablesTable.tableName
-            if currentTableSession != nil {
-                cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
-                cell.tableStatusLabel.text = NSLocalizedString("tableOpened", comment: "") + "\(currentTableSession!.openTime!.convertToString())"
-                cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)))" + UserSettings.currencySymbol
-            } else {
-                cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
-                cell.tableStatusLabel.text = NSLocalizedString("tableIsClosed", comment: "")
-                cell.currentAmountLabel.text = ""
-            }
-        }
+//        if let tablesTable = fetchedResultsController?.object(at: indexPath) {
+//            currentTableSession = TableSessionTable.getCurrentTableSession(table: tablesTable)
+//            cell.tableNameLabel.text = tablesTable.tableName
+//            if currentTableSession != nil {
+//                cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
+//                cell.tableStatusLabel.text = NSLocalizedString("tableOpened", comment: "") + "\(currentTableSession!.openTime!.convertToString())"
+//                cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)))" + UserSettings.currencySymbol
+//            } else {
+//                cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
+//                cell.tableStatusLabel.text = NSLocalizedString("tableIsClosed", comment: "")
+//                cell.currentAmountLabel.text = ""
+//            }
+//        }
         return cell
     }
     //Functions for Edit/Delete swipe buttons
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
-            let table = self.fetchedResultsController?.object(at: editActionsForRowAt)
-            let alert = UIAlertController(title: NSLocalizedString("confirmTableDeletion", comment: ""), message: NSLocalizedString("confirmTableDeletionMessage", comment: ""), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("alertCancel", comment: ""), style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("alertDelete", comment: ""), style: .destructive, handler: { (UIAlertAction) in
-                table!.remove()
-                self.updateGUI()
-            }))
-            self.presentAlert(alert: alert, animated: true)
+//            let table = self.fetchedResultsController?.object(at: editActionsForRowAt)
+//            let alert = UIAlertController(title: NSLocalizedString("confirmTableDeletion", comment: ""), message: NSLocalizedString("confirmTableDeletionMessage", comment: ""), preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: NSLocalizedString("alertCancel", comment: ""), style: .cancel, handler: nil))
+//            alert.addAction(UIAlertAction(title: NSLocalizedString("alertDelete", comment: ""), style: .destructive, handler: { (UIAlertAction) in
+//                table!.remove()
+//                self.updateGUI()
+//            }))
+//            self.presentAlert(alert: alert, animated: true)
         }
         deleteButton.backgroundColor = .red
         
         let editButton = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-            let table = self.fetchedResultsController?.object(at: editActionsForRowAt)
-            self.editTable(table: table!)
+//            let table = self.fetchedResultsController?.object(at: editActionsForRowAt)
+//            self.editTable(table: table!)
         }
         editButton.backgroundColor = .lightGray
         
@@ -196,11 +195,11 @@ class TablesTableViewController: FetchedResultsTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath as IndexPath)
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        currentTable = fetchedResultsController?.object(at: indexPath)
-        currentTableSession = TableSessionTable.getCurrentTableSession(table: currentTable!)
-        performSegue(withIdentifier: "openTableSegue", sender: cell)
+//        let cell = tableView.cellForRow(at: indexPath as IndexPath)
+//        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+//        currentTable = fetchedResultsController?.object(at: indexPath)
+//        currentTableSession = TableSessionTable.getCurrentTableSession(table: currentTable!)
+//        performSegue(withIdentifier: "openTableSegue", sender: cell)
     }
     
     
@@ -221,44 +220,37 @@ class TablesTableViewController: FetchedResultsTableViewController {
 // Common extension for fetchedResultsController
 extension TablesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController?.sections?.count ?? 1
+//        return fetchedResultsController?.sections?.count ?? 1
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].numberOfObjects
-        }
-        else {
-            return 0
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].numberOfObjects
+//        }
+//        else {
+//            return 0
+//        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-            return sections[section].name
-        }
-        else {
-            return nil
-        }
+//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+//            return sections[section].name
+//        }
+//        else {
+//            return nil
+//        }
+        return nil
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return fetchedResultsController?.sectionIndexTitles
+//        return fetchedResultsController?.sectionIndexTitles
+        return []
     }
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
-    }
-}
-
-// Observer to check that sync was performed to update GUI
-extension TablesTableViewController {
-    private func addSyncObserver () {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) {
-            [weak self] notification in
-            DispatchQueue.main.async {
-                self?.updateGUI()
-            }
-        }
+//        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
+        return 0
     }
 }

@@ -52,7 +52,7 @@ class SettingsTableViewController: UITableViewController {
         UserSettings.pricePerMinute = pricePerHourTextField.text!.getFloatNumber() ?? 0
     }
     @IBAction func runSyncButtonPressed(_ sender: UIButton) {
-        self.showSyncAlert()
+        //self.showSyncAlert()
     }
     
     // LifeCycle functions
@@ -88,9 +88,9 @@ class SettingsTableViewController: UITableViewController {
         self.addGestureRecognizer()
         
         // Refresh sync status
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) { notification in
-            self.syncStatusLabel.text = UserSettings.syncStatus
-        }
+//        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) { notification in
+//            self.syncStatusLabel.text = UserSettings.syncStatus
+//        }
     }
     
     // Configure view before it appears
@@ -109,7 +109,7 @@ class SettingsTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: NSLocalizedString("synchronizationWarningDeny", comment: ""), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: NSLocalizedString("synchronizationWarningConfirm", comment: ""), style: .default, handler: {(UIAlertAction) in
             
-            appDelegate.validateCloudKitAnd(runSync: true){}
+            //appDelegate.validateCloudKitAnd(runSync: true){}
             UserSettings.syncUserDefaults()
             self.configureViewWillAppear()
         }))
