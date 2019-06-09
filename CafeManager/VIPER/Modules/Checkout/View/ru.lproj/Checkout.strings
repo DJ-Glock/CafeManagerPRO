@@ -1,0 +1,31 @@
+
+/* Class = "UITextField"; placeholder = "5"; ObjectID = "3At-Fz-IfR"; */
+"3At-Fz-IfR.placeholder" = "5";
+
+/* Class = "UITextField"; placeholder = "2300"; ObjectID = "5Oq-8z-KPa"; */
+"5Oq-8z-KPa.placeholder" = "2300";
+
+/* Class = "UILabel"; text = "You can round total amount or apply discount. When you finish editing total amount, discount will be calculated automatically."; ObjectID = "K84-Se-qCP"; */
+"K84-Se-qCP.text" = "Вы можете ввести итоговую сумму вручную или определить значение скидки. По окончании ввода скидка/сумма будет пересчитана автоматически.";
+
+/* Class = "UIViewController"; title = "Checkout"; ObjectID = "Ki7-hj-gCY"; */
+"Ki7-hj-gCY.title" = "Посчитать";
+
+/* Class = "UILabel"; text = "Tips:"; ObjectID = "LSg-2m-v2N"; */
+"LSg-2m-v2N.text" = "Чаевые:";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "LYp-S9-12k"; */
+"LYp-S9-12k.text" = "Сумма:";
+
+/* Class = "UIButton"; normalTitle = "Close session"; ObjectID = "WKn-Jw-KK8"; */
+"WKn-Jw-KK8.normalTitle" = "Расчитать";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "WNu-Cu-vVH"; */
+"WNu-Cu-vVH.normalTitle" = "Отмена";
+
+/* Class = "UILabel"; text = "Close/edit session"; ObjectID = "abt-OS-Rwa"; */
+"abt-OS-Rwa.text" = "Расчет столика";
+
+/* Class = "UILabel"; text = "Dicsount, per cent:"; ObjectID = "lOu-yS-VSH"; */
+"lOu-yS-VSH.text" = "Скидка, в процентах:";
+

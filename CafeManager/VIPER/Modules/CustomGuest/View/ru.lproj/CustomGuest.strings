@@ -1,0 +1,18 @@
+
+/* Class = "UIButton"; normalTitle = "Add"; ObjectID = "8dS-fZ-Rv3"; */
+"8dS-fZ-Rv3.normalTitle" = "Добавить";
+
+/* Class = "UIButton"; normalTitle = "Add guest"; ObjectID = "Gp8-qG-Yms"; */
+"Gp8-qG-Yms.normalTitle" = "Добавить";
+
+/* Class = "UILabel"; text = "Adding guest"; ObjectID = "oNC-RZ-TWl"; */
+"oNC-RZ-TWl.text" = "Добавление гостя";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ozT-GS-aV7"; */
+"ozT-GS-aV7.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "sxI-hu-LGn"; */
+"sxI-hu-LGn.normalTitle" = "Отмена";
+
+/* Class = "UILabel"; text = "Popular guests:"; ObjectID = "xot-f8-BWc"; */
+"xot-f8-BWc.text" = "Известные гости:";

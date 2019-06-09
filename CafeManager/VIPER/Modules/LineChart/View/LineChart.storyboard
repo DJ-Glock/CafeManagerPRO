@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Line Chart View Controller-->
+        <scene sceneID="DPH-kt-j1W">
+            <objects>
+                <viewController storyboardIdentifier="LineChartViewController" id="xtI-zN-SYJ" customClass="LineChartViewController" customModule="CafeManager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zjB-pI-stR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UUM-lN-thT">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem id="Mwc-IV-9SA">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="xcb-Qw-dUC">
+                                            <connections>
+                                                <action selector="doneButtonPressed:" destination="xtI-zN-SYJ" id="fFH-fL-kbv"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tj3-ac-tFL" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Tj3-ac-tFL" firstAttribute="leading" secondItem="Rcx-nn-8yv" secondAttribute="leading" id="41T-7n-qW9"/>
+                            <constraint firstItem="UUM-lN-thT" firstAttribute="leading" secondItem="Rcx-nn-8yv" secondAttribute="leading" id="4GG-Hr-b4F"/>
+                            <constraint firstItem="Tj3-ac-tFL" firstAttribute="trailing" secondItem="Rcx-nn-8yv" secondAttribute="trailing" id="Che-c9-4lX"/>
+                            <constraint firstItem="UUM-lN-thT" firstAttribute="top" secondItem="zjB-pI-stR" secondAttribute="topMargin" id="Fgb-QO-W23"/>
+                            <constraint firstItem="Tj3-ac-tFL" firstAttribute="bottom" secondItem="Rcx-nn-8yv" secondAttribute="bottom" id="RGv-lS-MZJ"/>
+                            <constraint firstItem="Tj3-ac-tFL" firstAttribute="top" secondItem="UUM-lN-thT" secondAttribute="bottom" id="tAN-qT-a61"/>
+                            <constraint firstItem="UUM-lN-thT" firstAttribute="trailing" secondItem="Rcx-nn-8yv" secondAttribute="trailing" id="v6g-Xe-k2B"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Rcx-nn-8yv"/>
+                    </view>
+                    <connections>
+                        <outlet property="chartView" destination="Tj3-ac-tFL" id="VWO-bG-ED3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kH6-mD-W95" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-218.40000000000001" y="-185.75712143928038"/>
+        </scene>
+    </scenes>
+</document>

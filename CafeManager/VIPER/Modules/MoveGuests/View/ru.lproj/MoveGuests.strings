@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Moving guests"; ObjectID = "0Ht-e1-CZX"; */
+"0Ht-e1-CZX.text" = "Перемещение гостей";
+
+/* Class = "UILabel"; text = "Table Name"; ObjectID = "9O9-Xz-lJf"; */
+"9O9-Xz-lJf.text" = "Имя столика";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "LmS-NQ-ZwB"; */
+"LmS-NQ-ZwB.normalTitle" = "Выбрать";
+
+/* Class = "UILabel"; text = "All guests and orders will be moved to selected table."; ObjectID = "Nse-eK-FJm"; */
+"Nse-eK-FJm.text" = "Гости и сделанные заказы будут перенесены на выбранный столик.";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "s0W-WU-D1d"; */
+"s0W-WU-D1d.normalTitle" = "Отмена";

@@ -1,0 +1,349 @@
+/* Class = "UILabel"; text = "Total guests:"; ObjectID = "0YB-ai-MfA"; */
+"0YB-ai-MfA.text" = "Всего гостей:";
+
+/* Class = "UILabel"; text = "Total table sessions:"; ObjectID = "1Oi-P5-x4o"; */
+"1Oi-P5-x4o.text" = "Всего сессий столиков:";
+
+/* Class = "UILabel"; text = "Total profit:"; ObjectID = "2YI-PA-Osp"; */
+"2YI-PA-Osp.text" = "Прибыль:";
+
+/* Class = "UIButton"; normalTitle = "Menu"; ObjectID = "3Gs-dX-6tZ"; */
+"3Gs-dX-6tZ.normalTitle" = "Меню";
+
+/* Class = "UILabel"; text = "Item name"; ObjectID = "8Ji-9P-tyN"; */
+"8Ji-9P-tyN.text" = "Наименование";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "9Xr-Me-Uns"; */
+"9Xr-Me-Uns.normalTitle" = "Отмена";
+
+/* Class = "UIButton"; normalTitle = "Year"; ObjectID = "9mg-Le-kJf"; Note = "Pick year for report"; */
+"9mg-Le-kJf.normalTitle" = "Год";
+
+/* Class = "UILabel"; text = "Some description of the item. For example: a glass of red South African wine, or bottle of Coca-Cola Vanilla, 0.5l"; ObjectID = "9nD-bT-cuC"; */
+"9nD-bT-cuC.text" = "Some description of the item. For example: a glass of red South African wine, or bottle of Coca-Cola Vanilla, 0.5l";
+
+/* Class = "UILabel"; text = "Moving guests"; ObjectID = "80l-7u-fQC"; */
+"80l-7u-fQC.text" = "Перенос гостей";
+
+/* Class = "UILabel"; text = "Adding guest"; ObjectID = "A49-CD-iBJ"; */
+"A49-CD-iBJ.text" = "Добавление гостя";
+
+/* Class = "UILabel"; text = "Guests:"; ObjectID = "A62-VD-Yt2"; */
+"A62-VD-Yt2.text" = "Гости:";
+
+/* Class = "UILabel"; text = "Name of the item"; ObjectID = "Agl-ta-NAH"; */
+"Agl-ta-NAH.text" = "Наименование";
+
+/* Class = "UIButton"; normalTitle = "Month"; ObjectID = "B0p-ez-SLU"; Note = "Pick month for report"; */
+"B0p-ez-SLU.normalTitle" = "Месяц";
+
+/* Class = "UITableViewSection"; headerTitle = "Cafe and calculation type"; ObjectID = "BWa-FD-fFe"; */
+"BWa-FD-fFe.headerTitle" = "Тип кафе и расчета";
+
+"UdW-lo-zoE.headerTitle" = "Синхронизация";
+
+"Gra-pW-4WQ.headerTitle" = "Внешний вид";
+
+"3aj-dH-c4u.text" = "Темная тема (требуется перезапуск)";
+
+
+/* Class = "UITableViewSection"; headerTitle = "Currency settings"; ObjectID = "BbZ-QZ-dMm"; */
+"BbZ-QZ-dMm.headerTitle" = "Настройки валюты";
+
+/* Class = "UIButton"; normalTitle = "Main screen"; ObjectID = "BpF-7R-ecu"; */
+"BpF-7R-ecu.normalTitle" = "Столики";
+
+/* Class = "UILabel"; text = "Arrival"; ObjectID = "CVg-FJ-JLm"; */
+"CVg-FJ-JLm.text" = "Пришел ";
+
+/* Class = "UILabel"; text = "12.02.2017 17:00"; ObjectID = "DaJ-Uq-Lcn"; */
+"DaJ-Uq-Lcn.text" = "12.02.2017 17:00";
+
+/* Class = "UILabel"; text = "Average amount:"; ObjectID = "HfX-9X-LkN"; */
+"HfX-9X-LkN.text" = "Средний счет:";
+
+/* Class = "UIButton"; normalTitle = "Add guest"; ObjectID = "Hnj-He-ci9"; */
+"Hnj-He-ci9.normalTitle" = "Добавить гостя";
+
+/* Class = "UILabel"; text = "Capacity:"; ObjectID = "JtB-bh-asj"; */
+"JtB-bh-asj.text" = "Вместимость:";
+
+/* Class = "UINavigationItem"; title = "Table"; ObjectID = "JzQ-Yo-a3S"; */
+"JzQ-Yo-a3S.title" = "Столик";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "M6F-KF-Wnx"; */
+"M6F-KF-Wnx.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Add"; ObjectID = "Nfx-bX-jOa"; */
+"Nfx-bX-jOa.normalTitle" = "Добавить";
+
+/* Class = "UILabel"; text = "Table Status"; ObjectID = "P9O-OI-OfM"; */
+"P9O-OI-OfM.text" = "Статус столика";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "Q4e-Dt-7IZ"; */
+"Q4e-Dt-7IZ.text" = "Стоимость";
+
+/* Class = "UILabel"; text = "Departure"; ObjectID = "RTE-gL-8Pl"; */
+"RTE-gL-8Pl.text" = "Ушел";
+
+/* Class = "UILabel"; text = "1000"; ObjectID = "W3g-ka-SMS"; */
+"W3g-ka-SMS.text" = "1000";
+
+/* Class = "UILabel"; text = "Maximum amount:"; ObjectID = "W08-Ag-jIy"; */
+"W08-Ag-jIy.text" = "Максимальный счет:";
+
+/* Class = "UILabel"; text = "Popular guests:"; ObjectID = "WCV-hm-9vz"; */
+"WCV-hm-9vz.text" = "Недавно использованные:";
+
+/* Class = "UILabel"; text = "2"; ObjectID = "WCW-Gn-rmb"; */
+"WCW-Gn-rmb.text" = "2";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "WGx-NS-e7W"; */
+"WGx-NS-e7W.text" = "Стоимость";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "WSU-PP-cfb"; */
+"WSU-PP-cfb.text" = "Value";
+
+/* Class = "UILabel"; text = "Orders:"; ObjectID = "X2g-Sb-DIf"; */
+"X2g-Sb-DIf.text" = "Заказы:";
+
+/* Class = "UILabel"; text = "Current Amount"; ObjectID = "YOl-ZQ-WcQ"; */
+"YOl-ZQ-WcQ.text" = "Текущий счет";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "Yav-j9-Cz3"; */
+"Yav-j9-Cz3.text" = "Value";
+
+/* Class = "UILabel"; text = "Table Name"; ObjectID = "bBm-Dq-8xA"; */
+"bBm-Dq-8xA.text" = "Имя столика";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "bCO-c0-B0z"; */
+"bCO-c0-B0z.title" = "Настройки";
+
+/* Class = "UIButton"; normalTitle = "Reports"; ObjectID = "bot-Vi-GRa"; */
+"bot-Vi-GRa.normalTitle" = "Отчеты";
+
+/* Class = "UIButton"; normalTitle = "History"; ObjectID = "1rX-4C-G3c"; */
+"1rX-4C-G3c.normalTitle" = "История";
+
+/* Class = "UILabel"; text = "Occupied:"; ObjectID = "c6z-ph-rBQ"; */
+"c6z-ph-rBQ.text" = "Занято мест:";
+
+/* Class = "UINavigationItem"; title = "Menu"; ObjectID = "caX-yw-swh"; */
+"caX-yw-swh.title" = "Меню";
+
+/* Class = "UIButton"; normalTitle = "Custom"; ObjectID = "cb1-TB-Nqb"; Note = "Custom date picker for report"; */
+"cb1-TB-Nqb.normalTitle" = "Выбрать";
+
+/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "eco-Ww-fC8"; */
+"eco-Ww-fC8.normalTitle" = "Настройки";
+
+/* Class = "UIButton"; normalTitle = "Help"; ObjectID = "3zn-lG-Gqf"; */
+"3zn-lG-Gqf.normalTitle" = "Помощь";
+
+/* Class = "UILabel"; text = "Period"; ObjectID = "els-av-1VE"; */
+"els-av-1VE.text" = "Период";
+
+/* Class = "UIButton"; normalTitle = "Order"; ObjectID = "fyj-iM-WE9"; */
+"fyj-iM-WE9.normalTitle" = "Заказать";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "g1p-sK-09f"; */
+"g1p-sK-09f.text" = "Value";
+
+/* Class = "UIButton"; normalTitle = "Open"; ObjectID = "g43-yp-wx1"; */
+"g43-yp-wx1.normalTitle" = "Открыть";
+
+/* Class = "UILabel"; text = "Average time of table session:"; ObjectID = "gI4-3t-6Mm"; */
+"gI4-3t-6Mm.text" = "Среднее время сессии столика:";
+
+/* Class = "UILabel"; text = "Open time:"; ObjectID = "glb-81-Axj"; */
+"glb-81-Axj.text" = "Открыт:";
+
+/* Class = "UILabel"; text = "Price per minute"; ObjectID = "gqk-AV-0Oo"; */
+"gqk-AV-0Oo.text" = "Цена за минуту";
+
+/* Class = "UINavigationItem"; title = "Tables"; ObjectID = "gyj-aY-dQE"; */
+"gyj-aY-dQE.title" = "Столики";
+
+/* Class = "UILabel"; text = "Average time of guest session:"; ObjectID = "iWq-So-Tpp"; */
+"iWq-So-Tpp.text" = "Среднее время гостя:";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "j6j-z8-w27"; */
+"j6j-z8-w27.normalTitle" = "Отмена";
+
+/* Class = "UILabel"; text = "Name of the item"; ObjectID = "jxt-e9-QBY"; */
+"jxt-e9-QBY.text" = "Количество";
+
+/* Class = "UILabel"; text = "Adding order"; ObjectID = "k6o-nq-A6H"; */
+"k6o-nq-A6H.text" = "Добавление заказа";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "kHy-zf-vPy"; */
+"kHy-zf-vPy.text" = "Value";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "kNK-Ae-lps"; */
+"kNK-Ae-lps.text" = "Value";
+
+/* Class = "UILabel"; text = "Minimum amount:"; ObjectID = "kXS-hi-UDC"; */
+"kXS-hi-UDC.text" = "Минимальный счет:";
+
+/* Class = "UILabel"; text = "Quantity"; ObjectID = "kXt-DM-hmv"; */
+"kXt-DM-hmv.text" = "Количество";
+
+/* Class = "UILabel"; text = "Table Name"; ObjectID = "mYF-ge-cX0"; */
+"mYF-ge-cX0.text" = "Имя столика";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "nEm-Ul-Ujc"; */
+"nEm-Ul-Ujc.text" = "Value";
+
+/* Class = "UILabel"; text = "2"; ObjectID = "nSZ-X9-W0h"; */
+"nSZ-X9-W0h.text" = "2";
+
+/* Class = "UILabel"; text = "All guests and orders will be moved to selected table."; ObjectID = "ocL-FQ-TIe"; */
+"ocL-FQ-TIe.text" = "Все гости и сделанные заказы будут перенесены на выбранный столик.";
+
+/* Class = "UIBarButtonItem"; title = "Calculate table"; ObjectID = "oxa-EY-tIC"; */
+"oxa-EY-tIC.title" = "Рассчитать";
+
+"pVg-7R-Prh.text" = "Чаевые:";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "pGv-bD-hmO"; */
+"pGv-bD-hmO.text" = "Value";
+
+/* Class = "UIViewController"; title = "Reports"; ObjectID = "qvw-8l-zXC"; */
+"qvw-8l-zXC.title" = "Заказы";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "sd0-8v-QX8"; */
+"sd0-8v-QX8.normalTitle" = "Отмена";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "srW-ch-caj"; */
+"srW-ch-caj.normalTitle" = "Выбрать";
+
+/* Class = "UILabel"; text = "Guest name"; ObjectID = "t3E-Ru-0kq"; */
+"t3E-Ru-0kq.text" = "Имя гостя";
+
+/* Class = "UILabel"; text = "Average numbers per period"; ObjectID = "tCv-Ms-E1h"; */
+"tCv-Ms-E1h.text" = "Средние показатели за период";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "tZJ-jo-Qyk"; */
+"tZJ-jo-Qyk.text" = "Стоимость";
+
+/* Class = "UIButton"; normalTitle = "MoveGuests"; ObjectID = "tqc-mO-8HI"; */
+"tqc-mO-8HI.normalTitle" = "MoveGuests";
+
+/* Class = "UILabel"; text = "Time cafe"; ObjectID = "uVo-fH-bcj"; */
+"uVo-fH-bcj.text" = "Тайм кафе";
+
+/* Class = "UILabel"; text = "Choose currency"; ObjectID = "S55-v1-kSM"; */
+"S55-v1-kSM.text" = "Выбрать валюту";
+
+"Gmf-mS-Knd.text" = "Автоматическая синхронизация";
+
+"D99-cF-yKf.text" = "Последняя:";
+
+"Lg2-IN-CQn.normalTitle" = "Синхронизировать";
+
+"eFg-HC-TYo.text" = "Статус";
+
+/* Class = "UILabel"; text = "Average number of guests per table:"; ObjectID = "vj5-vf-9mc"; */
+"vj5-vf-9mc.text" = "Среднее кол-во гостей на столик:";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "w7R-i1-nsn"; */
+"w7R-i1-nsn.text" = "Value";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "yZa-tO-yWf"; */
+"yZa-tO-yWf.text" = "Value";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "yh2-mk-4m7"; */
+"yh2-mk-4m7.text" = "Счет:";
+
+/* Class = "UILabel"; text = "Some description of the item. For example: a glass of red South African wine, or bottle of Coca-Cola Vanilla, 0.5l"; ObjectID = "ykV-mh-V7P"; */
+"ykV-mh-V7P.text" = "Какое-то описание позиции меню. Например: бокал африканского вина или бутылка Кока-Колы.";
+
+/* Class = "UIButton"; normalTitle = "Day"; ObjectID = "zJE-QZ-g1I"; Note = "Pick day for report"; */
+"zJE-QZ-g1I.normalTitle" = "День";
+
+
+
+/* Class = "UINavigationItem"; title = "Reports"; ObjectID = "Xmp-GA-EzH"; */
+"Xmp-GA-EzH.title" = "Отчеты";
+
+/* Class = "UINavigationItem"; title = "History - Tables"; ObjectID = "XX9-yL-hRf"; */
+"XX9-yL-hRf.title" = "История";
+
+/* Class = "UINavigationItem"; title = "Help"; ObjectID = "U2r-ig-2xB"; */
+"U2r-ig-2xB.title" = "Помощь";
+
+/* Class = "UIButton"; normalTitle = "Open"; ObjectID = "jGA-Ni-2W2"; */
+"jGA-Ni-2W2.normalTitle" = "Открыть";
+
+/* Class = "UIButton"; normalTitle = "Open"; ObjectID = "OT3-Ob-dfV"; */
+"OT3-Ob-dfV.normalTitle" = "Открыть";
+
+/* Class = "UINavigationItem"; title = "Custom period"; ObjectID = "4K5-t3-Gqf"; */
+"4K5-t3-Gqf.title" = "Свой период";
+
+/* Class = "UILabel"; text = "Choose custom period"; ObjectID = "QBQ-p0-8XF"; */
+"QBQ-p0-8XF.text" = "Выберите период для построения отчета";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "BJy-pZ-vBw"; */
+"BJy-pZ-vBw.normalTitle" = "Готово";
+
+/* Class = "UILabel"; text = "Start date"; ObjectID = "IWI-nY-vma"; */
+"IWI-nY-vma.text" = "Начало:";
+
+/* Class = "UILabel"; text = "End date"; ObjectID = "ZXC-vT-PoJ"; */
+"ZXC-vT-PoJ.text" = "Конец:";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "BJy-pZ-vBw"; */
+"BJy-pZ-vBw.normalTitle" = "Готово";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "68i-hR-licw"; */
+"68i-hR-lic.normalTitle" = "Отмена";
+
+/* Class = "UILabel"; text = "Capacity:"; ObjectID = "O2N-5W-nbW"; */
+"O2N-5W-nbW.text" = "Вместимость:";
+
+/* Class = "UILabel"; text = "Total Guests:"; ObjectID = "Lnn-Kf-6aP"; */
+"Lnn-Kf-6aP.text" = "Всего гостей:";
+
+/* Class = "UILabel"; text = "Open:"; ObjectID = "94T-Y5-igp"; */
+"94T-Y5-igp.text" = "Открыт:";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "EG9-Gf-6kP"; */
+"EG9-Gf-6kP.text" = "Счет:";
+
+/* Class = "UIBarButtonItem"; title = "Recalculate"; ObjectID = "YPL-Rl-YDb"; */
+"YPL-Rl-YDb.title" = "Пересчитать";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "Od4-16-a0t"; */
+"Od4-16-a0t.text" = "Сумма:";
+
+/* Class = "UILabel"; text = "Discount, per cent:"; ObjectID = "meZ-RE-Oqc"; */
+"meZ-RE-Oqc.text" = "Скидка, в процентах:";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "eLl-Yd-riv"; */
+"eLl-Yd-riv.normalTitle" = "Отмена";
+
+
+/// Menu (MainViewController)
+"QNY-GS-Pjf.normalTitle" = "Столики";
+"X38-Dk-CaR.normalTitle" = "Меню";
+"n9W-aV-132.normalTitle" = "Отчеты";
+"lI4-Qs-84i.normalTitle" = "История";
+"7Ii-06-AwF.normalTitle" = "Настройки";
+"lHP-Df-Ob0.normalTitle" = "Помощь";
+
+// Reports View Controller
+"yaE-qd-dYm.text" = "Среднее время сессии столика";
+"r71-Ny-I9W.text" = "Среднее время гостя";
+"xdW-Nf-WEx.text" = "Среднее количество гостей за столиком";
+"5yu-xa-kvv.text" = "Средний счет";
+"GRg-ej-5io.text" = "Минимальный счет";
+"aGc-KA-aCn.text" = "Максимальный счет";
+"zgZ-bf-Y8x.text" = "Прибыль";
+"S56-fE-2iW.text" = "Всего гостей";
+"gBW-Qi-z4G.text" = "Всего сессий столиков";
+"GlP-wP-Wlc.text" = "Показать статистику по продажам";
+
+/* Class = "UIBarButtonItem"; title = "Export"; ObjectID = "19D-pO-iSc"; */
+"19D-pO-iSc.title" = "Экспорт";
+

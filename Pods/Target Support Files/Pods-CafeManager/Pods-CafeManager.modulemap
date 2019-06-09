@@ -1,0 +1,6 @@
+framework module Pods_CafeManager {
+  umbrella header "Pods-CafeManager-umbrella.h"
+
+  export *
+  module * { export * }
+}

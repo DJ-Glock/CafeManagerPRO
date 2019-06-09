@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="17B1003" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GuestsTable" representedClassName=".GuestsTable" syncable="YES">
+        <attribute name="closeTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="guestName" attributeType="String" syncable="YES"/>
+        <attribute name="openTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="table" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TableSessionTable" inverseName="guest" inverseEntity="TableSessionTable" syncable="YES"/>
+    </entity>
+    <entity name="MenuTable" representedClassName=".MenuTable" syncable="YES">
+        <attribute name="itemDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemName" attributeType="String" syncable="YES"/>
+        <attribute name="itemPrice" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OrdersTable" inverseName="menuItem" inverseEntity="OrdersTable" syncable="YES"/>
+    </entity>
+    <entity name="OrdersTable" representedClassName=".OrdersTable" syncable="YES">
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="quantityOfItems" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="menuItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MenuTable" inverseName="orders" inverseEntity="MenuTable" syncable="YES"/>
+        <relationship name="orderedTable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TableSessionTable" inverseName="orderedItems" inverseEntity="TableSessionTable" syncable="YES"/>
+    </entity>
+    <entity name="TableSessionTable" representedClassName=".TableSessionTable" syncable="YES">
+        <attribute name="closeTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="discount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="openTime" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="totalAmount" optional="YES" attributeType="Float" defaultValueString="-1" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="guest" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GuestsTable" inverseName="table" inverseEntity="GuestsTable" syncable="YES"/>
+        <relationship name="orderedItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OrdersTable" inverseName="orderedTable" inverseEntity="OrdersTable" syncable="YES"/>
+        <relationship name="table" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TablesTable" inverseName="tableSession" inverseEntity="TablesTable" syncable="YES"/>
+    </entity>
+    <entity name="TablesTable" representedClassName=".TablesTable" syncable="YES">
+        <attribute name="tableCapacity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tableDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tableName" attributeType="String" syncable="YES"/>
+        <relationship name="tableSession" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TableSessionTable" inverseName="table" inverseEntity="TableSessionTable" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="GuestsTable" positionX="-7668" positionY="-5836" width="128" height="103"/>
+        <element name="MenuTable" positionX="-8273" positionY="-5832" width="128" height="103"/>
+        <element name="OrdersTable" positionX="-8093" positionY="-5832" width="128" height="103"/>
+        <element name="TableSessionTable" positionX="-7902" positionY="-5833" width="126" height="148"/>
+        <element name="TablesTable" positionX="-7668" positionY="-5706" width="128" height="103"/>
+    </elements>
+</model>

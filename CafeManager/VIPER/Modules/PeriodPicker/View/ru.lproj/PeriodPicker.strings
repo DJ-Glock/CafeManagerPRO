@@ -1,0 +1,18 @@
+
+/* Class = "UIViewController"; title = "PeriodPickerViewController"; ObjectID = "2SG-yg-S4a"; */
+"2SG-yg-S4a.title" = "PeriodPickerViewController";
+
+/* Class = "UILabel"; text = "Start date:"; ObjectID = "FyI-VP-fNc"; */
+"FyI-VP-fNc.text" = "Начало:";
+
+/* Class = "UILabel"; text = "End Date:"; ObjectID = "G7O-ha-0mW"; */
+"G7O-ha-0mW.text" = "Конец:";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "Ily-po-zby"; */
+"Ily-po-zby.normalTitle" = "Готово";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "nWR-M9-rJc"; */
+"nWR-M9-rJc.normalTitle" = "Отмена";
+
+/* Class = "UINavigationItem"; title = "Custom period"; ObjectID = "tZk-m5-gh8"; */
+"tZk-m5-gh8.title" = "Свой период";

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="18B57c" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CommonMenuItemsTable" representedClassName=".CommonMenuItemsTable" syncable="YES">
+        <attribute name="itemCategory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemLanguage" attributeType="String" syncable="YES"/>
+        <attribute name="itemName" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="GuestOrdersTable" representedClassName=".GuestOrdersTable" syncable="YES">
+        <attribute name="quantityOfItems" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="menuItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MenuTable" inverseName="guestOrders" inverseEntity="MenuTable" syncable="YES"/>
+        <relationship name="orderedGuest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GuestsTable" inverseName="orders" inverseEntity="GuestsTable" syncable="YES"/>
+    </entity>
+    <entity name="GuestsTable" representedClassName=".GuestsTable" versionHashModifier="15.10.2018 index added" syncable="YES">
+        <attribute name="closeTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="guestName" attributeType="String" syncable="YES"/>
+        <attribute name="openTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="totalAmount" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GuestOrdersTable" inverseName="orderedGuest" inverseEntity="GuestOrdersTable" syncable="YES"/>
+        <relationship name="table" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TableSessionTable" inverseName="guest" inverseEntity="TableSessionTable" syncable="YES"/>
+        <fetchIndex name="byCloseTime">
+            <fetchIndexElement property="closeTime" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="MenuCategoryTable" representedClassName=".MenuCategoryTable" syncable="YES">
+        <attribute name="categoryName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="menuItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MenuTable" inverseName="category" inverseEntity="MenuTable" syncable="YES"/>
+    </entity>
+    <entity name="MenuTable" representedClassName=".MenuTable" syncable="YES">
+        <attribute name="isHidden" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="itemDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemName" attributeType="String" syncable="YES"/>
+        <attribute name="itemPrice" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MenuCategoryTable" inverseName="menuItem" inverseEntity="MenuCategoryTable" syncable="YES"/>
+        <relationship name="guestOrders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GuestOrdersTable" inverseName="menuItem" inverseEntity="GuestOrdersTable" syncable="YES"/>
+        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OrdersTable" inverseName="menuItem" inverseEntity="OrdersTable" syncable="YES"/>
+    </entity>
+    <entity name="OrdersTable" representedClassName=".OrdersTable" syncable="YES">
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="quantityOfItems" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="menuItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MenuTable" inverseName="orders" inverseEntity="MenuTable" syncable="YES"/>
+        <relationship name="orderedTable" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TableSessionTable" inverseName="orderedItems" inverseEntity="TableSessionTable" syncable="YES"/>
+    </entity>
+    <entity name="TableSessionTable" representedClassName=".TableSessionTable" versionHashModifier="15.10.2018 index added" syncable="YES">
+        <attribute name="closeTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="discount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="openTime" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="totalAmount" optional="YES" attributeType="Float" defaultValueString="-1" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="totalTips" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="guest" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GuestsTable" inverseName="table" inverseEntity="GuestsTable" syncable="YES"/>
+        <relationship name="orderedItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OrdersTable" inverseName="orderedTable" inverseEntity="OrdersTable" syncable="YES"/>
+        <relationship name="table" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TablesTable" inverseName="tableSession" inverseEntity="TablesTable" syncable="YES"/>
+        <fetchIndex name="byCloseTime">
+            <fetchIndexElement property="closeTime" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="TablesTable" representedClassName=".TablesTable" versionHashModifier="byLinkToSession index added" syncable="YES">
+        <attribute name="tableCapacity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tableDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tableName" attributeType="String" syncable="YES"/>
+        <relationship name="tableSession" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TableSessionTable" inverseName="table" inverseEntity="TableSessionTable" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CommonMenuItemsTable" positionX="-7643" positionY="-5665" width="128" height="103"/>
+        <element name="GuestOrdersTable" positionX="-7832" positionY="-5886" width="128" height="88"/>
+        <element name="GuestsTable" positionX="-8019" positionY="-5886" width="128" height="133"/>
+        <element name="MenuCategoryTable" positionX="-7650" positionY="-5967" width="128" height="73"/>
+        <element name="MenuTable" positionX="-7643" positionY="-5823" width="128" height="148"/>
+        <element name="OrdersTable" positionX="-7832" positionY="-5683" width="128" height="103"/>
+        <element name="TableSessionTable" positionX="-8217" positionY="-5815" width="126" height="163"/>
+        <element name="TablesTable" positionX="-8415" positionY="-5800" width="128" height="103"/>
+    </elements>
+</model>

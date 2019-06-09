@@ -1,0 +1,340 @@
+
+/* Class = "UILabel"; text = "Total guests:"; ObjectID = "0YB-ai-MfA"; */
+"0YB-ai-MfA.text" = "Total guests:";
+
+/* Class = "UILabel"; text = "Total table sessions:"; ObjectID = "1Oi-P5-x4o"; */
+"1Oi-P5-x4o.text" = "Total table sessions:";
+
+/* Class = "UILabel"; text = "Total profit:"; ObjectID = "2YI-PA-Osp"; */
+"2YI-PA-Osp.text" = "Total profit:";
+
+/* Class = "UIButton"; normalTitle = "Menu"; ObjectID = "3Gs-dX-6tZ"; */
+"3Gs-dX-6tZ.normalTitle" = "Menu";
+
+/* Class = "UILabel"; text = "Moving guests"; ObjectID = "80l-7u-fQC"; */
+"80l-7u-fQC.text" = "Moving guests";
+
+/* Class = "UILabel"; text = "Item name"; ObjectID = "8Ji-9P-tyN"; */
+"8Ji-9P-tyN.text" = "Item name";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "9Xr-Me-Uns"; */
+"9Xr-Me-Uns.normalTitle" = "Cancel";
+
+/* Class = "UIButton"; normalTitle = "Year"; ObjectID = "9mg-Le-kJf"; */
+"9mg-Le-kJf.normalTitle" = "Year";
+
+/* Class = "UILabel"; text = "Some description of the item. For example: a glass of red South African wine, or bottle of Coca-Cola Vanilla, 0.5l"; ObjectID = "9nD-bT-cuC"; */
+"9nD-bT-cuC.text" = "Some description of the item. For example: a glass of red South African wine, or bottle of Coca-Cola Vanilla, 0.5l";
+
+/* Class = "UILabel"; text = "Adding guest"; ObjectID = "A49-CD-iBJ"; */
+"A49-CD-iBJ.text" = "Adding guest";
+
+/* Class = "UILabel"; text = "Guests:"; ObjectID = "A62-VD-Yt2"; */
+"A62-VD-Yt2.text" = "Guests:";
+
+/* Class = "UILabel"; text = "Name of the item"; ObjectID = "Agl-ta-NAH"; */
+"Agl-ta-NAH.text" = "Name of the item";
+
+/* Class = "UIButton"; normalTitle = "Month"; ObjectID = "B0p-ez-SLU"; */
+"B0p-ez-SLU.normalTitle" = "Month";
+
+/* Class = "UITableViewSection"; headerTitle = "Cafe and calculation type"; ObjectID = "BWa-FD-fFe"; */
+"BWa-FD-fFe.headerTitle" = "Cafe and calculation type";
+
+/* Class = "UITableViewSection"; headerTitle = "Currency settings"; ObjectID = "BbZ-QZ-dMm"; */
+"BbZ-QZ-dMm.headerTitle" = "Currency settings";
+
+"UdW-lo-zoE.headerTitle" = "Synchronization";
+
+"Gra-pW-4WQ.headerTitle" = "Appearance";
+
+"3aj-dH-c4u.text" = "Dark theme (re-launch required)";
+
+/* Class = "UIButton"; normalTitle = "Main screen"; ObjectID = "BpF-7R-ecu"; */
+"BpF-7R-ecu.normalTitle" = "Tables";
+
+/* Class = "UILabel"; text = "Arrival"; ObjectID = "CVg-FJ-JLm"; */
+"CVg-FJ-JLm.text" = "Came at ";
+
+/* Class = "UILabel"; text = "12.02.2017 17:00"; ObjectID = "DaJ-Uq-Lcn"; */
+"DaJ-Uq-Lcn.text" = "12.02.2017 17:00";
+
+/* Class = "UILabel"; text = "Average amount:"; ObjectID = "HfX-9X-LkN"; */
+"HfX-9X-LkN.text" = "Average amount:";
+
+/* Class = "UIButton"; normalTitle = "Add guest"; ObjectID = "Hnj-He-ci9"; */
+"Hnj-He-ci9.normalTitle" = "Add guest";
+
+/* Class = "UILabel"; text = "Capacity:"; ObjectID = "JtB-bh-asj"; */
+"JtB-bh-asj.text" = "Capacity:";
+
+/* Class = "UINavigationItem"; title = "Table"; ObjectID = "JzQ-Yo-a3S"; */
+"JzQ-Yo-a3S.title" = "Table";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "M6F-KF-Wnx"; */
+"M6F-KF-Wnx.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Add"; ObjectID = "Nfx-bX-jOa"; */
+"Nfx-bX-jOa.normalTitle" = "Add";
+
+/* Class = "UILabel"; text = "Table Status"; ObjectID = "P9O-OI-OfM"; */
+"P9O-OI-OfM.text" = "Table Status";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "Q4e-Dt-7IZ"; */
+"Q4e-Dt-7IZ.text" = "Price";
+
+/* Class = "UILabel"; text = "Departure"; ObjectID = "RTE-gL-8Pl"; */
+"RTE-gL-8Pl.text" = "Departure";
+
+/* Class = "UILabel"; text = "Maximum amount:"; ObjectID = "W08-Ag-jIy"; */
+"W08-Ag-jIy.text" = "Maximum amount:";
+
+/* Class = "UILabel"; text = "1000"; ObjectID = "W3g-ka-SMS"; */
+"W3g-ka-SMS.text" = "1000";
+
+/* Class = "UILabel"; text = "Popular guests:"; ObjectID = "WCV-hm-9vz"; */
+"WCV-hm-9vz.text" = "Recently used:";
+
+/* Class = "UILabel"; text = "2"; ObjectID = "WCW-Gn-rmb"; */
+"WCW-Gn-rmb.text" = "2";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "WGx-NS-e7W"; */
+"WGx-NS-e7W.text" = "Price";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "WSU-PP-cfb"; */
+"WSU-PP-cfb.text" = "Value";
+
+/* Class = "UILabel"; text = "Orders:"; ObjectID = "X2g-Sb-DIf"; */
+"X2g-Sb-DIf.text" = "Orders:";
+
+/* Class = "UILabel"; text = "Current Amount"; ObjectID = "YOl-ZQ-WcQ"; */
+"YOl-ZQ-WcQ.text" = "Current Amount";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "Yav-j9-Cz3"; */
+"Yav-j9-Cz3.text" = "Value";
+
+/* Class = "UILabel"; text = "Table Name"; ObjectID = "bBm-Dq-8xA"; */
+"bBm-Dq-8xA.text" = "Table Name";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "bCO-c0-B0z"; */
+"bCO-c0-B0z.title" = "Settings";
+
+
+/* Class = "UIButton"; normalTitle = "Reports"; ObjectID = "bot-Vi-GRa"; */
+"bot-Vi-GRa.normalTitle" = "Reports";
+
+/* Class = "UIButton"; normalTitle = "History"; ObjectID = "1rX-4C-G3c"; */
+"1rX-4C-G3c.normalTitle" = "History";
+
+/* Class = "UILabel"; text = "Occupied:"; ObjectID = "c6z-ph-rBQ"; */
+"c6z-ph-rBQ.text" = "Occupied:";
+
+/* Class = "UINavigationItem"; title = "Menu"; ObjectID = "caX-yw-swh"; */
+"caX-yw-swh.title" = "Menu";
+
+/* Class = "UIButton"; normalTitle = "Custom"; ObjectID = "cb1-TB-Nqb"; */
+"cb1-TB-Nqb.normalTitle" = "Custom";
+
+/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "eco-Ww-fC8"; */
+"eco-Ww-fC8.normalTitle" = "Settings";
+
+/* Class = "UIButton"; normalTitle = "Help"; ObjectID = "3zn-lG-Gqf"; */
+"3zn-lG-Gqf.normalTitle" = "Help";
+
+/* Class = "UILabel"; text = "Period"; ObjectID = "els-av-1VE"; */
+"els-av-1VE.text" = "Period";
+
+/* Class = "UIButton"; normalTitle = "Order"; ObjectID = "fyj-iM-WE9"; */
+"fyj-iM-WE9.normalTitle" = "Order";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "g1p-sK-09f"; */
+"g1p-sK-09f.text" = "Value";
+
+/* Class = "UIButton"; normalTitle = "Open"; ObjectID = "g43-yp-wx1"; */
+"g43-yp-wx1.normalTitle" = "Open";
+
+/* Class = "UILabel"; text = "Average time of table session:"; ObjectID = "gI4-3t-6Mm"; */
+"gI4-3t-6Mm.text" = "Average time of table session:";
+
+/* Class = "UILabel"; text = "Open time:"; ObjectID = "glb-81-Axj"; */
+"glb-81-Axj.text" = "Open time:";
+
+/* Class = "UILabel"; text = "Price per minute"; ObjectID = "gqk-AV-0Oo"; */
+"gqk-AV-0Oo.text" = "Price per minute";
+
+/* Class = "UINavigationItem"; title = "Tables"; ObjectID = "gyj-aY-dQE"; */
+"gyj-aY-dQE.title" = "Tables";
+
+/* Class = "UINavigationItem"; title = "History - Tables"; ObjectID = "XX9-yL-hRf"; */
+"XX9-yL-hRf.title" = "History";
+
+/* Class = "UINavigationItem"; title = "Help"; ObjectID = "U2r-ig-2xB"; */
+"U2r-ig-2xB.title" = "Help";
+
+/* Class = "UIButton"; normalTitle = "Open"; ObjectID = "jGA-Ni-2W2"; */
+"jGA-Ni-2W2.normalTitle" = "Open";
+
+/* Class = "UIButton"; normalTitle = "Open"; ObjectID = "OT3-Ob-dfV"; */
+"OT3-Ob-dfV.normalTitle" = "Open";
+
+/* Class = "UILabel"; text = "Average time of guest session:"; ObjectID = "iWq-So-Tpp"; */
+"iWq-So-Tpp.text" = "Average time of guest session:";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "j6j-z8-w27"; */
+"j6j-z8-w27.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Name of the item"; ObjectID = "jxt-e9-QBY"; */
+"jxt-e9-QBY.text" = "Name of the item";
+
+/* Class = "UILabel"; text = "Adding order"; ObjectID = "k6o-nq-A6H"; */
+"k6o-nq-A6H.text" = "Adding order";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "kHy-zf-vPy"; */
+"kHy-zf-vPy.text" = "Value";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "kNK-Ae-lps"; */
+"kNK-Ae-lps.text" = "Value";
+
+/* Class = "UILabel"; text = "Minimum amount:"; ObjectID = "kXS-hi-UDC"; */
+"kXS-hi-UDC.text" = "Minimum amount:";
+
+/* Class = "UILabel"; text = "Quantity"; ObjectID = "kXt-DM-hmv"; */
+"kXt-DM-hmv.text" = "Quantity";
+
+/* Class = "UILabel"; text = "Table Name"; ObjectID = "mYF-ge-cX0"; */
+"mYF-ge-cX0.text" = "Table Name";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "nEm-Ul-Ujc"; */
+"nEm-Ul-Ujc.text" = "Value";
+
+/* Class = "UILabel"; text = "2"; ObjectID = "nSZ-X9-W0h"; */
+"nSZ-X9-W0h.text" = "2";
+
+/* Class = "UILabel"; text = "All guests and orders will be moved to selected table."; ObjectID = "ocL-FQ-TIe"; */
+"ocL-FQ-TIe.text" = "All guests and orders will be moved to selected table.";
+
+/* Class = "UIBarButtonItem"; title = "Close table"; ObjectID = "oxa-EY-tIC"; */
+"oxa-EY-tIC.title" = "Check out";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "pGv-bD-hmO"; */
+"pGv-bD-hmO.text" = "Value";
+
+/* Class = "UIViewController"; title = "Reports"; ObjectID = "qvw-8l-zXC"; */
+"qvw-8l-zXC.title" = "Reports";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "sd0-8v-QX8"; */
+"sd0-8v-QX8.normalTitle" = "Cancel";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "srW-ch-caj"; */
+"srW-ch-caj.normalTitle" = "Select";
+
+/* Class = "UILabel"; text = "Guest name"; ObjectID = "t3E-Ru-0kq"; */
+"t3E-Ru-0kq.text" = "Guest name";
+
+/* Class = "UILabel"; text = "Average numbers per period"; ObjectID = "tCv-Ms-E1h"; */
+"tCv-Ms-E1h.text" = "Average numbers per period";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "tZJ-jo-Qyk"; */
+"tZJ-jo-Qyk.text" = "Price";
+
+/* Class = "UIButton"; normalTitle = "MoveGuests"; ObjectID = "tqc-mO-8HI"; */
+"tqc-mO-8HI.normalTitle" = "MoveGuests";
+
+/* Class = "UILabel"; text = "Time cafe"; ObjectID = "uVo-fH-bcj"; */
+"uVo-fH-bcj.text" = "Time cafe";
+
+/* Class = "UILabel"; text = "Choose currency"; ObjectID = "S55-v1-kSM"; */
+"S55-v1-kSM.text" = "Choose currency";
+
+"Gmf-mS-Knd.text" = "Sync automatically";
+
+"D99-cF-yKf.text" = "Last performed:";
+
+"Lg2-IN-CQn.normalTitle" = "Run synchronization";
+
+"eFg-HC-TYo.text" = "Status";
+
+/* Class = "UILabel"; text = "Average guests per table:"; ObjectID = "vj5-vf-9mc"; */
+"vj5-vf-9mc.text" = "Average guests per table:";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "w7R-i1-nsn"; */
+"w7R-i1-nsn.text" = "Value";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "yZa-tO-yWf"; */
+"yZa-tO-yWf.text" = "Value";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "yh2-mk-4m7"; */
+"yh2-mk-4m7.text" = "Amount:";
+
+/* Class = "UILabel"; text = "Some description of the item. For example: a glass of red South African wine, or bottle of Coca-Cola Vanilla, 0.5l"; ObjectID = "ykV-mh-V7P"; */
+"ykV-mh-V7P.text" = "Some description of the item. For example: a glass of red South African wine, or bottle of Coca-Cola Vanilla, 0.5l";
+
+/* Class = "UIButton"; normalTitle = "Day"; ObjectID = "zJE-QZ-g1I"; */
+"zJE-QZ-g1I.normalTitle" = "Day";
+
+/* Class = "UIBarButtonItem"; title = "Export"; ObjectID = "19D-pO-iSc"; */
+"19D-pO-iSc.title" = "Export";
+
+/* Class = "UINavigationItem"; title = "Reports"; ObjectID = "Xmp-GA-EzH"; */
+"Xmp-GA-EzH.title" = "Reports";
+
+/* Class = "UINavigationItem"; title = "Custom period"; ObjectID = "4K5-t3-Gqf"; */
+"4K5-t3-Gqf.title" = "Custom period";
+
+/* Class = "UILabel"; text = "Choose custom period"; ObjectID = "QBQ-p0-8XF"; */
+"QBQ-p0-8XF.text" = "Choose custom period for report";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "BJy-pZ-vBw"; */
+"BJy-pZ-vBw.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "Start date"; ObjectID = "IWI-nY-vma"; */
+"IWI-nY-vma.text" = "Start date:";
+
+/* Class = "UILabel"; text = "Start date"; ObjectID = "ZXC-vT-PoJ"; */
+"ZXC-vT-PoJ.text" = "End date:";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "BJy-pZ-vBw"; */
+"BJy-pZ-vBw.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "68i-hR-licw"; */
+"68i-hR-lic.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Capacity:"; ObjectID = "O2N-5W-nbW"; */
+"O2N-5W-nbW.text" = "Capacity:";
+
+/* Class = "UILabel"; text = "Total Guests:"; ObjectID = "Lnn-Kf-6aP"; */
+"Lnn-Kf-6aP.text" = "Total guests:";
+
+/* Class = "UILabel"; text = "Open:"; ObjectID = "94T-Y5-igp"; */
+"94T-Y5-igp.text" = "Open:";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "EG9-Gf-6kP"; */
+"EG9-Gf-6kP.text" = "Amount:";
+
+/* Class = "UIBarButtonItem"; title = "Recalculate"; ObjectID = "YPL-Rl-YDb"; */
+"YPL-Rl-YDb.title" = "Recalculate";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "Od4-16-a0t"; */
+"Od4-16-a0t.text" = "Amount:";
+
+/* Class = "UILabel"; text = "Discount, per cent:"; ObjectID = "meZ-RE-Oqc"; */
+"meZ-RE-Oqc.text" = "Discount, per cent:";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "eLl-Yd-riv"; */
+"eLl-Yd-riv.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Amount:"; ObjectID = "xrK-Ir-GMv"; */
+"xrK-Ir-GMv.text" = "You can round total amount or apply discount. When you finish editing, discount/amount will be calculated automatically.";
+
+/// Menu (MainViewController)
+"QNY-GS-Pjf.normalTitle" = "Tables";
+"X38-Dk-CaR.normalTitle" = "Menu";
+"n9W-aV-132.normalTitle" = "Reports";
+"lI4-Qs-84i.normalTitle" = "History";
+"7Ii-06-AwF.normalTitle" = "Settings";
+"lHP-Df-Ob0.normalTitle" = "Help";
+
+
+/// ClosedEditTableSession
+"pVg-7R-Prh.text" = "Tips:";
+

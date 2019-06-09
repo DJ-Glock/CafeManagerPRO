@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Move Guests View Controller-->
+        <scene sceneID="dSl-Di-cUX">
+            <objects>
+                <viewController storyboardIdentifier="MoveGuestsViewController" id="TPq-m3-r9u" customClass="MoveGuestsViewController" customModule="CafeManager" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="i5m-Po-PMc"/>
+                        <viewControllerLayoutGuide type="bottom" id="mai-Ak-AV7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YCw-Dn-Cx2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gAK-1W-4nk">
+                                <rect key="frame" x="0.0" y="117" width="375" height="550"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="tableCell" id="1tD-8Z-8ZC" customClass="MoveGuestsTableViewCell" customModule="CafeManager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1tD-8Z-8ZC" id="dnt-ZY-unc">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Table Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="9O9-Xz-lJf">
+                                                    <rect key="frame" x="15" y="12" width="85.5" height="19.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="Knj-P9-pUC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmS-NQ-ZwB">
+                                                    <rect key="frame" x="311" y="7" width="44" height="30"/>
+                                                    <state key="normal" title="Select"/>
+                                                    <connections>
+                                                        <action selector="didPressTablesCellButton:" destination="1tD-8Z-8ZC" eventType="touchUpInside" id="FwV-HL-qxN"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="LmS-NQ-ZwB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9O9-Xz-lJf" secondAttribute="trailing" constant="5" id="1SF-J8-gIN"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="LmS-NQ-ZwB" secondAttribute="trailing" constant="5" id="6N9-Kk-70U"/>
+                                                <constraint firstItem="9O9-Xz-lJf" firstAttribute="centerY" secondItem="dnt-ZY-unc" secondAttribute="centerY" id="C6K-Fe-gFI"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="9O9-Xz-lJf" secondAttribute="leading" id="LO8-Uz-5Fw"/>
+                                                <constraint firstItem="LmS-NQ-ZwB" firstAttribute="centerY" secondItem="dnt-ZY-unc" secondAttribute="centerY" id="TwE-lZ-cxQ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="tableCellButton" destination="LmS-NQ-ZwB" id="W0m-tK-0h8"/>
+                                            <outlet property="tableNameLabel" destination="9O9-Xz-lJf" id="7XP-2L-vYh"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All guests and orders will be moved to selected table." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Nse-eK-FJm">
+                                <rect key="frame" x="16" y="71" width="343" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moving guests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ht-e1-CZX">
+                                <rect key="frame" x="131.5" y="30" width="112" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0W-WU-D1d">
+                                <rect key="frame" x="311" y="25.5" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="TPq-m3-r9u" eventType="touchUpInside" id="IIt-7r-ihF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="s0W-WU-D1d" secondAttribute="trailing" id="0WH-a5-qYb"/>
+                            <constraint firstItem="Nse-eK-FJm" firstAttribute="centerX" secondItem="YCw-Dn-Cx2" secondAttribute="centerX" id="5rS-hq-wg0"/>
+                            <constraint firstItem="gAK-1W-4nk" firstAttribute="leading" secondItem="YCw-Dn-Cx2" secondAttribute="leading" id="66P-bN-m2K"/>
+                            <constraint firstItem="Nse-eK-FJm" firstAttribute="top" secondItem="0Ht-e1-CZX" secondAttribute="bottom" constant="20" id="79o-Bz-FUX"/>
+                            <constraint firstItem="s0W-WU-D1d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YCw-Dn-Cx2" secondAttribute="leadingMargin" id="F2E-JB-QQx"/>
+                            <constraint firstItem="s0W-WU-D1d" firstAttribute="centerY" secondItem="0Ht-e1-CZX" secondAttribute="centerY" id="FyN-C7-Uq6"/>
+                            <constraint firstAttribute="trailing" secondItem="gAK-1W-4nk" secondAttribute="trailing" id="Iga-Le-guK"/>
+                            <constraint firstItem="gAK-1W-4nk" firstAttribute="top" secondItem="Nse-eK-FJm" secondAttribute="bottom" constant="10" id="OVL-4f-yLs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Nse-eK-FJm" secondAttribute="trailing" id="OxO-If-pa2"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Nse-eK-FJm" secondAttribute="leading" id="XNs-Qh-Ald"/>
+                            <constraint firstItem="0Ht-e1-CZX" firstAttribute="top" secondItem="i5m-Po-PMc" secondAttribute="bottom" constant="10" id="eHh-eW-dPY"/>
+                            <constraint firstItem="0Ht-e1-CZX" firstAttribute="centerX" secondItem="YCw-Dn-Cx2" secondAttribute="centerX" id="pd1-3K-rc9"/>
+                            <constraint firstItem="mai-Ak-AV7" firstAttribute="top" secondItem="gAK-1W-4nk" secondAttribute="bottom" id="skc-Rl-rX5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Oeu-TH-Knf"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="s0W-WU-D1d" id="aPc-My-Ouq"/>
+                        <outlet property="tableView" destination="gAK-1W-4nk" id="Tdz-o1-XCx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LEo-af-al4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4065" y="-1281"/>
+        </scene>
+    </scenes>
+</document>

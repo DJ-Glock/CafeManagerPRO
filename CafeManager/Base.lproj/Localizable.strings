@@ -1,0 +1,102 @@
+//Generic stuff
+"alertNoCanDo" = "Unable to complete";
+"paramsNotFilledProperly" = "Fields were not filled properly";
+"alertUnableToSaveData" = "Unable to save data";
+"checkInputParameters" = "Chek input parameters";
+"Import of menu performed successfully!" = "Import of menu performed successfully!";
+"Import of menu failed!" = "Import of menu failed!";
+"Rate us" = "Rate us";
+"Rate us!" = "Rate us!";
+"Do you like our app? Have an issue? Please rate us or leave a feedback!" = "Do you like our app? Have an issue? Please rate us or leave a feedback!";
+
+//Database localization
+"guestNameForInsert" = "Guest";
+
+//Buttons
+"openButton" = "Open";
+"closeButton" = "Close";
+
+//Alerts
+"alertCancel" = "Cancel";
+"alertClose" = "Close";
+"alertDone" = "Done";
+"alertDelete" = "Delete";
+"category" = "Category";
+
+//TableViewController localization
+"guestComeTime" = "Come at ";
+"guestGoneTime" = "Gone at ";
+"guestName" = "Guest name";
+"amount" = "Amount";
+"alertInputGuestName" = "Enter new guest name";
+"alertConfirmGuestHasGone" = "Please confirm guest is leaving";
+"alertConfirmGuestHasGoneMessage" = "You will not be able to activate this guest again.";
+"alertConfirmTableClosure" = "Please confirm table closure";
+"alertConfirmTableClosureMessage" = "All guests and orders will be moved to archive and available in History and Reports.";
+
+//Common menu
+"Choose" = "Choose";
+"Add selected" = "Add selected";
+
+//Menu view controller
+"itemName" = "Item name";
+"itemDescription" = "Description";
+"itemPrice" = "Price";
+"alertMenuItemAddingInputParameters" = "Enter menu item parameters";
+"alertConfirmDeletionOfItem" = "Plese confirm deletion";
+"alertConfirmDeletionOfItemMessage" = "Warning! Once menu item is deleted, all orders of this item will be deleted from database and not available in History and Reports.";
+"Please choose an option" = "Please choose an option";
+"Add manually" = "Add manually";
+"Add from catalogue (English)" = "Add from catalogue (English)";
+"Add from catalogue (Russian)" = "Add from catalogue (Russian)";
+"Export menu" = "Export menu";
+"Export of menu failed!" = "Export of menu failed!";
+
+//Tables view controller
+"tableName" = "Table name";
+"tableCapacity" = "Table capacity";
+"inputTableParams" = "Enter table parameters";
+"tableOpened" = "Opened at ";
+"tableIsClosed" = "Table is closed";
+"confirmTableDeletion" = "Please confirm table deletion";
+"confirmTableDeletionMessage" = "Warning! Once table is deleted, all archived data will be deleted and no longer available.";
+
+//Reports view controller
+"choosePeriodButton" = "Choose";
+"sellingStatistics" = "Sales";
+"Average time of table sessions" = "Average time of table sessions";
+"Average time of guest sessions" = "Average time of guest sessions";
+"Average number of guests per table" = "Average number of guests per table";
+"Average amount" = "Average amount";
+"Minimum amount" = "Minimum amount";
+"Maximum amount" = "Maximum amount";
+"Total profit" = "Total profit";
+"Guests count" = "Guests count";
+"Table sessions count" = "Table sessions count";
+"Bulk selection" = "Select";
+"Show chart" = "Show chart";
+"Date;Value" = "Date;Value";
+
+//History - Table sessions
+"tableOpenTime" = "Opened: ";
+"tableCloseTime" = "Closed: ";
+"tableTotalGuests" = "Guests: ";
+"tableTotalAmount" = "Amount: ";
+
+//History - table
+"discount" = "Discount: ";
+"original" = "Original: ";
+"tips" = "Tips: ";
+
+//Edit/Close session popover
+"CheckoutPopoverViewTitle" = "Checkout params";
+"CheckoutButtonTitle" = "Checkout";
+
+//Settings view
+"synchronizationWarningTitle" = "WARNING!";
+"synchronizationWarningText" = "Before running sync, ensure that you read section of Help page regarding sync!";
+"synchronizationWarningConfirm" = "I am aware, run sync.";
+"synchronizationWarningDeny" = "Cancel";
+"ColorThemeChangedTitle" = "Color theme has been changed";
+"ColorThemeChangedMessage" = "For changes to take effect, application should be closed now. Please relaunch app.";
+"ColorThemeChangedButton" = "Close the app";

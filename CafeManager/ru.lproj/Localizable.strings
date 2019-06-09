@@ -1,0 +1,102 @@
+//Generic stuff
+"alertNoCanDo" = "Невозможно выполнить";
+"paramsNotFilledProperly" = "Поля были заполнены некорректно";
+"alertUnableToSaveData" = "Невозможно сохранить данные";
+"checkInputParameters" = "Проверьте введенные параметры";
+"Import of menu performed successfully!" = "Импорт выполнен успешно!";
+"Import of menu failed!" = "Импорт меню не удался!";
+"Rate us" = "Оцените нас";
+"Rate us!" = "Оценить нас!";
+"Do you like our app? Have an issue? Please rate us or leave a feedback!" = "Вам понравилось наше приложение? Возникли вопросы? Оцените нас или оставьте свой отзыв!";
+
+//Database localization
+"guestNameForInsert" = "Гость";
+
+//Buttons
+"openButton" = "Открыть";
+"closeButton" = "Закрыть";
+
+//Alerts
+"alertCancel" = "Отмена";
+"alertClose" = "Закрыть";
+"alertDone" = "Готово";
+"alertDelete" = "Удалить";
+"category" = "Категория";
+
+//TableViewController localization
+"guestComeTime" = "Пришел ";
+"guestGoneTime" = "Ушел ";
+"guestName" = "Имя гостя";
+"amount" = "Счет";
+"alertInputGuestName" = "Введите новое имя гостя";
+"alertConfirmGuestHasGone" = "Подтвердите уход гостя";
+"alertConfirmGuestHasGoneMessage" = "Ушедшего гостя нельзя вновь активировать.";
+"alertConfirmTableClosure" = "Подтвердите закрытие столика";
+"alertConfirmTableClosureMessage" = "Все заказы и гости переместятся в архив и будут доступны в Истории и Отчетах.";
+
+//Common Menu
+"Choose" = "Выбрать";
+"Add selected" = "Добавить выбранное";
+
+//Menu view controller
+"itemName" = "Наименование";
+"itemDescription" = "Описание";
+"itemPrice" = "Стоимость";
+"alertMenuItemAddingInputParameters" = "Введите параметры";
+"alertConfirmDeletionOfItem" = "Подтвердите удаление";
+"alertConfirmDeletionOfItemMessage" = "Внимание! При удалении пункта меню будут удалены все заказы этой позиции из базы данных и недоступны в отчетах.";
+"Please choose an option" = "Пожалуйста выберите опцию";
+"Add manually" = "Добавить вручную";
+"Add from catalogue (English)" = "Добавить из каталога (Английский)";
+"Add from catalogue (Russian)" = "Добавить из каталога (Русский)";
+"Export menu" = "Экспортировать меню";
+"Export of menu failed!" = "Экспорт не удался!";
+
+//Tables view controller
+"tableName" = "Имя столика";
+"tableCapacity" = "Количество мест";
+"inputTableParams" = "Введите параметры столика";
+"tableOpened" = "Открыт ";
+"tableIsClosed" = "Столик закрыт";
+"confirmTableDeletion" = "Подтвердите удаление столика";
+"confirmTableDeletionMessage" = "Внимание! При удалении столика, будет удалены исторические данные!";
+
+//Reports view controller
+"choosePeriodButton" = "Выбрать";
+"sellingStatistics" = "Продажи";
+"Average time of table sessions" = "Среднее время сессии столика";
+"Average time of guest sessions" = "Среднее время гостя";
+"Average number of guests per table" = "Среднее количество гостей за столиком";
+"Average amount" = "Средний счет";
+"Minimum amount" = "Минимальный счет";
+"Maximum amount" = "Максимальный счет";
+"Total profit" = "Прибыль";
+"Guests count" = "Всего гостей";
+"Table sessions count" = "Всего сессий столиков";
+"Bulk selection" = "Выбрать";
+"Show chart" = "Показать";
+"Date;Value" = "Дата;Значение";
+
+//History - table
+"discount" = "Скидка: ";
+"original" = "Было: ";
+"tips" = "Чаевые: ";
+
+//History - Table sessions
+"tableOpenTime" = "Открыт: ";
+"tableCloseTime" = "Закрыт: ";
+"tableTotalGuests" = "Гостей: ";
+"tableTotalAmount" = "Счет: ";
+
+//Edit/Close session popover
+"CheckoutPopoverViewTitle" = "Расчет столика";
+"CheckoutButtonTitle" = "Расчитать";
+
+//Settings view
+"synchronizationWarningTitle" = "ВНИМАНИЕ!";
+"synchronizationWarningText" = "Перед выполнением синхронизации, убедитесь, что Вы прочитали раздел Помощь, посвященный синхронизации!";
+"synchronizationWarningConfirm" = "В курсе, выполнить синхронизацию";
+"synchronizationWarningDeny" = "Отмена";
+"ColorThemeChangedTitle" = "Цветовая тема изменена";
+"ColorThemeChangedMessage" = "Приложение должно быть перезапущено. Запустите приложение повторно.";
+"ColorThemeChangedButton" = "Закрыть приложение";
