@@ -25,6 +25,17 @@ class MainViewController: ParentViewController {
     @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var helpTextButton: UIButton!
 
+    @IBAction func signOutButtonPressed(_ sender: UIButton) {
+        do {
+            try appDelegate.auth?.signOut()
+            self.dismiss(animated: true, completion: nil)
+        }
+            
+        catch {
+            print("Unable to sign out")
+        }
+    }
+    
     
     private func configureColorTheme() {
         // View and Label

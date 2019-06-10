@@ -109,6 +109,8 @@
 		2156E08321065BD7004D5647 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2156E08221065BD7004D5647 /* Double+Extension.swift */; };
 		215C46C41F7AF6A700595BBB /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215C46C31F7AF6A700595BBB /* LoadingOverlay.swift */; };
 		2172396422AD9EC700527607 /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */; };
+		2172396622ADAF4E00527607 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396522ADAF4E00527607 /* LogInViewController.swift */; };
+		2172396922AE3F8D00527607 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2172396822AE3F8D00527607 /* GoogleService-Info.plist */; };
 		2177F93B1EEBFC62007DE102 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2177F93A1EEBFC62007DE102 /* Images.xcassets */; };
 		218C6CDF201FA943003CCE6D /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CDE201FA943003CCE6D /* ErrorHandling.swift */; };
 		218C6CE120207192003CCE6D /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CE020207192003CCE6D /* String+Extension.swift */; };
@@ -342,6 +344,8 @@
 		2156E08221065BD7004D5647 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		215C46C31F7AF6A700595BBB /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
+		2172396522ADAF4E00527607 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = "../New Group/LogInViewController.swift"; sourceTree = "<group>"; };
+		2172396822AE3F8D00527607 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2177F93A1EEBFC62007DE102 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		218C6CDE201FA943003CCE6D /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		218C6CE020207192003CCE6D /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -916,6 +920,7 @@
 			isa = PBXGroup;
 			children = (
 				21D760E31EBA8B8000E72A8F /* MainViewController.swift */,
+				2172396722ADAF5900527607 /* LogIn */,
 				21386F132057092000A14D30 /* SWRevealViewController */,
 				21386F2320570A4200A14D30 /* Tables */,
 				21386F2220570A3F00A14D30 /* Table */,
@@ -1081,6 +1086,14 @@
 				21BF72A31F4A08F000D508AA /* HistoryTableUIViewController.swift */,
 			);
 			path = Table;
+			sourceTree = "<group>";
+		};
+		2172396722ADAF5900527607 /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				2172396522ADAF4E00527607 /* LogInViewController.swift */,
+			);
+			path = LogIn;
 			sourceTree = "<group>";
 		};
 		2191DF55205E657B00786030 /* AddOrder */ = {
@@ -1249,14 +1262,15 @@
 		21D760AF1EBA60FE00E72A8F /* CafeManager */ = {
 			isa = PBXGroup;
 			children = (
+				21D760B01EBA60FE00E72A8F /* AppDelegate.swift */,
+				2172396822AE3F8D00527607 /* GoogleService-Info.plist */,
+				21D760B41EBA60FE00E72A8F /* Main.storyboard */,
 				212995771FB6EB3E000BDBB0 /* CafeManager-Bridging-Header.h */,
 				21386F07205706B300A14D30 /* Generic */,
 				21386F0F2057081400A14D30 /* Data Model */,
 				21386EF92057058600A14D30 /* VIPER */,
 				21386F112057090700A14D30 /* MVC */,
-				21D760B41EBA60FE00E72A8F /* Main.storyboard */,
 				211D2A711F238FBF00A67186 /* Localizable.strings */,
-				21D760B01EBA60FE00E72A8F /* AppDelegate.swift */,
 			);
 			path = CafeManager;
 			sourceTree = "<group>";
@@ -1444,6 +1458,7 @@
 				215044081FB7A92B0046AD25 /* ReportsDarkTheme.png in Resources */,
 				210BB5C81FC3325E002A23A2 /* LaunchScreen.jpg in Resources */,
 				21377B2C1FB9FA54003689F2 /* RefreshLightTheme.png in Resources */,
+				2172396922AE3F8D00527607 /* GoogleService-Info.plist in Resources */,
 				21377B2D1FB9FA54003689F2 /* ReportsLightTheme.png in Resources */,
 				21012E88203B608C003DCD94 /* iCafeManagerCommonMenu.csv in Resources */,
 				21377B241FB9FA54003689F2 /* AddOrderLightTheme.png in Resources */,
@@ -1512,6 +1527,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CafeManager/Pods-CafeManager-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
@@ -1531,6 +1547,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
@@ -1700,6 +1717,7 @@
 				21922EEC206408B600DF4CF5 /* LineChartViewController.swift in Sources */,
 				21E145051F489E1500879F01 /* TableSessionsTableViewController.swift in Sources */,
 				2101CB27206172A900AB9C49 /* CustomGuestViewControllerInterface.swift in Sources */,
+				2172396622ADAF4E00527607 /* LogInViewController.swift in Sources */,
 				21EBE34A20123C12005FE6B2 /* UIView+Extension.swift in Sources */,
 				21F749871ED9911F00C75436 /* OrderInTableTableViewCell.swift in Sources */,
 				21C7330A1ED5D57C0051AF77 /* TableSessionTable.swift in Sources */,

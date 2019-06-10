@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QWR-rw-F0f">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ld9-Sr-wqX">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -254,6 +254,9 @@
                                 <rect key="frame" x="8" y="584" width="183" height="50"/>
                                 <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="38"/>
                                 <state key="normal" title="Sign out"/>
+                                <connections>
+                                    <action selector="signOutButtonPressed:" destination="mE9-7Q-wUe" eventType="touchUpInside" id="m1Q-al-SOQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -289,6 +292,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RDH-ss-x9d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-623" y="-2904"/>
+        </scene>
+        <!--Log In View Controller-->
+        <scene sceneID="A0G-7O-QcZ">
+            <objects>
+                <viewController id="ld9-Sr-wqX" customClass="LogInViewController" customModule="CafeManager" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sly-Wz-Sad"/>
+                        <viewControllerLayoutGuide type="bottom" id="XGw-oC-cLX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cT2-mk-4ch">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cc3-sv-nRM">
+                                <rect key="frame" x="164" y="318.5" width="47" height="30"/>
+                                <state key="normal" title="Sign in"/>
+                                <connections>
+                                    <action selector="signInButtonPressed:" destination="ld9-Sr-wqX" eventType="touchUpInside" id="H1W-mr-q68"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cc3-sv-nRM" firstAttribute="centerX" secondItem="cT2-mk-4ch" secondAttribute="centerX" id="fbF-Sx-GgU"/>
+                            <constraint firstItem="cc3-sv-nRM" firstAttribute="centerY" secondItem="cT2-mk-4ch" secondAttribute="centerY" id="wa7-O1-99n"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="QWR-rw-F0f" kind="presentation" identifier="LogIn segue" id="8bo-Eq-jp7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wsZ-tU-DAM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2644" y="-2904"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="Pbc-4Y-cNS">
@@ -2911,6 +2948,6 @@
         <image name="TablesLightTheme.png" width="70" height="70"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="grJ-4Q-1He"/>
+        <segue reference="8go-wL-hPE"/>
     </inferredMetricsTieBreakers>
 </document>

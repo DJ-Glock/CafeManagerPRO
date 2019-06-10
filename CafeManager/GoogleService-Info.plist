@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>305901239409-0042c8ihpl2g46phusgk2u964u6lk67j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.305901239409-0042c8ihpl2g46phusgk2u964u6lk67j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBAdbHCn4HWveWMpDvecd_pXBwPIIOVK6c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>305901239409</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>iGlock.CafeManagerPRO.com</string>
+	<key>PROJECT_ID</key>
+	<string>icafemanagerpro-glockapps</string>
+	<key>STORAGE_BUCKET</key>
+	<string>icafemanagerpro-glockapps.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:305901239409:ios:d5a1a2f30efa2ecd</string>
+	<key>DATABASE_URL</key>
+	<string>https://icafemanagerpro-glockapps.firebaseio.com</string>
+</dict>
+</plist>

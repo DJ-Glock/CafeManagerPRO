@@ -18,19 +18,9 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
+#import "FBSDKAccessToken.h"
+#import "FBSDKAccessTokenCaching.h"
 
-@interface FBSDKRestrictiveDataFilterManager : NSObject
-
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
-
-+ (void)updateFilters:(nullable NSArray<NSDictionary<NSString *, id> *> *)restrictiveRules
-    restrictiveParams:(nullable NSDictionary<NSString *, id> *)restrictiveParams;
-+ (nullable NSString *)getMatchedDataTypeWithEventName:(NSString *)eventName
-                                              paramKey:(NSString *)paramKey
-                                            paramValue:(NSString *)paramValue;
+@interface FBSDKAccessTokenCacheV4 : NSObject<FBSDKAccessTokenCaching>
 
 @end
-
-NS_ASSUME_NONNULL_END

@@ -18,6 +18,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FBSDKBasicUtility : NSObject
-
+@interface FBSDKBoltsMeasurementEventListener : NSObject
++ (FBSDKBoltsMeasurementEventListener *)defaultListener;
 @end
