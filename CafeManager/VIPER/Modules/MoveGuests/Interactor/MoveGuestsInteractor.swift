@@ -29,7 +29,7 @@ class MoveGuestsInteractor: NSObject, MoveGuestsInteractorInterface {
             for table in tables {
                 let session = TableSessionTable.getCurrentTableSession(table: table)
                 if session == nil {
-                    tablesNames.append(table.tableName!)
+                    tablesNames.append(table.tableName)
                 }
             }
             return tablesNames
@@ -43,7 +43,7 @@ class MoveGuestsInteractor: NSObject, MoveGuestsInteractorInterface {
             
             for table in tables {
                 if let _ = TableSessionTable.getCurrentTableSession(table: table) {
-                    tablesNames.append(table.tableName!)
+                    tablesNames.append(table.tableName)
                 }
             }
             return tablesNames

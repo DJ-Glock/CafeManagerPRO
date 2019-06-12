@@ -10,9 +10,13 @@ import Foundation
 
 class MenuCategoryTable {
     
-    public var categoryName: String?
-    public var menuItem: MenuTable?
+    public var categoryName: String
+    public var menuItems: [MenuTable]
     
+    init (categoryName: String, menuItems: [MenuTable]) {
+        self.categoryName = categoryName
+        self.menuItems = menuItems
+    }
     
     
     class func getAllCategories() -> [String] {

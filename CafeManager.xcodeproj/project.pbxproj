@@ -874,13 +874,13 @@
 		21386F0E205707D200A14D30 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				21C733011ED5D4E40051AF77 /* GuestsTable.swift */,
-				21375C731FEA78D90080DA7F /* MenuCategoryTable.swift */,
-				21C733051ED5D5370051AF77 /* MenuTable.swift */,
-				21C733071ED5D54F0051AF77 /* OrdersTable.swift */,
-				21C733091ED5D57C0051AF77 /* TableSessionTable.swift */,
 				21C7330B1ED5D58F0051AF77 /* TablesTable.swift */,
+				21C733091ED5D57C0051AF77 /* TableSessionTable.swift */,
+				21C733011ED5D4E40051AF77 /* GuestsTable.swift */,
+				21C733071ED5D54F0051AF77 /* OrdersTable.swift */,
 				21F92D281FE19512004A4201 /* GuestOrdersTable.swift */,
+				21C733051ED5D5370051AF77 /* MenuTable.swift */,
+				21375C731FEA78D90080DA7F /* MenuCategoryTable.swift */,
 				21ED04D81FE80F7E002671A7 /* CommonMenuItemsTable.swift */,
 			);
 			path = Entities;
@@ -889,6 +889,7 @@
 		21386F0F2057081400A14D30 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				2172396A22B177AC00527607 /* Queries */,
 				21D760B71EBA60FE00E72A8F /* CafeManager.xcdatamodeld */,
 				21386F0E205707D200A14D30 /* Entities */,
 			);
@@ -1094,6 +1095,13 @@
 				2172396522ADAF4E00527607 /* LogInViewController.swift */,
 			);
 			path = LogIn;
+			sourceTree = "<group>";
+		};
+		2172396A22B177AC00527607 /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Queries;
 			sourceTree = "<group>";
 		};
 		2191DF55205E657B00786030 /* AddOrder */ = {

@@ -9,10 +9,19 @@
 import Foundation
 
 class GuestOrdersTable {
+    
+    
+    //// TO BE REPLACED WITH OrdersTable AND DECOMMED!!!
 
-    public var quantityOfItems: Int32 = 0
-    public var menuItem: MenuTable?
-    public var orderedGuest: GuestsTable?
+    public var quantityOfItems: Int16
+    public var menuItem: MenuTable
+    public weak var orderedGuest: GuestsTable?
+    
+    init (menuItem: MenuTable, quantity: Int16, orderedGuest: GuestsTable) {
+        self.menuItem = menuItem
+        self.quantityOfItems = quantity
+        self.orderedGuest = orderedGuest
+    }
     
     // MARK: methods
     func increaseQuantity() {

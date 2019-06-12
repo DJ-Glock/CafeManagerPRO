@@ -10,15 +10,24 @@
 import Foundation
 
 class MenuTable {
-    
+    public var itemName: String
     public var itemDescription: String?
-    public var itemName: String?
     public var itemPrice: Float = 0.0
     public var isHidden: Bool = false
-    public var orders: NSSet?
-    public var guestOrders: NSSet?
-    public var category: MenuCategoryTable?
+    public var orders: [OrdersTable] = []
+    public weak var category: MenuCategoryTable?
     
+    init (itemName: String, itemDescription: String?, itemPrice: Float) {
+        self.itemName = itemName
+        self.itemDescription = itemDescription
+        self.itemPrice = itemPrice
+    }
+    
+    convenience init (itemName: String, itemDescription: String?, itemPrice: Float, isHidden: Bool, orders: [OrdersTable], category: MenuCategoryTable?) {
+        self.init(itemName: itemName, itemDescription: itemDescription, itemPrice: itemPrice)
+        self.isHidden = isHidden
+        self.orders = orders
+    }
     
     
     // MARK: methods

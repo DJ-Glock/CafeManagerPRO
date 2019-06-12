@@ -62,7 +62,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     //@IBAction func saveDescriptionButtonPressed(_ sender: UIButton) {saveTableDescription()}
     @IBAction func closeTableBarButtonPressed(_ sender: UIBarButtonItem) {
         if let session = currentTableSession {
-            let plainSession = TableSession(openTime: session.openTime! as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.totalTips, discount: session.discount)
+            let plainSession = TableSession(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.totalTips, discount: session.discount)
             let checkout = CheckoutAssembly.assembleModule()
             checkout.delegate = self
             checkout.checkoutWithParams(session: plainSession, originalTotalAmount: self.totalAmount, sender: sender)
@@ -144,7 +144,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         tableCapacityLabel.text = String(describing: currentTable!.tableCapacity)
         tableCountOfGuestsLabel.text = String(describing: countOfGuests)
         if currentTableSession != nil, currentTableSession?.openTime != nil {
-            tableOpenTimeLabel.text = currentTableSession!.openTime!.convertToString()
+            tableOpenTimeLabel.text = currentTableSession!.openTime.convertToString()
         } else {
             tableOpenTimeLabel.text = " - "
         }
@@ -215,7 +215,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             cell.guestOrdersTableView.dataSource = cell
             
             cell.guestNameLabel.text = guest.guestName
-            cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime!.convertToString()
+            cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime.convertToString()
             cell.closeGuestButton.isEnabled = true
             
             // Change cell button color theme
@@ -245,9 +245,9 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             cell.order = order
             cell.menuItem = order.menuItem
             
-            cell.itemNameLabel.text = order.menuItem?.itemName
+            cell.itemNameLabel.text = order.menuItem.itemName
             cell.itemQuantityLabel.text = String(describing: order.quantityOfItems)
-            cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem?.itemPrice)!), number: .decimal) + UserSettings.currencySymbol
+            cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem.itemPrice)), number: .decimal) + UserSettings.currencySymbol
             
             // Change cell buttons color theme
             cell.plusButton = ChangeGUITheme.setColorThemeFor(button: cell.plusButton)
@@ -320,7 +320,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
                     if self.guestNameTextField.text != "" {
                         newGuestName = self.guestNameTextField.text!
                     } else {
-                        newGuestName = guest.guestName!
+                        newGuestName = guest.guestName
                     }
                     guest.renameTo(newName: newGuestName)
                     self.updateGUI()

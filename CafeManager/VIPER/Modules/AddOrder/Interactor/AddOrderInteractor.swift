@@ -28,9 +28,9 @@ class AddOrderInteractor: NSObject, AddOrderInteractorInterface {
         
         for item in menuItems {
             var dictionary = [String: String]()
-            let category = item.category?.categoryName! ?? ".Default"
+            let category = item.category?.categoryName ?? ".Default"
         
-            let name = item.itemName!
+            let name = item.itemName
             dictionary["name"] = name
             
             let description = item.itemDescription

@@ -508,7 +508,7 @@ extension MenuTableViewController {
 
     private func addSubViewForChangingMenuItem (menuItem: MenuTable) {
         self.isAddingOrChangingMenuItem = true
-        let itemName = menuItem.itemName!
+        let itemName = menuItem.itemName
         let itemDescription = menuItem.itemDescription
         let itemPrice = menuItem.itemPrice
         let itemCategory = menuItem.category?.categoryName

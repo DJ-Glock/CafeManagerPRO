@@ -14,6 +14,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
 //    private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
     private var currentTable: TablesTable?
     private var currentTableSession: TableSessionTable?
+    private var tablesArray: [TablesTable] = []
     private var tableNameTextField: UITextField!
     private var tableCapacityTextField: UITextField!
     internal var tableViewRefreshControl: UIRefreshControl?
@@ -22,7 +23,9 @@ class TablesTableViewController: FetchedResultsTableViewController {
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
     // MARK: IBFunctions
-    @IBAction func addTableBarButtonPressed(_ sender: UIBarButtonItem) { addTable() }
+    @IBAction func addTableBarButtonPressed(_ sender: UIBarButtonItem) {
+        //        addTable()
+    }
     
     //MARK: system functions for view
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +48,36 @@ class TablesTableViewController: FetchedResultsTableViewController {
             revealViewController().rearViewRevealWidth = 260
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+    }
+    
+    // Firebase functions
+    // Execute query to get tables data
+    private func getDataFromDatabase () {
+        // Test query to Firestore
+        let userId = appDelegate.auth?.currentUser?.uid ?? ""
+        
+        var tables = [TablesTable]()
+        
+        let tablesCollection = appDelegate.db.collection("usersData").document(userId).collection("tables")
+        tablesCollection.order(by: "name", descending: false)
+        tablesCollection.getDocuments { (snapshot, error) in
+            if let snapshot = snapshot {
+                for document in snapshot.documents {
+                    let data = document.data()
+                    let tableName = data["name"] as! String
+                    let tableCapacity = data["capacity"] as! Int16
+                    let tableDescription = data["description"] as? String
+                    
+                    let table = TablesTable(tableName: tableName, tableCapacity: tableCapacity, tableDescription: tableDescription, tableSession: nil)
+                    tables.append(table)
+                }
+                print(tables.count)
+                for table in tables {
+                    print (table.tableName)
+                }
+            }
+        }
+        
     }
     
     // TableView refresh control
@@ -207,8 +240,8 @@ class TablesTableViewController: FetchedResultsTableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openTableSegue" {
             if let tableTVC = segue.destination as? TableUIViewController {
-                tableTVC.title = currentTable!.tableName!
-                tableTVC.tableName = currentTable!.tableName!
+                tableTVC.title = currentTable!.tableName
+                tableTVC.tableName = currentTable!.tableName
                 tableTVC.currentTable = currentTable!
                 tableTVC.currentTableSession = currentTableSession
             }

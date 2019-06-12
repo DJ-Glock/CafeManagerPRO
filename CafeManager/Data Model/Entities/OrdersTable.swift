@@ -10,12 +10,22 @@
 import Foundation
 
 class OrdersTable {
+    public var quantityOfItems: Int16
+    public var menuItem: MenuTable
+    public weak var orderedTable: TableSessionTable?
+    public weak var orderedGuest: GuestsTable?
     
-    public var isActive: Bool = true
-    public var quantityOfItems: Int32 = 0
-    public var menuItem: MenuTable?
-    public var orderedTable: TableSessionTable?
+    init (menuItem: MenuTable, quantity: Int16, orderedTable: TableSessionTable) {
+        self.menuItem = menuItem
+        self.quantityOfItems = quantity
+        self.orderedTable = orderedTable
+    }
     
+    init (menuItem: MenuTable, quantity: Int16, orderedGuest: GuestsTable) {
+        self.menuItem = menuItem
+        self.quantityOfItems = quantity
+        self.orderedGuest = orderedGuest
+    }
     
     
     // MARK: methods

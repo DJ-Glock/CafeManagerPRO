@@ -10,16 +10,35 @@ import Foundation
 
 class GuestsTable {
     
-    public var closeTime: NSDate?
-    public var guestName: String?
-    public var openTime: NSDate?
+    public var guestName: String
+    public var openTime: Date
+    public weak var table: TableSessionTable?
+    public var closeTime: Date?
     public var totalAmount: Float = 0.0
-    public var table: TableSessionTable?
-    public var orders: NSSet?
+    public var orders: [OrdersTable] = []
     
+    init (guestName: String, openTime: Date, tableSession: TableSessionTable) {
+        self.guestName = guestName
+        self.openTime = openTime
+        self.table = tableSession
+    }
+    
+    convenience init(guestName: String,
+                     openTime: Date,
+                     tableSession: TableSessionTable,
+                     closeTime: Date?,
+                     totalAmount: Float,
+                     orders: [OrdersTable]) {
+        self.init(guestName: guestName, openTime: openTime, tableSession: tableSession)
+        self.closeTime = closeTime
+        self.totalAmount = totalAmount
+        self.orders = orders
+    }
+    
+    // Supporting properties
     public var guestSessionDurationInSeconds: Double {
-        let currentCloseTime = closeTime ?? NSDate()
-        let period = currentCloseTime.timeIntervalSince1970 - openTime!.timeIntervalSince1970
+        let currentCloseTime = closeTime ?? Date()
+        let period = currentCloseTime.timeIntervalSince1970 - openTime.timeIntervalSince1970
         return period
     }
     
@@ -31,13 +50,13 @@ class GuestsTable {
     }
     
     func changeTime (openTime: Date, closeTime: Date) {
-        self.openTime = openTime as NSDate
-        self.closeTime = closeTime as NSDate
+        self.openTime = openTime
+        self.closeTime = closeTime
         //try? viewContext.save()
     }
     
     func close () {
-        self.closeTime = Date() as NSDate
+        self.closeTime = Date()
         //try? viewContext.save()
     }
     
@@ -76,7 +95,7 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    class func addNewGuestHistorical (tableSession: TableSessionTable, openTime: NSDate, closeTime: NSDate) {
+    class func addNewGuestHistorical (tableSession: TableSessionTable, openTime: Date, closeTime: Date) {
 //        let allGuests = self.getAllGuestsForTableSorted(tableSession: tableSession)
 //        let name = NSLocalizedString("guestNameForInsert", comment: "") + " \((allGuests.count) + 1)"
 //        if #available(iOS 10.0, *) {
@@ -112,7 +131,7 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    class func addNewCustomGuestHistorical (guestName: String, tableSession: TableSessionTable, openTime: NSDate, closeTime: NSDate) {
+    class func addNewCustomGuestHistorical (guestName: String, tableSession: TableSessionTable, openTime: Date, closeTime: Date) {
 //        if #available(iOS 10.0, *) {
 //            let newGuest = GuestsTable(context: viewContext)
 //            newGuest.guestName = guestName

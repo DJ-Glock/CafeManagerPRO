@@ -68,7 +68,7 @@ class HistoryTablesTableViewController: FetchedResultsTableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showTableSessions" {
             if let tableSessionsTVC = segue.destination as? TableSessionsTableViewController {
-                tableSessionsTVC.title = self.currentTable!.tableName!
+                tableSessionsTVC.title = self.currentTable!.tableName
                 tableSessionsTVC.currentTable = self.currentTable!
             }
         }

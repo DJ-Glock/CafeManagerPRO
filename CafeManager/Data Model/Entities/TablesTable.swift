@@ -11,10 +11,21 @@ import Foundation
 
 class TablesTable {
 
-    public var tableCapacity: Int16 = 0
+    public var tableCapacity: Int16
     public var tableDescription: String?
-    public var tableName: String?
-    public var tableSession: NSSet?
+    public var tableName: String
+    public var tableSession: TableSessionTable?
+    
+    init (tableName: String, tableCapacity: Int16, tableDescription: String?) {
+        self.tableName = tableName
+        self.tableCapacity = tableCapacity
+        self.tableDescription = tableDescription
+    }
+    
+    convenience init (tableName: String, tableCapacity: Int16, tableDescription: String?, tableSession: TableSessionTable?) {
+        self.init(tableName: tableName, tableCapacity: tableCapacity, tableDescription: tableDescription)
+        self.tableSession = tableSession
+    }
     
     
     // MARK: methods
@@ -31,7 +42,7 @@ class TablesTable {
     }
     
     // MARK: class functions
-    class func getOrCreateTable (table: Table) throws -> TablesTable {
+    class func getOrCreateTable (table: Table) throws -> TablesTable? {
 //        tablesTableRequest.predicate = NSPredicate(format: "tableName = %@", table.tableName)
 //        do {
 //            let matchedTableName = try viewContext.fetch(tablesTableRequest)
@@ -56,7 +67,7 @@ class TablesTable {
 //            try? viewContext.save()
 //            return newTable
 //        }
-        return TablesTable()
+        return TablesTable(tableName: "Fake", tableCapacity: 1, tableDescription: "Fake")
     }
     
     class func getTable (withName name: String) -> TablesTable? {

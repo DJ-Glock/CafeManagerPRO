@@ -106,7 +106,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     }
     @IBAction func recalculateButtonPressed(_ sender: UIBarButtonItem) {
         if let session = currentTableSession {
-            let plainSession = TableSession(openTime: session.openTime! as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.totalTips, discount: session.discount)
+            let plainSession = TableSession(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.totalTips, discount: session.discount)
             let checkout = CheckoutAssembly.assembleModule()
             checkout.delegate = self as CheckoutDelegate
             checkout.checkoutWithParams(session: plainSession, originalTotalAmount: self.originalAmount, sender: sender)
@@ -146,7 +146,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     private func updateLabelsViewWillAppear() {
         tableCapacityLabel.text = String(describing: currentTable!.tableCapacity)
         tableCountOfGuestsLabel.text = String(describing: countOfGuests)
-        tableOpenTimeLabel.text = currentTableSession!.openTime!.convertToString() + "-" + currentTableSession!.closeTime!.convertToString()
+        tableOpenTimeLabel.text = currentTableSession!.openTime.convertToString() + "-" + currentTableSession!.closeTime!.convertToString()
         
         if tips > 0 {
             totalAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: totalAmount), number: .decimal) + UserSettings.currencySymbol + " " + NSLocalizedString("tips", comment: "") + "\(tips)" + UserSettings.currencySymbol
@@ -158,7 +158,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     private func updateLabels() {
         tableCapacityLabel.text = String(describing: currentTable!.tableCapacity)
         tableCountOfGuestsLabel.text = String(describing: countOfGuests)
-        tableOpenTimeLabel.text = currentTableSession!.openTime!.convertToString() + "-" + currentTableSession!.closeTime!.convertToString()
+        tableOpenTimeLabel.text = currentTableSession!.openTime.convertToString() + "-" + currentTableSession!.closeTime!.convertToString()
         
         if tips > 0 {
             if self.totalAmount != self.originalAmount {
@@ -183,7 +183,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     
     
     private func addQuickGuest () {
-        GuestsTable.addNewGuestHistorical(tableSession: currentTableSession!, openTime: (currentTableSession?.openTime)!, closeTime: (currentTableSession?.closeTime)!)
+        GuestsTable.addNewGuestHistorical(tableSession: currentTableSession!, openTime: (currentTableSession?.openTime ?? Date()), closeTime: (currentTableSession?.closeTime)!)
         updateGuestsTableView()
         updateLabels()
     }
@@ -228,7 +228,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
             cell.guestOrdersTableView.dataSource = cell
             
             cell.guestNameLabel.text = guest.guestName
-            cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime!.convertToString()
+            cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime.convertToString()
             if UserSettings.isTimeCafe == true {
                 cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Float(TableSessionTable.calculateIndividualAmount(guest: guest))), number: .decimal) + UserSettings.currencySymbol
             } else {
@@ -246,9 +246,9 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
             cell.order = order
             cell.menuItem = order.menuItem
             
-            cell.itemNameLabel.text = order.menuItem?.itemName
+            cell.itemNameLabel.text = order.menuItem.itemName
             cell.itemQuantityLabel.text = String(describing: order.quantityOfItems)
-            cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem?.itemPrice)!), number: .decimal) + UserSettings.currencySymbol
+            cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem.itemPrice)), number: .decimal) + UserSettings.currencySymbol
             
             // Change cell buttons color theme
             cell.plusButton = ChangeGUITheme.setColorThemeFor(button: cell.plusButton)
@@ -322,7 +322,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
                     if self.guestNameTextField.text != "" {
                         newGuestName = self.guestNameTextField.text!
                     } else {
-                        newGuestName = guest.guestName!
+                        newGuestName = guest.guestName
                     }
                     guest.renameTo(newName: newGuestName)
                     self.updateLabels()
@@ -423,7 +423,7 @@ extension HistoryTableUIViewController: PeriodPickerDelegate {
 // Delegate of CustomGuest module that allows user to choose custom guest name
 extension HistoryTableUIViewController: CustomGuestDelegate {
     func didChooseCustomGuest(name: String) {
-        GuestsTable.addNewCustomGuestHistorical(guestName: name, tableSession: currentTableSession!, openTime: currentTableSession!.openTime!, closeTime: currentTableSession!.closeTime!)
+        GuestsTable.addNewCustomGuestHistorical(guestName: name, tableSession: currentTableSession!, openTime: currentTableSession!.openTime, closeTime: currentTableSession!.closeTime!)
         updateGUI()
     }
 }

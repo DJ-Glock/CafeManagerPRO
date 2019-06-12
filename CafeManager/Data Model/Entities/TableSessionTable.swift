@@ -11,28 +11,53 @@ import Foundation
 
 class TableSessionTable {
     
-    public var closeTime: NSDate?
-    public var openTime: NSDate?
+    public weak var table: TablesTable?
+    public var openTime: Date
+    public var closeTime: Date?
+    public var guests: [GuestsTable] = []
+    public var orderedItems: [OrdersTable] = []
     public var totalAmount: Float = 0.0
     public var totalTips: Float = 0.0
     public var discount: Int16 = 0
-    public var guest: NSSet?
-    public var orderedItems: NSSet?
-    public var table: TablesTable?
+
+    
+    init (table: TablesTable, openTime: Date) {
+        self.table = table
+        self.openTime = openTime
+    }
+    
+    convenience init (table: TablesTable,
+                     openTime: Date,
+                     closeTime: Date,
+                     guests: [GuestsTable],
+                     orderedItems: [OrdersTable],
+                     totalAmount: Float,
+                     totalTips :Float,
+                     discount: Int16) {
+        self.init(table: table, openTime: openTime)
+        self.closeTime = closeTime
+        self.guests = guests
+        self.orderedItems = orderedItems
+        self.totalAmount = totalAmount
+        self.totalTips = totalTips
+        self.discount = discount
+    }
 
     // Supporting properties
     public var openTimeTruncatedToDay: String {
-        return openTime!.getTimeStrWithDayPrecision()
+        return openTime.getTimeStrWithDayPrecision()
     }
     public var openTimeTruncatedToMonth: String {
-        return openTime!.getTimeStrWithMonthPrecision()
+        return openTime.getTimeStrWithMonthPrecision()
     }
 
     public var sessionDurationInSeconds: Double {
-        let currentCloseTime = closeTime ?? NSDate()
-        let period = currentCloseTime.timeIntervalSince1970 - openTime!.timeIntervalSince1970
+        let currentCloseTime = closeTime ?? Date()
+        let period = currentCloseTime.timeIntervalSince1970 - openTime.timeIntervalSince1970
         return period
     }
+    
+    
     
     
     // MARK: functions for managing sessions
@@ -52,7 +77,7 @@ class TableSessionTable {
 //            try? viewContext.save()
 //            return newTableSession
 //        }
-        return TableSessionTable()
+        return TableSessionTable(table: table, openTime: Date())
     }
     
     class func saveRecalculated (tableSession: TableSessionTable, totalAmount: Float, discount: Int16, tips: Float) throws {
@@ -145,8 +170,8 @@ class TableSessionTable {
         
         let guestsTable = GuestsTable.getAllGuestsForTableSorted(tableSession: tableSession)
         for guest in guestsTable {
-            let closeOrCurrentTime = guest.closeTime ?? Date() as NSDate
-            amount = amount + roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime! as Date))/60) * UserSettings.pricePerMinute
+            let closeOrCurrentTime = guest.closeTime ?? Date()
+            amount = amount + roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.pricePerMinute
         }
         return amount
     }
