@@ -38,7 +38,10 @@ class LogInViewController: UIViewController, FUIAuthDelegate {
         self.authUI = FUIAuth.defaultAuthUI()
         self.authUI?.delegate = self
         self.authUI?.providers = [FUIGoogleAuth()]
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Open login form or perform segue if user is already logged in
         self.authStateListenerHandle = self.auth?.addStateDidChangeListener { (auth, user) in
             guard user != nil else {
                 self.loginAction(sender: self)
