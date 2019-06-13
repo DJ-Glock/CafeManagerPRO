@@ -24,8 +24,20 @@ class TablesTableViewController: FetchedResultsTableViewController {
     
     // MARK: IBFunctions
     @IBAction func addTableBarButtonPressed(_ sender: UIBarButtonItem) {
-        //        addTable()
+
+        DBQuery.getTables { (tables, error) in
+            if let error = error {
+                CommonAlert.shared.show(title: "Error occurred", text: "An error occurred while getting data from DB. \(error.localizedDescription)")
+                return
+            }
+            self.tablesArray = tables
+            print("Array received: \(tables)")
+            for table in tables {
+                print("Table name: \(table.tableName)")
+            }
+        }
     }
+    
     
     //MARK: system functions for view
     override func viewWillAppear(_ animated: Bool) {
@@ -49,36 +61,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
     }
-    
-    // Firebase functions
-    // Execute query to get tables data
-    private func getDataFromDatabase () {
-        // Test query to Firestore
-        let userId = appDelegate.auth?.currentUser?.uid ?? ""
-        
-        var tables = [TablesTable]()
-        
-        let tablesCollection = appDelegate.db.collection("usersData").document(userId).collection("tables")
-        tablesCollection.order(by: "name", descending: false)
-        tablesCollection.getDocuments { (snapshot, error) in
-            if let snapshot = snapshot {
-                for document in snapshot.documents {
-                    let data = document.data()
-                    let tableName = data["name"] as! String
-                    let tableCapacity = data["capacity"] as! Int16
-                    let tableDescription = data["description"] as? String
-                    
-                    let table = TablesTable(tableName: tableName, tableCapacity: tableCapacity, tableDescription: tableDescription, tableSession: nil)
-                    tables.append(table)
-                }
-                print(tables.count)
-                for table in tables {
-                    print (table.tableName)
-                }
-            }
-        }
-        
-    }
+
     
     // TableView refresh control
     func configureRefreshControl () {

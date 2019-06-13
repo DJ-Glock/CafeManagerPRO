@@ -111,6 +111,7 @@
 		2172396422AD9EC700527607 /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */; };
 		2172396622ADAF4E00527607 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396522ADAF4E00527607 /* LogInViewController.swift */; };
 		2172396922AE3F8D00527607 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2172396822AE3F8D00527607 /* GoogleService-Info.plist */; };
+		2172396C22B2579600527607 /* DBQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396B22B2579600527607 /* DBQuery.swift */; };
 		2177F93B1EEBFC62007DE102 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2177F93A1EEBFC62007DE102 /* Images.xcassets */; };
 		218C6CDF201FA943003CCE6D /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CDE201FA943003CCE6D /* ErrorHandling.swift */; };
 		218C6CE120207192003CCE6D /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CE020207192003CCE6D /* String+Extension.swift */; };
@@ -346,6 +347,7 @@
 		2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
 		2172396522ADAF4E00527607 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = "../New Group/LogInViewController.swift"; sourceTree = "<group>"; };
 		2172396822AE3F8D00527607 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2172396B22B2579600527607 /* DBQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBQuery.swift; sourceTree = "<group>"; };
 		2177F93A1EEBFC62007DE102 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		218C6CDE201FA943003CCE6D /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		218C6CE020207192003CCE6D /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -889,7 +891,7 @@
 		21386F0F2057081400A14D30 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				2172396A22B177AC00527607 /* Queries */,
+				2172396A22B177AC00527607 /* DBQuery */,
 				21D760B71EBA60FE00E72A8F /* CafeManager.xcdatamodeld */,
 				21386F0E205707D200A14D30 /* Entities */,
 			);
@@ -1097,11 +1099,12 @@
 			path = LogIn;
 			sourceTree = "<group>";
 		};
-		2172396A22B177AC00527607 /* Queries */ = {
+		2172396A22B177AC00527607 /* DBQuery */ = {
 			isa = PBXGroup;
 			children = (
+				2172396B22B2579600527607 /* DBQuery.swift */,
 			);
-			path = Queries;
+			path = DBQuery;
 			sourceTree = "<group>";
 		};
 		2191DF55205E657B00786030 /* AddOrder */ = {
@@ -1749,6 +1752,7 @@
 				21ED04D91FE80F7E002671A7 /* CommonMenuItemsTable.swift in Sources */,
 				21922EF020640A2000DF4CF5 /* LineChartPresenter.swift in Sources */,
 				2123063A205D909400F89C03 /* MoveGuestsAssembly.swift in Sources */,
+				2172396C22B2579600527607 /* DBQuery.swift in Sources */,
 				218C6CE120207192003CCE6D /* String+Extension.swift in Sources */,
 				21EBE34F20123F47005FE6B2 /* Date+Extension.swift in Sources */,
 				2123066C205DD56B00F89C03 /* CustomGuestInterface.swift in Sources */,
