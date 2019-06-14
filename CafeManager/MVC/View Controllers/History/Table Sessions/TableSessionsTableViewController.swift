@@ -25,7 +25,7 @@ class TableSessionsTableViewController: FetchedResultsTableViewController {
         let queue = DispatchQueue.global(qos: .userInitiated)
         queue.async {
             [ weak self] in
-            guard self != nil else { return }
+            guard let self = self else { return }
             //Get data
 //            var predicates: [NSPredicate] = []
 //            let originalPredicate = NSPredicate(format: "closeTime <> %@", NSNull() as CVarArg)
@@ -46,7 +46,7 @@ class TableSessionsTableViewController: FetchedResultsTableViewController {
             //Back to MainQueue to update tableView
             DispatchQueue.main.async {
                 // Update GUI
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
                 LoadingOverlay.shared.hideOverlayView()
             }
         }

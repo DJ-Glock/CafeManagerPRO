@@ -25,17 +25,30 @@ class TablesTableViewController: FetchedResultsTableViewController {
     // MARK: IBFunctions
     @IBAction func addTableBarButtonPressed(_ sender: UIBarButtonItem) {
 
-        DBQuery.getTables { (tables, error) in
-            if let error = error {
-                CommonAlert.shared.show(title: "Error occurred", text: "An error occurred while getting data from DB. \(error.localizedDescription)")
-                return
-            }
-            self.tablesArray = tables
-            print("Array received: \(tables)")
-            for table in tables {
-                print("Table name: \(table.tableName)")
-            }
+        // Testing zone
+
+        
+        for table in self.tablesArray {
+            print("\nTableName:")
+            print(table.tableName)
+            print("Opened at:")
+            print(table.tableSession?.openTime)
+            print("Guests count:")
+            print(table.tableSession?.guests.count)
+            print("First guest name:")
+            print(table.tableSession?.guests[0].guestName)
+            print("First guest orders count:")
+            print(table.tableSession?.guests[0].orders.count)
+            print("First guest first order name:")
+            print(table.tableSession?.guests[0].orders[0].menuItem.itemName)
+            print("First guest first order qty:")
+            print(table.tableSession?.guests[0].orders[0].quantityOfItems)
+            print("Other orders count:")
+            print(table.tableSession?.orderedItems.count)
+            print("First order name:")
+            print(table.tableSession?.orderedItems[0].menuItem.itemName)
         }
+        
     }
     
     

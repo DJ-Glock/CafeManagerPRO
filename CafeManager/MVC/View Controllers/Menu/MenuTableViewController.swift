@@ -154,7 +154,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         let queue = DispatchQueue.global(qos: .userInitiated)
         queue.async {
             [ weak self ] in
-            guard self != nil else { return }
+            guard let self = self else { return }
             //Get data
 //            let request : NSFetchRequest<MenuTable> = MenuTable.fetchRequest()
 //            let theFirstSortDescriptor = NSSortDescriptor(key: "category.categoryName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
@@ -167,8 +167,8 @@ class MenuTableViewController: FetchedResultsTableViewController {
             //Back to MainQueue to update GUI
             DispatchQueue.main.async {
                 // Update GUI
-                self?.tableView.reloadData()
-                self?.tableViewRefreshControl?.endRefreshing()
+                self.tableView.reloadData()
+                self.tableViewRefreshControl?.endRefreshing()
             }
         }
     }

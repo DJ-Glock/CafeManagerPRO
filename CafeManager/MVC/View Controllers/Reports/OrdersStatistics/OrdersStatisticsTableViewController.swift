@@ -37,16 +37,16 @@ class OrdersStatisticsTableViewController: UITableViewController {
         let queue = DispatchQueue.global(qos: .userInitiated)
         queue.async {
             [ weak self ] in
-            guard self != nil else { return }
-            self!.model.startDate = self!.startDate
-            self!.model.endDate = self!.endDate
-            self!.model.detailedPeriodType = self!.detailedPeriodType
-            self!.model.getMenuItemsStatistics()
+            guard let self = self else { return }
+            self.model.startDate = self.startDate
+            self.model.endDate = self.endDate
+            self.model.detailedPeriodType = self.detailedPeriodType
+            self.model.getMenuItemsStatistics()
             
             //Back to MainQueue to update GUI
             DispatchQueue.main.async {
                 // Update GUI
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
                 LoadingOverlay.shared.hideOverlayView()
             }
         }

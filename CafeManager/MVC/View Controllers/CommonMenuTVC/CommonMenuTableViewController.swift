@@ -30,7 +30,7 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
         let queue = DispatchQueue.global(qos: .userInitiated)
         queue.async {
             [ weak self ] in
-            guard self != nil else { return }
+            guard let self = self else { return }
             //Get data
 //            let request = NSFetchRequest<CommonMenuItemsTable>(entityName: "CommonMenuItemsTable")
 //            let predicate = NSPredicate(format: "itemLanguage = %@", self!.selectedLanguage.rawValue as CVarArg)
@@ -46,7 +46,7 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
             //Back to MainQueue to update GUI
             DispatchQueue.main.async {
                 // Update GUI
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
                 LoadingOverlay.shared.hideOverlayView()
             }
         }

@@ -113,7 +113,7 @@
 		2172396922AE3F8D00527607 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2172396822AE3F8D00527607 /* GoogleService-Info.plist */; };
 		2172396C22B2579600527607 /* DBQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396B22B2579600527607 /* DBQuery.swift */; };
 		2177F93B1EEBFC62007DE102 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2177F93A1EEBFC62007DE102 /* Images.xcassets */; };
-		218C6CDF201FA943003CCE6D /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CDE201FA943003CCE6D /* ErrorHandling.swift */; };
+		218C6CDF201FA943003CCE6D /* iCafeManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CDE201FA943003CCE6D /* iCafeManagerError.swift */; };
 		218C6CE120207192003CCE6D /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CE020207192003CCE6D /* String+Extension.swift */; };
 		218C6CE320221F79003CCE6D /* AppRater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6CE220221F79003CCE6D /* AppRater.swift */; };
 		218FB4811FFE7C9400F54C2A /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218FB4801FFE7C9400F54C2A /* Overlay.swift */; };
@@ -349,7 +349,7 @@
 		2172396822AE3F8D00527607 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2172396B22B2579600527607 /* DBQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBQuery.swift; sourceTree = "<group>"; };
 		2177F93A1EEBFC62007DE102 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		218C6CDE201FA943003CCE6D /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		218C6CDE201FA943003CCE6D /* iCafeManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCafeManagerError.swift; sourceTree = "<group>"; };
 		218C6CE020207192003CCE6D /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		218C6CE220221F79003CCE6D /* AppRater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRater.swift; sourceTree = "<group>"; };
 		218FB4801FFE7C9400F54C2A /* Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
@@ -865,7 +865,7 @@
 				214943541EDCCDAE0046CBD3 /* GenericStuff.swift */,
 				21ED04DA1FE81071002671A7 /* MenuCSVParsing.swift */,
 				21EBE35320124B34005FE6B2 /* UserSettings.swift */,
-				218C6CDE201FA943003CCE6D /* ErrorHandling.swift */,
+				218C6CDE201FA943003CCE6D /* iCafeManagerError.swift */,
 				218C6CE220221F79003CCE6D /* AppRater.swift */,
 				21C2894A20694C0B00CA0CA8 /* EnumsForStatistics.swift */,
 			);
@@ -891,7 +891,7 @@
 		21386F0F2057081400A14D30 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				2172396A22B177AC00527607 /* DBQuery */,
+				2172396A22B177AC00527607 /* DBService */,
 				21D760B71EBA60FE00E72A8F /* CafeManager.xcdatamodeld */,
 				21386F0E205707D200A14D30 /* Entities */,
 			);
@@ -1099,12 +1099,12 @@
 			path = LogIn;
 			sourceTree = "<group>";
 		};
-		2172396A22B177AC00527607 /* DBQuery */ = {
+		2172396A22B177AC00527607 /* DBService */ = {
 			isa = PBXGroup;
 			children = (
 				2172396B22B2579600527607 /* DBQuery.swift */,
 			);
-			path = DBQuery;
+			path = DBService;
 			sourceTree = "<group>";
 		};
 		2191DF55205E657B00786030 /* AddOrder */ = {
@@ -1722,7 +1722,7 @@
 				21386EDF2056FF4D00A14D30 /* CheckoutRouterInterface.swift in Sources */,
 				213B451F205490F900D04CF8 /* PeriodPickerRouterInterface.swift in Sources */,
 				21F92D2B1FE402F4004A4201 /* GuestOrdersTableViewRefreshDelegate.swift in Sources */,
-				218C6CDF201FA943003CCE6D /* ErrorHandling.swift in Sources */,
+				218C6CDF201FA943003CCE6D /* iCafeManagerError.swift in Sources */,
 				2123063C205D90D500F89C03 /* MoveGuestsRouter.swift in Sources */,
 				21375C741FEA78D90080DA7F /* MenuCategoryTable.swift in Sources */,
 				21922EEC206408B600DF4CF5 /* LineChartViewController.swift in Sources */,

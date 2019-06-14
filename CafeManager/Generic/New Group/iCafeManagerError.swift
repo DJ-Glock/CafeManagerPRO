@@ -13,4 +13,5 @@ enum iCafeManagerError : Error {
     case ParsingError(String)
     case CoreDataException(String)
     case ExportError(String)
+    case DatabaseError(String)
 }
