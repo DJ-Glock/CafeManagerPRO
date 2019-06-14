@@ -12,18 +12,20 @@ import Firebase
 class DBQuery {
     /// Funtion returns all tables with active sessions (if any)
     class func getTablesWithActiveSessions(completion: @escaping ([TablesTable], Error?) -> Void) {
-        
+        print("Started getTablesWithActiveSessions")
         var tables = [TablesTable]()
         let tablesCollection = userData
             .collection("Tables")
             .order(by: "name", descending: false)
         tablesCollection.addSnapshotListener { (snapshot, error) in
+//        tablesCollection.getDocuments { (snapshot, error) in
             if let error = error {
                 completion (tables, error)
             }
-        
+            
             if let snapshot = snapshot {
                 for document in snapshot.documents {
+                    print("Started loop in getTablesWithActiveSessions")
                     let data = document.data()
                     let firebaseID = document.documentID
                     let tableName = data["name"] as! String
@@ -40,8 +42,9 @@ class DBQuery {
             let tablesCount = tables.count
             for var i in 0...tablesCount-1 {
                 let table = tables[i]
-                
+                print("Started table sessions loop in getTablesWithActiveSessions. i = \(i)")
                 DBQuery.getActiveTableSession(forTable: table, completion: { (tableSession, error) in
+                    print("getActiveTableSession has been executed. Running closure. i = \(i)")
                     if let error = error {
                         CommonAlert.shared.show(title: "Error occurred", text: "An error occurred while retrieving data from DB: \(error)")
                         return
@@ -50,29 +53,38 @@ class DBQuery {
                     
                     i = i + 1
                     if (tablesCount != 1) && (i == tablesCount - 1) || (tablesCount == 1) && (i == tablesCount) {
+                        print("Ended loop in getTablesWithActiveSessions")
                         completion(tables, nil)
+                        return
                     }
                 })
             }
-            completion([], nil)
         }
     }
     
     class func getActiveTableSession (forTable table: TablesTable, completion: @escaping (TableSessionTable?, Error?) -> Void) {
+        print("getActiveTableSession is started")
         
+        // If path does not exist, we will freeze fail loading of data. It will never end.
         let tableSessionCollection = userData
             .collection("Tables")
             .document(table.firebaseID!)
             .collection("ActiveSessions")
-
+        print(tableSessionCollection.collectionID)
+        
+        
+        
+//        tableSessionCollection.getDocuments { (snapshot, error) in
         tableSessionCollection.addSnapshotListener { (snapshot, error) in
             if let error = error {
+                print("getActiveTableSession got no data data. The error is: \(error)")
                 completion(nil, error)
                 return
             }
-            
             if let snapshot = snapshot {
-                guard snapshot.count != 0 else {return}
+                guard snapshot.documents.count != 0 else { completion(nil, error); return }
+                print("getActiveTableSession got some data")
+                
                 let document = snapshot.documents[0]
                 let data = document.data()
                 
@@ -87,7 +99,7 @@ class DBQuery {
                 let tableSession = TableSessionTable(table: table, openTime: openTime, closeTime: closeTime, guests: [], orderedItems: [], totalAmount: totalAmount, tips: tips, discount: discount)
                 
                 var guests = [GuestsTable]()
-                let guestsData = data["Guests"] as! [[String:Any]]
+                let guestsData = data["Guests"] as? [[String:Any]] ?? []
                 
                 // Get Guests and their individual orders
                 for guestData in guestsData {
@@ -116,7 +128,7 @@ class DBQuery {
                 
                 // Get shared orders
                 var orders = [OrdersTable]()
-                let ordersData = data["Orders"] as! [[String:Any]]
+                let ordersData = data["Orders"] as? [[String:Any]] ?? []
                 for orderData in ordersData {
                     let menuItemName = orderData["name"] as! String
                     let price = orderData["price"] as! Float
@@ -132,11 +144,17 @@ class DBQuery {
                 // Check if database contains more than one active session for table (INCORRECT!!!) and throw an error
                 if snapshot.documents.count > 1 {
                     let myError = iCafeManagerError.DatabaseError("Ambiguous sessions for table \(table.tableName) found. Notify iCafeManager support. UserID: \(userId)")
+                    print("getActiveTableSession is almost ended, but more than one active session found. going to run clouse")
                     completion(tableSession, myError)
+                    return
+                } else {
+                    print("getActiveTableSession is almost ended. going to run clouse")
+                    completion(tableSession, error)
+                    return
                 }
-                completion(tableSession, error)
             }
-            completion(nil, error)
+            print("getActiveTableSession got no data. Going to execute closure")
+            completion(nil,nil)
         }
     }
     

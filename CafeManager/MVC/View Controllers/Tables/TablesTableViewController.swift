@@ -24,33 +24,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
     
     // MARK: IBFunctions
     @IBAction func addTableBarButtonPressed(_ sender: UIBarButtonItem) {
-
-        // Testing zone
-        DBQuery.getTablesWithActiveSessions { [weak self] (tables, error) in
-            guard let self = self else {return}
-            self.tablesArray = tables
-            
-            for table in tables {
-                print("\nTableName:")
-                print(table.tableName)
-                print("Opened at:")
-                print(table.tableSession?.openTime)
-                print("Guests count:")
-                print(table.tableSession?.guests.count)
-                print("First guest name:")
-                print(table.tableSession?.guests[0].guestName)
-                print("First guest orders count:")
-                print(table.tableSession?.guests[0].orders.count)
-                print("First guest first order name:")
-                print(table.tableSession?.guests[0].orders[0].menuItemName)
-                print("First guest first order qty:")
-                print(table.tableSession?.guests[0].orders[0].quantity)
-                print("Other orders count:")
-                print(table.tableSession?.orderedItems.count)
-                print("First order name:")
-                print(table.tableSession?.orderedItems[0].menuItemName)
-            }
-        }
+        addTable()
     }
     
     
@@ -77,6 +51,18 @@ class TablesTableViewController: FetchedResultsTableViewController {
         }
     }
 
+    // UI Update
+    @objc private func updateGUI () {
+        print("updateUI was called")
+        DBQuery.getTablesWithActiveSessions { [weak self] (tables, error) in
+            print("getTablesWithActiveSessions has been executed. Running closure")
+            guard let self = self else {return}
+            self.tablesArray = tables
+            self.tableView.reloadData()
+            self.tableViewRefreshControl?.endRefreshing()
+        }
+    }
+    
     
     // TableView refresh control
     func configureRefreshControl () {
@@ -176,17 +162,24 @@ class TablesTableViewController: FetchedResultsTableViewController {
 
     
     //MARK: functions for table update
-    @objc private func updateGUI () {
-//        let request : NSFetchRequest<TablesTable> = TablesTable.fetchRequest()
-//        request.sortDescriptors = [NSSortDescriptor(key: "tableName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))]
-//        fetchedResultsController = NSFetchedResultsController<TablesTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: nil, cacheName: nil)
-//        try? fetchedResultsController?.performFetch()
-        tableView.reloadData()
-        self.tableViewRefreshControl?.endRefreshing()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TablesTableViewCell
+        
+        let table = self.tablesArray[indexPath.row]
+        let tableSession = table.tableSession
+        cell.tableNameLabel.text = table.tableName
+        
+        if tableSession != nil {
+            cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
+            cell.tableStatusLabel.text = NSLocalizedString("tableOpened", comment: "") + "\(tableSession!.openTime.convertToString())"
+            cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)))" + UserSettings.currencySymbol
+        } else {
+            cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
+            cell.tableStatusLabel.text = NSLocalizedString("tableIsClosed", comment: "")
+            cell.currentAmountLabel.text = ""
+        }
+        
+        
 //        if let tablesTable = fetchedResultsController?.object(at: indexPath) {
 //            currentTableSession = TableSessionTable.getCurrentTableSession(table: tablesTable)
 //            cell.tableNameLabel.text = tablesTable.tableName
@@ -251,37 +244,22 @@ class TablesTableViewController: FetchedResultsTableViewController {
 // Common extension for fetchedResultsController
 extension TablesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-//        return fetchedResultsController?.sections?.count ?? 1
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-//            return sections[section].numberOfObjects
-//        }
-//        else {
-//            return 0
-//        }
-        return 0
+        return self.tablesArray.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-//            return sections[section].name
-//        }
-//        else {
-//            return nil
-//        }
         return nil
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-//        return fetchedResultsController?.sectionIndexTitles
         return []
     }
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-//        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
         return 0
     }
 }
