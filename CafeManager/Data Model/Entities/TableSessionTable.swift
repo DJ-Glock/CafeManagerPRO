@@ -17,7 +17,7 @@ class TableSessionTable {
     public var guests: [GuestsTable] = []
     public var orderedItems: [OrdersTable] = []
     public var totalAmount: Float = 0.0
-    public var totalTips: Float = 0.0
+    public var tips: Float = 0.0
     public var discount: Int16 = 0
 
     
@@ -28,18 +28,18 @@ class TableSessionTable {
     
     convenience init (table: TablesTable,
                      openTime: Date,
-                     closeTime: Date,
+                     closeTime: Date?,
                      guests: [GuestsTable],
                      orderedItems: [OrdersTable],
                      totalAmount: Float,
-                     totalTips :Float,
+                     tips :Float,
                      discount: Int16) {
         self.init(table: table, openTime: openTime)
         self.closeTime = closeTime
         self.guests = guests
         self.orderedItems = orderedItems
         self.totalAmount = totalAmount
-        self.totalTips = totalTips
+        self.tips = tips
         self.discount = discount
     }
 

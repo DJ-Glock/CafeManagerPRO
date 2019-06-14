@@ -10,20 +10,23 @@
 import Foundation
 
 class OrdersTable {
-    public var quantityOfItems: Int16
-    public var menuItem: MenuTable
+    public var menuItemName: String
+    public var quantity: Int16
+    public var price: Float
     public weak var orderedTable: TableSessionTable?
     public weak var orderedGuest: GuestsTable?
     
-    init (menuItem: MenuTable, quantity: Int16, orderedTable: TableSessionTable) {
-        self.menuItem = menuItem
-        self.quantityOfItems = quantity
+    init (menuItemName: String, quantity: Int16, price: Float, orderedTable: TableSessionTable) {
+        self.menuItemName = menuItemName
+        self.quantity = quantity
+        self.price = price
         self.orderedTable = orderedTable
     }
     
-    init (menuItem: MenuTable, quantity: Int16, orderedGuest: GuestsTable) {
-        self.menuItem = menuItem
-        self.quantityOfItems = quantity
+    init (menuItemName: String, quantity: Int16, price: Float, orderedGuest: GuestsTable) {
+        self.menuItemName = menuItemName
+        self.quantity = quantity
+        self.price = price
         self.orderedGuest = orderedGuest
     }
     

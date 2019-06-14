@@ -13,6 +13,8 @@ import FirebaseUI
 
 // Global constants
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
+let userId = appDelegate.auth?.currentUser?.uid ?? ""
+let userData = appDelegate.db.collection("UserData").document(userId)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {

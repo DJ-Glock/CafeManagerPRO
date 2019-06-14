@@ -10,20 +10,22 @@
 import Foundation
 
 class TablesTable {
-
+    
+    public var firebaseID: String?
     public var tableCapacity: Int16
     public var tableDescription: String?
     public var tableName: String
     public var tableSession: TableSessionTable?
     
-    init (tableName: String, tableCapacity: Int16, tableDescription: String?) {
+    init (firebaseID: String?, tableName: String, tableCapacity: Int16, tableDescription: String?) {
+        self.firebaseID = firebaseID
         self.tableName = tableName
         self.tableCapacity = tableCapacity
         self.tableDescription = tableDescription
     }
     
-    convenience init (tableName: String, tableCapacity: Int16, tableDescription: String?, tableSession: TableSessionTable?) {
-        self.init(tableName: tableName, tableCapacity: tableCapacity, tableDescription: tableDescription)
+    convenience init (firebaseID: String?, tableName: String, tableCapacity: Int16, tableDescription: String?, tableSession: TableSessionTable?) {
+        self.init(firebaseID: firebaseID, tableName: tableName, tableCapacity: tableCapacity, tableDescription: tableDescription)
         self.tableSession = tableSession
     }
     
@@ -67,7 +69,7 @@ class TablesTable {
 //            try? viewContext.save()
 //            return newTable
 //        }
-        return TablesTable(tableName: "Fake", tableCapacity: 1, tableDescription: "Fake")
+        return TablesTable(firebaseID: nil, tableName: "Fake", tableCapacity: 1, tableDescription: "Fake")
     }
     
     class func getTable (withName name: String) -> TablesTable? {

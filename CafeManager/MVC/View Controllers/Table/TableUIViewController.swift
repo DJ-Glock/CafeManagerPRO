@@ -62,7 +62,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     //@IBAction func saveDescriptionButtonPressed(_ sender: UIButton) {saveTableDescription()}
     @IBAction func closeTableBarButtonPressed(_ sender: UIBarButtonItem) {
         if let session = currentTableSession {
-            let plainSession = TableSession(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.totalTips, discount: session.discount)
+            let plainSession = TableSession(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.tips, discount: session.discount)
             let checkout = CheckoutAssembly.assembleModule()
             checkout.delegate = self
             checkout.checkoutWithParams(session: plainSession, originalTotalAmount: self.totalAmount, sender: sender)
@@ -243,11 +243,11 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             
             cell.cellDelegate = self
             cell.order = order
-            cell.menuItem = order.menuItem
+            //cell.menuItem = order.menuItem
             
-            cell.itemNameLabel.text = order.menuItem.itemName
-            cell.itemQuantityLabel.text = String(describing: order.quantityOfItems)
-            cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem.itemPrice)), number: .decimal) + UserSettings.currencySymbol
+            cell.itemNameLabel.text = order.menuItemName
+            cell.itemQuantityLabel.text = String(describing: order.quantity)
+            cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantity) * (order.price)), number: .decimal) + UserSettings.currencySymbol
             
             // Change cell buttons color theme
             cell.plusButton = ChangeGUITheme.setColorThemeFor(button: cell.plusButton)
@@ -420,7 +420,7 @@ extension TableUIViewController: OrderInTableTableViewCellDelegate {
         if action == "+" {
             order.increaseQuantity()
         } else {
-            if action == "-", order.quantityOfItems > 1 {
+            if action == "-", order.quantity > 1 {
                 order.decreaseQuantity()
             } else {
                 return

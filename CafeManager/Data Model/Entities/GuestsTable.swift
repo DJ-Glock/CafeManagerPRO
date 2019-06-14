@@ -27,12 +27,10 @@ class GuestsTable {
                      openTime: Date,
                      tableSession: TableSessionTable,
                      closeTime: Date?,
-                     totalAmount: Float,
-                     orders: [OrdersTable]) {
+                     totalAmount: Float) {
         self.init(guestName: guestName, openTime: openTime, tableSession: tableSession)
         self.closeTime = closeTime
         self.totalAmount = totalAmount
-        self.orders = orders
     }
     
     // Supporting properties
