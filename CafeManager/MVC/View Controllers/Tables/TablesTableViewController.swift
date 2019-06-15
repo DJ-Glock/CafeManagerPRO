@@ -53,10 +53,13 @@ class TablesTableViewController: FetchedResultsTableViewController {
 
     // UI Update
     @objc private func updateGUI () {
-        print("updateUI was called")
         DBQuery.getTablesWithActiveSessions { [weak self] (tables, error) in
-            print("getTablesWithActiveSessions has been executed. Running closure")
             guard let self = self else {return}
+            
+            if let error = error {
+                CommonAlert.shared.show(title: "Error occurred", text: "An error occurred while retrieving data from DB: \(error)")
+            }
+            
             self.tablesArray = tables
             self.tableView.reloadData()
             self.tableViewRefreshControl?.endRefreshing()
