@@ -62,7 +62,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     //@IBAction func saveDescriptionButtonPressed(_ sender: UIButton) {saveTableDescription()}
     @IBAction func closeTableBarButtonPressed(_ sender: UIBarButtonItem) {
         if let session = currentTableSession {
-            let plainSession = TableSession(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.tips, discount: session.discount)
+            let plainSession = TableSessionStruct(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.tips, discount: session.discount)
             let checkout = CheckoutAssembly.assembleModule()
             checkout.delegate = self
             checkout.checkoutWithParams(session: plainSession, originalTotalAmount: self.totalAmount, sender: sender)

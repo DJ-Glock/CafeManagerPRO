@@ -6,7 +6,7 @@
 //  Copyright © 2018 Denis Kurashko. All rights reserved.
 //
 
-struct TableSession {
+struct TableSessionStruct {
     var openTime: Date
     var closeTime: Date?
     var totalAmount: Float

@@ -106,7 +106,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     }
     @IBAction func recalculateButtonPressed(_ sender: UIBarButtonItem) {
         if let session = currentTableSession {
-            let plainSession = TableSession(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.tips, discount: session.discount)
+            let plainSession = TableSessionStruct(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.tips, discount: session.discount)
             let checkout = CheckoutAssembly.assembleModule()
             checkout.delegate = self as CheckoutDelegate
             checkout.checkoutWithParams(session: plainSession, originalTotalAmount: self.originalAmount, sender: sender)

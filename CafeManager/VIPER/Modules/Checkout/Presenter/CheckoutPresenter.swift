@@ -14,7 +14,7 @@ class CheckoutPresenter: NSObject, CheckoutPresenterInterface {
     
     // Public properties
     var originalTotalAmount: Float = 0
-    var currentSession: TableSession!
+    var currentSession: TableSessionStruct!
     
     var totalAmount: Float = 0 {
         didSet {
@@ -48,7 +48,7 @@ class CheckoutPresenter: NSObject, CheckoutPresenterInterface {
 
     
     // Public methods
-    func configureViewWithParams(session: TableSession, originalTotalAmount: Float) {
+    func configureViewWithParams(session: TableSessionStruct, originalTotalAmount: Float) {
         self.currentSession = session
         self.originalTotalAmount = originalTotalAmount
         self.totalAmount = session.totalAmount
