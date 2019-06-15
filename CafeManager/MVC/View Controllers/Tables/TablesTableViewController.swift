@@ -53,7 +53,8 @@ class TablesTableViewController: FetchedResultsTableViewController {
 
     // UI Update
     @objc private func updateGUI () {
-        DBQuery.getTablesWithActiveSessions { [weak self] (tables, error) in
+        DBQuery.getTablesWithActiveSessionsAsync { [weak self] (tables, error) in
+            print("updateGUI get called")
             guard let self = self else {return}
             
             if let error = error {

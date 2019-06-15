@@ -11,16 +11,18 @@ import Firebase
 import Dispatch
 
 class DBQuery {
-    /// Funtion returns all tables with active sessions (if any)
-    class func getTablesWithActiveSessions(completion: @escaping ([TablesTable], Error?) -> Void) {
+    
+    /// Async function returns all tables with active sessions (if any)
+    class func getTablesWithActiveSessionsAsync(completion: @escaping ([TablesTable], Error?) -> Void) {
         
-        var tables = [TablesTable]()
+        
         let tablesCollection = userData
             .collection("Tables")
             .order(by: "name", descending: false)
         
-//        tablesCollection.addSnapshotListener { (snapshot, error) in
-        tablesCollection.getDocuments { (snapshot, error) in
+        tablesCollection.addSnapshotListener { (snapshot, error) in
+            var tables = [TablesTable]()
+            
             if let error = error {
                 completion (tables, error)
             }
@@ -44,7 +46,7 @@ class DBQuery {
             
             for table in tables {
                 dispatchGroup.enter()
-                DBQuery.getActiveTableSession(forTable: table, completion: { (tableSession, error) in
+                DBQuery.getActiveTableSessionAsync(forTable: table, completion: { (tableSession, error) in
                     if let error = error {
                         completion([], error)
                         return
@@ -59,16 +61,15 @@ class DBQuery {
         }
     }
     
-    class func getActiveTableSession (forTable table: TablesTable, completion: @escaping (TableSessionTable?, Error?) -> Void) {
+    /// Async function returns table session for table or nil if no active session is opened.
+    class func getActiveTableSessionAsync (forTable table: TablesTable, completion: @escaping (TableSessionTable?, Error?) -> Void) {
         
-        // If path does not exist, we will freeze fail loading of data. It will never end.
         let tableSessionCollection = userData
             .collection("Tables")
             .document(table.firebaseID!)
             .collection("ActiveSessions")
         
-        tableSessionCollection.getDocuments { (snapshot, error) in
-//        tableSessionCollection.addSnapshotListener { (snapshot, error) in
+        tableSessionCollection.addSnapshotListener { (snapshot, error) in
             if let error = error {
                 completion(nil, error)
                 return
