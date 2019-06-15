@@ -15,7 +15,6 @@ class DBQuery {
     /// Async function returns all tables with active sessions (if any)
     class func getTablesWithActiveSessionsAsync(completion: @escaping ([TablesTable], Error?) -> Void) {
         
-        
         let tablesCollection = userData
             .collection("Tables")
             .order(by: "name", descending: false)

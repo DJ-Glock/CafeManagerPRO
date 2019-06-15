@@ -31,7 +31,7 @@ class TablesTable {
     
     
     // MARK: methods
-    func changeTable (to changedTable: Table) {
+    func changeTable (to changedTable: TableStruct) {
 //        self.tableName = changedTable.tableName
 //        self.tableCapacity = Int16(changedTable.tableCapacity)
 //        try? viewContext.save()
@@ -44,7 +44,7 @@ class TablesTable {
     }
     
     // MARK: class functions
-    class func getOrCreateTable (table: Table) throws -> TablesTable? {
+    class func getOrCreateTable (table: TableStruct) throws -> TablesTable? {
 //        tablesTableRequest.predicate = NSPredicate(format: "tableName = %@", table.tableName)
 //        do {
 //            let matchedTableName = try viewContext.fetch(tablesTableRequest)

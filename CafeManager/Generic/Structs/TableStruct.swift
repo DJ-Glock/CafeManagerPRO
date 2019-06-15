@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Table {
+struct TableStruct {
     var tableName: String
     var tableCapacity: Int
 }

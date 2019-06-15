@@ -11,7 +11,6 @@ import CoreData
 
 class TablesTableViewController: FetchedResultsTableViewController {
     // MARK: variables
-//    private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
     private var currentTable: TablesTable?
     private var currentTableSession: TableSessionTable?
     private var tablesArray: [TablesTable] = []
@@ -54,7 +53,6 @@ class TablesTableViewController: FetchedResultsTableViewController {
     // UI Update
     @objc private func updateGUI () {
         DBQuery.getTablesWithActiveSessionsAsync { [weak self] (tables, error) in
-            print("updateGUI get called")
             guard let self = self else {return}
             
             if let error = error {
@@ -125,7 +123,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
                 return
             }
             if let capacity = self.tableCapacityTextField.text!.getIntNumber() {
-                let newTable = Table(tableName: self.tableNameTextField.text!, tableCapacity: capacity)
+                let newTable = TableStruct(tableName: self.tableNameTextField.text!, tableCapacity: capacity)
                 let result = try? TablesTable.getOrCreateTable(table: newTable)
                 if result != nil {
                     self.updateGUI()
@@ -153,7 +151,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
                 return
             }
             if let capacity = self.tableCapacityTextField.text!.getIntNumber() {
-                let changedTable = Table(tableName: self.tableNameTextField.text!, tableCapacity: capacity)
+                let changedTable = TableStruct(tableName: self.tableNameTextField.text!, tableCapacity: capacity)
                 table.changeTable(to: changedTable)
                 self.updateGUI()
             } else {

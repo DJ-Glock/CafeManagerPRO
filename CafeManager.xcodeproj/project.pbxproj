@@ -76,7 +76,7 @@
 		21386EE72056FFFF00A14D30 /* CheckoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386EE62056FFFF00A14D30 /* CheckoutPresenter.swift */; };
 		21386EE92057001F00A14D30 /* CheckoutPresenterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386EE82057001F00A14D30 /* CheckoutPresenterInterface.swift */; };
 		21386EEB2057003F00A14D30 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386EEA2057003F00A14D30 /* CheckoutViewController.swift */; };
-		21386F2F2057D52200A14D30 /* TableSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F2E2057D52200A14D30 /* TableSession.swift */; };
+		21386F2F2057D52200A14D30 /* TableSessionStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F2E2057D52200A14D30 /* TableSessionStruct.swift */; };
 		21386F312057EF4B00A14D30 /* CommonAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F302057EF4B00A14D30 /* CommonAlert.swift */; };
 		21386F332058073200A14D30 /* CheckoutInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F322058073200A14D30 /* CheckoutInterface.swift */; };
 		21386F382058323200A14D30 /* CheckoutModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F35205830D800A14D30 /* CheckoutModule.swift */; };
@@ -166,7 +166,7 @@
 		21C7330A1ED5D57C0051AF77 /* TableSessionTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733091ED5D57C0051AF77 /* TableSessionTable.swift */; };
 		21C7330C1ED5D58F0051AF77 /* TablesTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C7330B1ED5D58F0051AF77 /* TablesTable.swift */; };
 		21C733251ED621A90051AF77 /* TableUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733241ED621A90051AF77 /* TableUIViewController.swift */; };
-		21C733271ED63B1B0051AF77 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733261ED63B1B0051AF77 /* Table.swift */; };
+		21C733271ED63B1B0051AF77 /* TableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733261ED63B1B0051AF77 /* TableStruct.swift */; };
 		21D055D91EE9C92E00620E28 /* ReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D055D81EE9C92E00620E28 /* ReportsViewController.swift */; };
 		21D760B11EBA60FE00E72A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D760B01EBA60FE00E72A8F /* AppDelegate.swift */; };
 		21D760B61EBA60FE00E72A8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21D760B41EBA60FE00E72A8F /* Main.storyboard */; };
@@ -326,7 +326,7 @@
 		21386EE62056FFFF00A14D30 /* CheckoutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPresenter.swift; sourceTree = "<group>"; };
 		21386EE82057001F00A14D30 /* CheckoutPresenterInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPresenterInterface.swift; sourceTree = "<group>"; };
 		21386EEA2057003F00A14D30 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
-		21386F2E2057D52200A14D30 /* TableSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSession.swift; sourceTree = "<group>"; };
+		21386F2E2057D52200A14D30 /* TableSessionStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSessionStruct.swift; sourceTree = "<group>"; };
 		21386F302057EF4B00A14D30 /* CommonAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlert.swift; sourceTree = "<group>"; };
 		21386F322058073200A14D30 /* CheckoutInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutInterface.swift; sourceTree = "<group>"; };
 		21386F35205830D800A14D30 /* CheckoutModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutModule.swift; sourceTree = "<group>"; };
@@ -403,7 +403,7 @@
 		21C733091ED5D57C0051AF77 /* TableSessionTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSessionTable.swift; sourceTree = "<group>"; };
 		21C7330B1ED5D58F0051AF77 /* TablesTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablesTable.swift; sourceTree = "<group>"; };
 		21C733241ED621A90051AF77 /* TableUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableUIViewController.swift; sourceTree = "<group>"; };
-		21C733261ED63B1B0051AF77 /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
+		21C733261ED63B1B0051AF77 /* TableStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableStruct.swift; sourceTree = "<group>"; };
 		21D055D81EE9C92E00620E28 /* ReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsViewController.swift; sourceTree = "<group>"; };
 		21D760AD1EBA60FD00E72A8F /* CafeManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CafeManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D760B01EBA60FE00E72A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -851,8 +851,8 @@
 			isa = PBXGroup;
 			children = (
 				219DF7181EE0BF83004070A3 /* Menu.swift */,
-				21C733261ED63B1B0051AF77 /* Table.swift */,
-				21386F2E2057D52200A14D30 /* TableSession.swift */,
+				21C733261ED63B1B0051AF77 /* TableStruct.swift */,
+				21386F2E2057D52200A14D30 /* TableSessionStruct.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1762,7 +1762,7 @@
 				2191DF68205E671F00786030 /* AddOrderInteractor.swift in Sources */,
 				213B451720548A4D00D04CF8 /* PeriodPickerViewController.swift in Sources */,
 				21A8BDD01EDF32FE0066F9C5 /* GuestAtTableTableViewCellDelegate.swift in Sources */,
-				21386F2F2057D52200A14D30 /* TableSession.swift in Sources */,
+				21386F2F2057D52200A14D30 /* TableSessionStruct.swift in Sources */,
 				21BF72A41F4A08F000D508AA /* HistoryTableUIViewController.swift in Sources */,
 				21377B331FBA2FAF003689F2 /* ColorThemes.swift in Sources */,
 				21386F3C20585C6300A14D30 /* CheckoutAssembly.swift in Sources */,
@@ -1772,7 +1772,7 @@
 				219DF7191EE0BF83004070A3 /* Menu.swift in Sources */,
 				21A8BDD21EDF34720066F9C5 /* OrderInTableTableViewCellDelegate.swift in Sources */,
 				21E0A8541EC23E6600DB10CE /* TablesTableViewController.swift in Sources */,
-				21C733271ED63B1B0051AF77 /* Table.swift in Sources */,
+				21C733271ED63B1B0051AF77 /* TableStruct.swift in Sources */,
 				2156E08321065BD7004D5647 /* Double+Extension.swift in Sources */,
 				21C733251ED621A90051AF77 /* TableUIViewController.swift in Sources */,
 				21386F3E205878CD00A14D30 /* UIApplication+Extension.swift in Sources */,
