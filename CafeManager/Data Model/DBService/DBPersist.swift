@@ -8,7 +8,6 @@
 
 import Foundation
 import Firebase
-import Dispatch
 
 class DBPersist {
     class func createTableInDatabase (newTable table: Table, completion: @escaping (Error?)-> Void) {

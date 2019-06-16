@@ -8,7 +8,6 @@
 
 import Foundation
 import Firebase
-import Dispatch
 
 class DBUpdate {
     class func changeTableInDatabase (tableToChange table: Table, completion: @escaping (Error?)-> Void) {
