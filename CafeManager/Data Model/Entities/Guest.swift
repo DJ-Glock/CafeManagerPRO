@@ -8,16 +8,16 @@
 // This class contains functions for managing GuestsTable in CoreData.
 import Foundation
 
-class GuestsTable {
+class Guest {
     
     public var guestName: String
     public var openTime: Date
-    public weak var table: TableSessionTable?
+    public weak var table: TableSession?
     public var closeTime: Date?
     public var totalAmount: Float = 0.0
-    public var orders: [OrdersTable] = []
+    public var orders: [Order] = []
     
-    init (guestName: String, openTime: Date, tableSession: TableSessionTable) {
+    init (guestName: String, openTime: Date, tableSession: TableSession) {
         self.guestName = guestName
         self.openTime = openTime
         self.table = tableSession
@@ -25,7 +25,7 @@ class GuestsTable {
     
     convenience init(guestName: String,
                      openTime: Date,
-                     tableSession: TableSessionTable,
+                     tableSession: TableSession,
                      closeTime: Date?,
                      totalAmount: Float) {
         self.init(guestName: guestName, openTime: openTime, tableSession: tableSession)
@@ -58,13 +58,13 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    func moveGuest (to targetTableSesion: TableSessionTable) {
+    func moveGuest (to targetTableSesion: TableSession) {
         self.table = targetTableSesion
         //try? viewContext.save()
     }
     
     func removeFromTable () {
-        let orders = GuestOrdersTable.getOrders(for: self)
+        let orders = GuestOrder.getOrders(for: self)
         for order in orders {
             order.remove()
         }
@@ -74,7 +74,7 @@ class GuestsTable {
     }
     
     // MARK: Class functions
-    class func addNewGuest (tableSession: TableSessionTable) {
+    class func addNewGuest (tableSession: TableSession) {
 //        let allGuests = self.getAllGuestsForTableSorted(tableSession: tableSession)
 //        let name = NSLocalizedString("guestNameForInsert", comment: "") + " \((allGuests.count) + 1)"
 //        if #available(iOS 10.0, *) {
@@ -93,7 +93,7 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    class func addNewGuestHistorical (tableSession: TableSessionTable, openTime: Date, closeTime: Date) {
+    class func addNewGuestHistorical (tableSession: TableSession, openTime: Date, closeTime: Date) {
 //        let allGuests = self.getAllGuestsForTableSorted(tableSession: tableSession)
 //        let name = NSLocalizedString("guestNameForInsert", comment: "") + " \((allGuests.count) + 1)"
 //        if #available(iOS 10.0, *) {
@@ -112,7 +112,7 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    class func addNewCustomGuest (guestName: String, tableSession: TableSessionTable) {
+    class func addNewCustomGuest (guestName: String, tableSession: TableSession) {
 //        if #available(iOS 10.0, *) {
 //            let newGuest = GuestsTable(context: viewContext)
 //            newGuest.guestName = guestName
@@ -129,7 +129,7 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    class func addNewCustomGuestHistorical (guestName: String, tableSession: TableSessionTable, openTime: Date, closeTime: Date) {
+    class func addNewCustomGuestHistorical (guestName: String, tableSession: TableSession, openTime: Date, closeTime: Date) {
 //        if #available(iOS 10.0, *) {
 //            let newGuest = GuestsTable(context: viewContext)
 //            newGuest.guestName = guestName
@@ -146,7 +146,7 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    class func closeAllGuestsForTable (tableSession: TableSessionTable) {
+    class func closeAllGuestsForTable (tableSession: TableSession) {
 //        let guests = GuestsTable.getActiveGuestsFor(tableSession: tableSession)
 //        let closeTime = Date()
 //        for guest in guests {
@@ -155,7 +155,7 @@ class GuestsTable {
         //try? viewContext.save()
     }
     
-    class func getActiveGuestsFor (tableSession: TableSessionTable) -> [GuestsTable] {
+    class func getActiveGuestsFor (tableSession: TableSession) -> [Guest] {
         //let tablePredicate = appDelegate.smStore?.predicate(for: "table", referencing: tableSession) ?? NSPredicate()
 //        let timePredicate = NSPredicate(format: "closeTime = %@", NSNull() as CVarArg)
 //        let request: NSFetchRequest<GuestsTable> = GuestsTable.fetchRequest()
@@ -168,7 +168,7 @@ class GuestsTable {
         return []
     }
     
-    class func getAllGuestsFor (tableSession: TableSessionTable) -> [GuestsTable] {
+    class func getAllGuestsFor (tableSession: TableSession) -> [Guest] {
         //let tablePredicate = appDelegate.smStore?.predicate(for: "table", referencing: tableSession) ?? NSPredicate()
 //        let request: NSFetchRequest<GuestsTable> = GuestsTable.fetchRequest()
 //        request.predicate = tablePredicate
@@ -180,7 +180,7 @@ class GuestsTable {
         return []
     }
     
-    class func getAllGuestsForTableSorted (tableSession: TableSessionTable) -> [GuestsTable] {
+    class func getAllGuestsForTableSorted (tableSession: TableSession) -> [Guest] {
 //        var guests = GuestsTable.getAllGuestsFor(tableSession: tableSession)
 //        guests = guests.sorted(by: { $0.openTime?.compare($1.openTime! as Date) == ComparisonResult.orderedDescending })
 //        return guests

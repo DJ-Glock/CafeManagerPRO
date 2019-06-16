@@ -8,14 +8,14 @@
 
 import Foundation
 
-class CommonMenuItemsTable {
+class CommonMenuItem {
     
     public var itemLanguage: String?
     public var itemCategory: String?
     public var itemName: String?
     public var itemDescription: String?
 
-    class func getCommonMenuItemsTable () -> [CommonMenuItemsTable] {
+    class func getCommonMenuItemsTable () -> [CommonMenuItem] {
         //commonMenuItemsTableRequest.predicate = nil
 //        if let result = try? viewContext.fetch(commonMenuItemsTableRequest) {
 //            return result

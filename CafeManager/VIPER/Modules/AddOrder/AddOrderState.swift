@@ -7,7 +7,7 @@
 //
 
 class AddOrderState: NSObject {
-    var currentGuest: GuestsTable!
-    var currentSession: TableSessionTable!
-    var selectedMenuItem: MenuTable!
+    var currentGuest: Guest!
+    var currentSession: TableSession!
+    var selectedMenuItem: MenuItem!
 }

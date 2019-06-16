@@ -9,12 +9,12 @@
 
 import Foundation
 
-class TablesTable {
+class Table {
     
     public var firebaseID: String?
     public var capacity: Int16
     public var name: String
-    public var tableSession: TableSessionTable?
+    public var tableSession: TableSession?
     
     init (firebaseID: String?, tableName: String, tableCapacity: Int16) {
         self.firebaseID = firebaseID
@@ -22,7 +22,7 @@ class TablesTable {
         self.capacity = tableCapacity
     }
     
-    convenience init (firebaseID: String?, tableName: String, tableCapacity: Int16, tableDescription: String?, tableSession: TableSessionTable?) {
+    convenience init (firebaseID: String?, tableName: String, tableCapacity: Int16, tableDescription: String?, tableSession: TableSession?) {
         self.init(firebaseID: firebaseID, tableName: tableName, tableCapacity: tableCapacity)
         self.tableSession = tableSession
     }
@@ -36,11 +36,11 @@ class TablesTable {
     }
     
     
-    class func getTable (withName name: String) -> TablesTable? {
+    class func getTable (withName name: String) -> Table? {
         return nil
     }
     
-    class func getAllTables () -> [TablesTable]? {
+    class func getAllTables () -> [Table]? {
         return []
     }
 }

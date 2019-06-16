@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Menu {
+struct MenuStruct {
     var itemName: String
     var itemDescription: String?
     var itemPrice: Float

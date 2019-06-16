@@ -11,7 +11,7 @@ import Firebase
 import Dispatch
 
 class DBPersist {
-    class func createTableInDatabase (newTable table: TablesTable, completion: @escaping (Error?)-> Void) {
+    class func createTableInDatabase (newTable table: Table, completion: @escaping (Error?)-> Void) {
         var tableData = [String:Any]()
         tableData["name"] = table.name
         tableData["capacity"] = table.capacity

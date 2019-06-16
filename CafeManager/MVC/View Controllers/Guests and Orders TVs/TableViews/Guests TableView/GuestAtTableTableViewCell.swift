@@ -12,8 +12,8 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
     
     weak var cellDelegate: GuestAtTableTableViewCellDelegate?
     weak var didRefreshTableViewDelegate: GuestOrdersTableViewRefreshDelegate?
-    var guest: GuestsTable? = nil
-    var guestOrders: [GuestOrdersTable] = []
+    var guest: Guest? = nil
+    var guestOrders: [GuestOrder] = []
     
     @IBOutlet weak var addGuestOrderButton: UIButton!
     @IBOutlet weak var closeGuestButton: UIButton!
@@ -34,7 +34,7 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
         if guest == nil {
             self.guestOrders = []
         } else {
-            self.guestOrders = GuestOrdersTable.getOrders(for: self.guest!)
+            self.guestOrders = GuestOrder.getOrders(for: self.guest!)
         }
     }
     
@@ -95,7 +95,7 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
 }
 
 extension GuestAtTableTableViewCell:GuestOrdersTableViewCellDelegate {
-    func didPressOrderIncreaseOrDecreaseButton(order: GuestOrdersTable, action: String) {
+    func didPressOrderIncreaseOrDecreaseButton(order: GuestOrder, action: String) {
         if action == "+" {
             order.increaseQuantity()
         } else {

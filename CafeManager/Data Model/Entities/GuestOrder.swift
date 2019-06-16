@@ -8,16 +8,16 @@
 
 import Foundation
 
-class GuestOrdersTable {
+class GuestOrder {
     
     
     //// TO BE REPLACED WITH OrdersTable AND DECOMMED!!!
 
     public var quantityOfItems: Int16
-    public var menuItem: MenuTable
-    public weak var orderedGuest: GuestsTable?
+    public var menuItem: MenuItem
+    public weak var orderedGuest: Guest?
     
-    init (menuItem: MenuTable, quantity: Int16, orderedGuest: GuestsTable) {
+    init (menuItem: MenuItem, quantity: Int16, orderedGuest: Guest) {
         self.menuItem = menuItem
         self.quantityOfItems = quantity
         self.orderedGuest = orderedGuest
@@ -40,7 +40,7 @@ class GuestOrdersTable {
     }
     
     // MARK: class functions
-    class func addOrIncreaseOrder(for guest: GuestsTable, menuItem: MenuTable) {
+    class func addOrIncreaseOrder(for guest: Guest, menuItem: MenuItem) {
         
         //let sessionPredicate = appDelegate.smStore?.predicate(for: "orderedGuest", referencing: guest) ?? NSPredicate()
 //        let request : NSFetchRequest<GuestOrdersTable> = GuestOrdersTable.fetchRequest()
@@ -70,7 +70,7 @@ class GuestOrdersTable {
 //        try? viewContext.save()
     }
     
-    class func getOrders (for guest: GuestsTable) -> [GuestOrdersTable] {
+    class func getOrders (for guest: Guest) -> [GuestOrder] {
         
         //let sessionPredicate = appDelegate.smStore?.predicate(for: "orderedGuest", referencing: guest) ?? NSPredicate()
 //        let request : NSFetchRequest<GuestOrdersTable> = GuestOrdersTable.fetchRequest()

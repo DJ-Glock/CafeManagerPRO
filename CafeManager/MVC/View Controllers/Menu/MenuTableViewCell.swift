@@ -9,7 +9,7 @@
 import UIKit
 
 class MenuTableViewCell: UITableViewCell {
-    var menuItem: MenuTable? = nil
+    var menuItem: MenuItem? = nil
     
     @IBOutlet weak var menuItemNameLabel: UILabel!
     @IBOutlet weak var menuItemDescriptionLabel: UILabel!

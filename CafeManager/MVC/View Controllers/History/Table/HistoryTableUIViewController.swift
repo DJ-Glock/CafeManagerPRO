@@ -14,8 +14,8 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     //MARK: variables:
     //The following three variables will be set before segue to this view.
     var tableName: String? = nil
-    var currentTable: TablesTable? = nil
-    var currentTableSession: TableSessionTable? = nil
+    var currentTable: Table? = nil
+    var currentTableSession: TableSession? = nil
     
     private var selectedCellIndexPath: IndexPath?
     private var selectedCellHeight: CGFloat {
@@ -32,31 +32,31 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
             return 40
         }
     }
-    private var currentGuest: GuestsTable? = nil
+    private var currentGuest: Guest? = nil
     private var guestNameTextField: UITextField!
-    private var guests: [GuestsTable] {
+    private var guests: [Guest] {
         if currentTableSession != nil {
-            return GuestsTable.getAllGuestsForTableSorted(tableSession: currentTableSession!)
+            return Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!)
         } else {
             return []
         }
     }
-    private var orders: [OrdersTable] {
+    private var orders: [Order] {
         if currentTableSession != nil {
-            return OrdersTable.getOrdersFor(tableSession: currentTableSession!)
+            return Order.getOrdersFor(tableSession: currentTableSession!)
         } else {
             return []
         }
     }
     private var originalAmount: Float {
-        return TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)
+        return TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
     }
     private var totalAmount: Float {
         guard currentTableSession != nil else {return 0}
         if currentTableSession!.totalAmount != -1 {
             return currentTableSession!.totalAmount
         } else {
-            return TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)
+            return TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
         }
     }
     private var discount: Int16 {
@@ -77,7 +77,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     private var countOfGuests: Int {
         get {
             guard currentTableSession != nil else {return 0}
-            return GuestsTable.getAllGuestsForTableSorted(tableSession: currentTableSession!).count
+            return Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!).count
         }
     }
     
@@ -183,7 +183,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     
     
     private func addQuickGuest () {
-        GuestsTable.addNewGuestHistorical(tableSession: currentTableSession!, openTime: (currentTableSession?.openTime ?? Date()), closeTime: (currentTableSession?.closeTime)!)
+        Guest.addNewGuestHistorical(tableSession: currentTableSession!, openTime: (currentTableSession?.openTime ?? Date()), closeTime: (currentTableSession?.closeTime)!)
         updateGuestsTableView()
         updateLabels()
     }
@@ -230,7 +230,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
             cell.guestNameLabel.text = guest.guestName
             cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime.convertToString()
             if UserSettings.isTimeCafe == true {
-                cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Float(TableSessionTable.calculateIndividualAmount(guest: guest))), number: .decimal) + UserSettings.currencySymbol
+                cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Float(TableSession.calculateIndividualAmount(guest: guest))), number: .decimal) + UserSettings.currencySymbol
             } else {
                 cell.guestAmountLabel.text = NSLocalizedString("guestGoneTime", comment: "") + guest.closeTime!.convertToString()
             }
@@ -377,7 +377,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
 // MARK: Delegates
 // Delegate of GuestsTableView
 extension HistoryTableUIViewController: GuestAtTableTableViewCellDelegate {
-    func didPressAddGuestOrderButton(guest: GuestsTable, sender: AnyObject) {
+    func didPressAddGuestOrderButton(guest: Guest, sender: AnyObject) {
         self.currentGuest = guest
         
         let addOrder = AddOrderAssembly.assembleModule()
@@ -385,7 +385,7 @@ extension HistoryTableUIViewController: GuestAtTableTableViewCellDelegate {
         addOrder.showMenuItemsToAddOrder(forGuest: self.currentGuest!, sender: sender)
     }
     
-    func didPressCloseGuestButton(guest: GuestsTable) {
+    func didPressCloseGuestButton(guest: Guest) {
     }
 }
 
@@ -398,7 +398,7 @@ extension HistoryTableUIViewController: GuestOrdersTableViewRefreshDelegate {
 
 // Delegate for OrdersTableView
 extension HistoryTableUIViewController: OrderInTableTableViewCellDelegate {
-    func didPressIncreaseOrDecreaseOrderQuantityButton(order: OrdersTable, menuItem: MenuTable, action: String) {
+    func didPressIncreaseOrDecreaseOrderQuantityButton(order: Order, menuItem: MenuItem, action: String) {
         if action == "+" {
             order.increaseQuantity()
         } else {
@@ -423,20 +423,20 @@ extension HistoryTableUIViewController: PeriodPickerDelegate {
 // Delegate of CustomGuest module that allows user to choose custom guest name
 extension HistoryTableUIViewController: CustomGuestDelegate {
     func didChooseCustomGuest(name: String) {
-        GuestsTable.addNewCustomGuestHistorical(guestName: name, tableSession: currentTableSession!, openTime: currentTableSession!.openTime, closeTime: currentTableSession!.closeTime!)
+        Guest.addNewCustomGuestHistorical(guestName: name, tableSession: currentTableSession!, openTime: currentTableSession!.openTime, closeTime: currentTableSession!.closeTime!)
         updateGUI()
     }
 }
 
 // Delegate of AddOrder module that allows user to choose items to order
 extension HistoryTableUIViewController: AddOrderDelegate {
-    func didChoose(menuItem item: MenuTable, forGuest guest: GuestsTable) {
-        GuestOrdersTable.addOrIncreaseOrder(for: guest, menuItem: item)
+    func didChoose(menuItem item: MenuItem, forGuest guest: Guest) {
+        GuestOrder.addOrIncreaseOrder(for: guest, menuItem: item)
         self.updateGUI()
     }
     
-    func didChoose(menuItem item: MenuTable, forSession session: TableSessionTable) {
-        OrdersTable.addOrIncreaseOrder(tableSession: session, menuItem: item)
+    func didChoose(menuItem item: MenuItem, forSession session: TableSession) {
+        Order.addOrIncreaseOrder(tableSession: session, menuItem: item)
         self.updateGUI()
     }
 }
@@ -445,7 +445,7 @@ extension HistoryTableUIViewController: AddOrderDelegate {
 extension HistoryTableUIViewController:CheckoutDelegate {
     func didPerformCheckout(totalAmount: Float, discount: Int16, tips: Float) {
         do {
-            try TableSessionTable.saveRecalculated(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
+            try TableSession.saveRecalculated(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
         } catch {
             CommonAlert.shared.show(title: "Failed to close session", text: error.localizedDescription)
         }

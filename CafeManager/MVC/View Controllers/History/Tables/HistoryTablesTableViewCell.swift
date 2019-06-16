@@ -10,6 +10,6 @@ import UIKit
 
 class HistoryTablesTableViewCell: UITableViewCell {
     weak var cellDelegate: HistoryTablesTableViewCellDelegate?
-    var table: TablesTable? = nil
+    var table: Table? = nil
     @IBOutlet weak var tableNameLabel: UILabel!
 }

@@ -60,11 +60,11 @@ class ReportsDataModel {
     
     // MARK: Functions to get plain data from database
     private func getPlainDataFromDatabaseForPeriod () {
-        let guestSessions = GuestsTable.getGuestSessionsTimings(from: self.startDate, to: self.endDate)
+        let guestSessions = Guest.getGuestSessionsTimings(from: self.startDate, to: self.endDate)
         self.plainGuestSessionDurations = guestSessions.durationsInSeconds
         self.plainGuestSessionOpenDates = guestSessions.dates
         
-        let tableSessions = TableSessionTable.getTableSessionsTimingsAndAmounts(from: self.startDate, to: self.endDate)
+        let tableSessions = TableSession.getTableSessionsTimingsAndAmounts(from: self.startDate, to: self.endDate)
         self.plainTableSessionDurations = tableSessions.durationsInSeconds
         self.plainTableSessionOpenDates = tableSessions.dates
         self.plainTableSessionAmounts = tableSessions.amounts

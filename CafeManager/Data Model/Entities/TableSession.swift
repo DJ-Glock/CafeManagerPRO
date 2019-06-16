@@ -9,28 +9,28 @@
 
 import Foundation
 
-class TableSessionTable {
+class TableSession {
     
-    public weak var table: TablesTable?
+    public weak var table: Table?
     public var openTime: Date
     public var closeTime: Date?
-    public var guests: [GuestsTable] = []
-    public var orderedItems: [OrdersTable] = []
+    public var guests: [Guest] = []
+    public var orderedItems: [Order] = []
     public var totalAmount: Float = 0.0
     public var tips: Float = 0.0
     public var discount: Int16 = 0
 
     
-    init (table: TablesTable, openTime: Date) {
+    init (table: Table, openTime: Date) {
         self.table = table
         self.openTime = openTime
     }
     
-    convenience init (table: TablesTable,
+    convenience init (table: Table,
                      openTime: Date,
                      closeTime: Date?,
-                     guests: [GuestsTable],
-                     orderedItems: [OrdersTable],
+                     guests: [Guest],
+                     orderedItems: [Order],
                      totalAmount: Float,
                      tips :Float,
                      discount: Int16) {
@@ -61,7 +61,7 @@ class TableSessionTable {
     
     
     // MARK: functions for managing sessions
-    class func createTableSession (table: TablesTable) -> TableSessionTable {
+    class func createTableSession (table: Table) -> TableSession {
 //        if #available(iOS 10.0, *) {
 //            let newTableSession = TableSessionTable(context: viewContext)
 //            newTableSession.openTime = Date() as NSDate
@@ -77,10 +77,10 @@ class TableSessionTable {
 //            try? viewContext.save()
 //            return newTableSession
 //        }
-        return TableSessionTable(table: table, openTime: Date())
+        return TableSession(table: table, openTime: Date())
     }
     
-    class func saveRecalculated (tableSession: TableSessionTable, totalAmount: Float, discount: Int16, tips: Float) throws {
+    class func saveRecalculated (tableSession: TableSession, totalAmount: Float, discount: Int16, tips: Float) throws {
 //        tableSession.totalAmount = totalAmount
 //        tableSession.discount = discount
 //        tableSession.totalTips = tips
@@ -91,7 +91,7 @@ class TableSessionTable {
 //        }
     }
     
-    class func checkout (tableSession: TableSessionTable, totalAmount: Float, discount: Int16, tips: Float) throws {
+    class func checkout (tableSession: TableSession, totalAmount: Float, discount: Int16, tips: Float) throws {
 //        GuestsTable.closeAllGuestsForTable(tableSession: tableSession)
 //        tableSession.totalAmount = totalAmount
 //        tableSession.discount = discount
@@ -104,7 +104,7 @@ class TableSessionTable {
 //        }
     }
     
-    class func getCurrentTableSession (table: TablesTable) -> TableSessionTable? {
+    class func getCurrentTableSession (table: Table) -> TableSession? {
 //        //let tablePredicate = appDelegate.smStore?.predicate(for: "table", referencing: table) ?? NSPredicate()
 //        let timePredicate = NSPredicate(format: "closeTime = %@", NSNull() as CVarArg)
 //        let request: NSFetchRequest<TableSessionTable> = TableSessionTable.fetchRequest()
@@ -128,12 +128,12 @@ class TableSessionTable {
         return nil
     }
     
-    class func moveTableSessionTo (targetTable: TablesTable, currentSession: TableSessionTable) {
+    class func moveTableSessionTo (targetTable: Table, currentSession: TableSession) {
 //        currentSession.table = targetTable
 //        try? viewContext.save()
     }
     
-    private static func removeSession(_ session: TableSessionTable) {
+    private static func removeSession(_ session: TableSession) {
 //        let guests = GuestsTable.getAllGuestsFor(tableSession: session)
 //
 //        for guest in guests {
@@ -153,7 +153,7 @@ class TableSessionTable {
 //        try? viewContext.save()
     }
     
-    class func removeTableSessionsForTable (table: TablesTable) {
+    class func removeTableSessionsForTable (table: Table) {
 //        //let predicate = appDelegate.smStore?.predicate(for: "table", referencing: table)
 //        tableSessionRequest.predicate = predicate
 //        if let matchedTableSessions = try? viewContext.fetch(tableSessionRequest) {
@@ -164,11 +164,11 @@ class TableSessionTable {
     }
     
     // MARK: functions for amounts calculation
-    class func calculateAmountForTime(tableSession: TableSessionTable) -> Float {
+    class func calculateAmountForTime(tableSession: TableSession) -> Float {
         var amount: Float = 0
         guard UserSettings.isTimeCafe == true else {return amount}
         
-        let guestsTable = GuestsTable.getAllGuestsForTableSorted(tableSession: tableSession)
+        let guestsTable = Guest.getAllGuestsForTableSorted(tableSession: tableSession)
         for guest in guestsTable {
             let closeOrCurrentTime = guest.closeTime ?? Date()
             amount = amount + roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.pricePerMinute
@@ -176,7 +176,7 @@ class TableSessionTable {
         return amount
     }
     
-    class func calculateIndividualAmount (guest: GuestsTable) -> Float {
+    class func calculateIndividualAmount (guest: Guest) -> Float {
         var amount: Float = 0
         var ordersAmount: Float = 0
         var amountForTime: Float = 0
@@ -202,7 +202,7 @@ class TableSessionTable {
         return amount
     }
     
-    class func calculateActualTotalAmount (for currentTableSession: TableSessionTable?) -> Float {
+    class func calculateActualTotalAmount (for currentTableSession: TableSession?) -> Float {
         guard currentTableSession != nil else {return 0}
         
         var totalAmount: Float = 0
@@ -224,7 +224,7 @@ class TableSessionTable {
         return totalAmount
     }
     
-    class func calculateTotalAmount (currentTableSession: TableSessionTable?) -> Float {
+    class func calculateTotalAmount (currentTableSession: TableSession?) -> Float {
         guard currentTableSession != nil else {return 0}
         
         var totalAmount: Float = 0

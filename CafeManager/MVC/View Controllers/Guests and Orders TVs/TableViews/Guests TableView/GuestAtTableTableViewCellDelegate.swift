@@ -10,6 +10,6 @@ import Foundation
 
 //Protocol for tableView to support segues with sending data to new view
 protocol GuestAtTableTableViewCellDelegate : class {
-    func didPressCloseGuestButton(guest: GuestsTable)
-    func didPressAddGuestOrderButton(guest: GuestsTable, sender: AnyObject)
+    func didPressCloseGuestButton(guest: Guest)
+    func didPressAddGuestOrderButton(guest: Guest, sender: AnyObject)
 }

@@ -10,8 +10,8 @@ import UIKit
 
 class OrderInTableTableViewCell: UITableViewCell {
     weak var cellDelegate: OrderInTableTableViewCellDelegate?
-    var order: OrdersTable? = nil
-    var menuItem: MenuTable? = nil
+    var order: Order? = nil
+    var menuItem: MenuItem? = nil
     
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemQuantityLabel: UILabel!

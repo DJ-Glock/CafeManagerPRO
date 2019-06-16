@@ -12,7 +12,7 @@ import CoreData
 class HistoryTablesTableViewController: FetchedResultsTableViewController {
     //MARK: variables
     //private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
-    private var currentTable: TablesTable?
+    private var currentTable: Table?
     private var tableNameTextField: UITextField!
     
     //MARK: system functions for view
@@ -77,7 +77,7 @@ class HistoryTablesTableViewController: FetchedResultsTableViewController {
 
 // MARK: Delegates
 extension HistoryTablesTableViewController: HistoryTablesTableViewCellDelegate {
-    func didPressTablesCellButton(table: TablesTable) {
+    func didPressTablesCellButton(table: Table) {
         currentTable = table
     }
 }

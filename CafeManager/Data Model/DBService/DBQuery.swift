@@ -13,14 +13,14 @@ import Dispatch
 class DBQuery {
     
     /// Async function returns all tables with active sessions (if any)
-    class func getTablesWithActiveSessionsAsync(completion: @escaping ([TablesTable], Error?) -> Void) {
+    class func getTablesWithActiveSessionsAsync(completion: @escaping ([Table], Error?) -> Void) {
         
         let tablesCollection = userData
             .collection("Tables")
             .order(by: "name", descending: false)
         
         tablesCollection.addSnapshotListener { (snapshot, error) in
-            var tables = [TablesTable]()
+            var tables = [Table]()
             
             if let error = error {
                 completion (tables, error)
@@ -33,7 +33,7 @@ class DBQuery {
                     let tableName = data["name"] as! String
                     let tableCapacity = data["capacity"] as! Int16
                     
-                    let table = TablesTable(firebaseID: firebaseID, tableName: tableName, tableCapacity: tableCapacity)
+                    let table = Table(firebaseID: firebaseID, tableName: tableName, tableCapacity: tableCapacity)
                     tables.append(table)
                 }
             }
@@ -60,7 +60,7 @@ class DBQuery {
     }
     
     /// Async function returns table session for table or nil if no active session is opened.
-    class func getActiveTableSessionAsync (forTable table: TablesTable, completion: @escaping (TableSessionTable?, Error?) -> Void) {
+    class func getActiveTableSessionAsync (forTable table: Table, completion: @escaping (TableSession?, Error?) -> Void) {
         
         let tableSessionCollection = userData
             .collection("Tables")
@@ -86,9 +86,9 @@ class DBQuery {
                 let tips = data["tips"] as? Float ?? 0.0
                 let discount = data["discount"] as? Int16 ?? 0
                 
-                let tableSession = TableSessionTable(table: table, openTime: openTime, closeTime: closeTime, guests: [], orderedItems: [], totalAmount: totalAmount, tips: tips, discount: discount)
+                let tableSession = TableSession(table: table, openTime: openTime, closeTime: closeTime, guests: [], orderedItems: [], totalAmount: totalAmount, tips: tips, discount: discount)
                 
-                var guests = [GuestsTable]()
+                var guests = [Guest]()
                 let guestsData = data["Guests"] as? [[String:Any]] ?? []
                 
                 // Get Guests and their individual orders
@@ -100,16 +100,16 @@ class DBQuery {
                     let guestCloseTime = guestCloseTimeStamp?.dateValue()
                     let guestTotalAmount = guestData["totalAmount"] as? Float ?? 0.0
                     
-                    let guest = GuestsTable(guestName: guestName, openTime: guestOpenTime, tableSession: tableSession, closeTime: guestCloseTime, totalAmount: guestTotalAmount)
+                    let guest = Guest(guestName: guestName, openTime: guestOpenTime, tableSession: tableSession, closeTime: guestCloseTime, totalAmount: guestTotalAmount)
                     
-                    var guestOrders = [OrdersTable]()
+                    var guestOrders = [Order]()
                     let guestOrdersData = guestData["Orders"] as! [[String:Any]]
                     for guestOrderData in guestOrdersData {
                         let menuItemName = guestOrderData["name"] as! String
                         let price = guestOrderData["price"] as! Float
                         let quantity = guestOrderData["quantity"] as! Int16
                         
-                        let guestOrder = OrdersTable(menuItemName: menuItemName, quantity: quantity, price: price, orderedGuest: guest)
+                        let guestOrder = Order(menuItemName: menuItemName, quantity: quantity, price: price, orderedGuest: guest)
                         guestOrders.append(guestOrder)
                     }
                     guest.orders = guestOrders
@@ -117,14 +117,14 @@ class DBQuery {
                 }
                 
                 // Get shared orders
-                var orders = [OrdersTable]()
+                var orders = [Order]()
                 let ordersData = data["Orders"] as? [[String:Any]] ?? []
                 for orderData in ordersData {
                     let menuItemName = orderData["name"] as! String
                     let price = orderData["price"] as! Float
                     let quantity = orderData["quantity"] as! Int16
                     
-                    let order = OrdersTable(menuItemName: menuItemName, quantity: quantity, price: price, orderedTable: tableSession)
+                    let order = Order(menuItemName: menuItemName, quantity: quantity, price: price, orderedTable: tableSession)
                     orders.append(order)
                 }
                 

@@ -7,8 +7,8 @@
 //
 
 class MoveGuestsState: NSObject {
-    var currentGuest: GuestsTable!
-    var currentTableSession: TableSessionTable!
-    var targetTable: TablesTable!
-    var targetTableSession: TableSessionTable!
+    var currentGuest: Guest!
+    var currentTableSession: TableSession!
+    var targetTable: Table!
+    var targetTableSession: TableSession!
 }

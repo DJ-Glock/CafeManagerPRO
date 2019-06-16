@@ -19,18 +19,18 @@ class MenuTableViewController: FetchedResultsTableViewController {
     private var itemPriceTextField: UITextField!
     internal var tableViewRefreshControl: UIRefreshControl?
     private var isSearchActive : Bool = false
-    private var filtered:[MenuTable] = []
+    private var filtered:[MenuItem] = []
     private var selectedLanguage = GenericStuff.MenuLanguage.english
     private var menuCategories: [String] {
-        return MenuCategoryTable.getAllCategories()
+        return MenuCategory.getAllCategories()
     }
     private var addingItemView = UIView()
     
     // Variable is used for adding or changing menuItem
-    private var menuItem = Menu(itemName: "", itemDescription: nil, itemPrice: -1, itemCategory: nil)
+    private var menuItem = MenuStruct(itemName: "", itemDescription: nil, itemPrice: -1, itemCategory: nil)
     // Flag for disabling actions with tableView while adding or changing menuItem
     private var isAddingOrChangingMenuItem = false
-    private var currentMenuItem: MenuTable?
+    private var currentMenuItem: MenuItem?
     
     // MARK: IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -143,7 +143,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
     }
     
-    private func removeMenuItem(menuItem: MenuTable) {
+    private func removeMenuItem(menuItem: MenuItem) {
         menuItem.remove()
         self.updateGUI()
     }
@@ -176,7 +176,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
     // MARK: TableView functions
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell
-        var menuItem: MenuTable!
+        var menuItem: MenuItem!
         
         if isSearchActive {
             menuItem = filtered[indexPath.row]
@@ -205,7 +205,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
     //Functions for Edit/Delete swipe buttons
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         guard self.isAddingOrChangingMenuItem == false else {return []}
-        var menuItem: MenuTable!
+        var menuItem: MenuItem!
         if self.isSearchActive {
             menuItem = self.filtered[editActionsForRowAt.row]
         } else {
@@ -341,7 +341,7 @@ extension MenuTableViewController: UISearchBarDelegate {
 
 extension MenuTableViewController {
     private func exportMenuToCSV() throws -> URL {
-        var items: [MenuTable]
+        var items: [MenuItem]
         if isSearchActive {
             items = self.filtered
         } else {
@@ -383,7 +383,7 @@ extension MenuTableViewController {
 extension MenuTableViewController {
     private func addSubViewForAddingMenuItem () {
         self.isAddingOrChangingMenuItem = true
-        self.menuItem = Menu(itemName: "", itemDescription: "", itemPrice: -1, itemCategory: nil)
+        self.menuItem = MenuStruct(itemName: "", itemDescription: "", itemPrice: -1, itemCategory: nil)
         let viewWidth = self.view.myCustomAlertViewWidth()
         let viewHeight = 200
         addingItemView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
@@ -488,7 +488,7 @@ extension MenuTableViewController {
             self.showAlertParamsNotFilledProperly()
             return
         }
-        MenuTable.addMenuItem(item: self.menuItem)
+        MenuItem.addMenuItem(item: self.menuItem)
         self.updateGUI()
         self.searchBar.isHidden = false
         Overlay.shared.hideOverlayView()
@@ -506,13 +506,13 @@ extension MenuTableViewController {
         self.isAddingOrChangingMenuItem = false
     }
 
-    private func addSubViewForChangingMenuItem (menuItem: MenuTable) {
+    private func addSubViewForChangingMenuItem (menuItem: MenuItem) {
         self.isAddingOrChangingMenuItem = true
         let itemName = menuItem.itemName
         let itemDescription = menuItem.itemDescription
         let itemPrice = menuItem.itemPrice
         let itemCategory = menuItem.category?.categoryName
-        self.menuItem = Menu(itemName: itemName, itemDescription: itemDescription, itemPrice: itemPrice, itemCategory: itemCategory)
+        self.menuItem = MenuStruct(itemName: itemName, itemDescription: itemDescription, itemPrice: itemPrice, itemCategory: itemCategory)
         self.currentMenuItem = menuItem
         let viewWidth = self.view.myCustomAlertViewWidth()
         let viewHeight = 200

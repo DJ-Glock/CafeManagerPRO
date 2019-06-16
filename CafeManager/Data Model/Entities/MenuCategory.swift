@@ -8,12 +8,12 @@
 
 import Foundation
 
-class MenuCategoryTable {
+class MenuCategory {
     
     public var categoryName: String
-    public var menuItems: [MenuTable]
+    public var menuItems: [MenuItem]
     
-    init (categoryName: String, menuItems: [MenuTable]) {
+    init (categoryName: String, menuItems: [MenuItem]) {
         self.categoryName = categoryName
         self.menuItems = menuItems
     }
@@ -33,7 +33,7 @@ class MenuCategoryTable {
         return categories
     }
     
-    class func getOrCreateCategory(category: String?) -> MenuCategoryTable? {
+    class func getOrCreateCategory(category: String?) -> MenuCategory? {
 //        // If category is nil, set Default value.
 //        let itemCategory = category ?? ".Default"
 //

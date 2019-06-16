@@ -14,13 +14,13 @@ class AddOrderRouter: NSObject, AddOrderInterface, AddOrderRouterInterface {
     var state: AddOrderState!
     
     // Incoming
-    func showMenuItemsToAddOrder(forGuest guest: GuestsTable, sender: AnyObject) {
+    func showMenuItemsToAddOrder(forGuest guest: Guest, sender: AnyObject) {
         showView(sender: sender)
         state.currentGuest = guest
         presenter.configureView()
     }
     
-    func showMenuItemsToAddOrder(forSession session: TableSessionTable, sender: AnyObject) {
+    func showMenuItemsToAddOrder(forSession session: TableSession, sender: AnyObject) {
         showView(sender: sender)
         state.currentSession = session
         presenter.configureView()

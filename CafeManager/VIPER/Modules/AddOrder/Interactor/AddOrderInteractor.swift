@@ -11,19 +11,19 @@ class AddOrderInteractor: NSObject, AddOrderInteractorInterface {
     weak var state: AddOrderState!
     
     func getMenuItem (withName name: String) {
-        if let item = MenuTable.getActiveMenuItem(withName: name) {
+        if let item = MenuItem.getActiveMenuItem(withName: name) {
             state.selectedMenuItem = item
         }
     }
     
     func getMenuItems (withNameContains text: String?) -> [String : [[String : String]]] {
-        var menuItems: [MenuTable] = []
+        var menuItems: [MenuItem] = []
         var result = [String : [[String : String]]]()
 
         if let containsText = text {
-            menuItems = MenuTable.getActiveMenuItems(withNameContains: containsText)
+            menuItems = MenuItem.getActiveMenuItems(withNameContains: containsText)
         } else {
-            menuItems = MenuTable.getActiveMenuItems()
+            menuItems = MenuItem.getActiveMenuItems()
         }
         
         for item in menuItems {

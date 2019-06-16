@@ -17,7 +17,7 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
     // MARK: variables
 //    private var fetchedResultsController: NSFetchedResultsController<CommonMenuItemsTable>?
     private var isSearchActive : Bool = false
-    private var filtered:[CommonMenuItemsTable] = []
+    private var filtered:[CommonMenuItem] = []
     private var selectedIndexPaths: Set<IndexPath> = []
     private var invalidSelectedIndexPaths: Set<IndexPath> = []
     private var pricesForSelectedMenuItems: [IndexPath:Float] = [:]
@@ -76,14 +76,14 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
             }
             
             self.invalidSelectedIndexPaths = []
-            var menuItems: [Menu] = []
+            var menuItems: [MenuStruct] = []
             
             // If search is active, use filtered data
             if self.isSearchActive {
                 for index in selectedIndexPaths {
                     if let price = pricesForSelectedMenuItems[index] {
                         let commonMenuItem = self.filtered[index.row]
-                        let menuItem = Menu(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
+                        let menuItem = MenuStruct(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
                         menuItems.append(menuItem)
                     } else {
                         self.invalidSelectedIndexPaths.insert(index)
@@ -109,7 +109,7 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
                 // Add selected menu items to database and close this view
                 tableView.reloadData()
                 for item in menuItems {
-                    MenuTable.addMenuItem(item: item)
+                    MenuItem.addMenuItem(item: item)
                 }
                 self.navigationController?.popViewController(animated: true)
             }
@@ -127,7 +127,7 @@ extension CommonMenuTableViewController {
     // MARK: Table view configuration
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "menuItemCell") as! CommonMenuTableViewCell
-        var menuItem: CommonMenuItemsTable?
+        var menuItem: CommonMenuItem?
         
         // If search is active, use another data source
         if isSearchActive {

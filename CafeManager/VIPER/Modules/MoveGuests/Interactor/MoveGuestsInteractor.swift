@@ -23,11 +23,11 @@ class MoveGuestsInteractor: NSObject, MoveGuestsInteractorInterface {
     }
     
     func getTablesArrayForMovingSession() -> [String] {
-        if let tables = TablesTable.getAllTables() {
+        if let tables = Table.getAllTables() {
             var tablesNames: [String] = []
             
             for table in tables {
-                let session = TableSessionTable.getCurrentTableSession(table: table)
+                let session = TableSession.getCurrentTableSession(table: table)
                 if session == nil {
                     tablesNames.append(table.name)
                 }
@@ -38,11 +38,11 @@ class MoveGuestsInteractor: NSObject, MoveGuestsInteractorInterface {
     }
     
     func getTablesArrayForMovingGuest() -> [String] {
-        if let tables = TablesTable.getAllTables() {
+        if let tables = Table.getAllTables() {
             var tablesNames: [String] = []
             
             for table in tables {
-                if let _ = TableSessionTable.getCurrentTableSession(table: table) {
+                if let _ = TableSession.getCurrentTableSession(table: table) {
                     tablesNames.append(table.name)
                 }
             }
@@ -52,16 +52,16 @@ class MoveGuestsInteractor: NSObject, MoveGuestsInteractorInterface {
     }
     
     // Private functions
-    private func getTableForSession (tableName: String) -> TablesTable? {
-        if let table = TablesTable.getTable(withName: tableName) {
+    private func getTableForSession (tableName: String) -> Table? {
+        if let table = Table.getTable(withName: tableName) {
             return table
         }
         return nil
     }
     
-    private func getTableSessionForGuest (tableName: String) -> TableSessionTable? {
-        if let table = TablesTable.getTable(withName: tableName) {
-            if let session = TableSessionTable.getCurrentTableSession(table: table) {
+    private func getTableSessionForGuest (tableName: String) -> TableSession? {
+        if let table = Table.getTable(withName: tableName) {
+            if let session = TableSession.getCurrentTableSession(table: table) {
                 return session
             }
         }

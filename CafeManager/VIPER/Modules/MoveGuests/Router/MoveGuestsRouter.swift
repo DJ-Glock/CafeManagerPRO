@@ -15,14 +15,14 @@ class MoveGuestsRouter: NSObject, MoveGuestsInterface, MoveGuestsRouterInterface
     
     
     // Incoming
-    func chooseTargetTableSession(forGuest guest: GuestsTable, sender: AnyObject) {
+    func chooseTargetTableSession(forGuest guest: Guest, sender: AnyObject) {
         showView(sender: sender)
         
         state.currentGuest = guest
         presenter.configureViewToSelectTableForGuest()
     }
     
-    func chooseTargetTable(forSession session: TableSessionTable, sender: AnyObject) {
+    func chooseTargetTable(forSession session: TableSession, sender: AnyObject) {
         showView(sender: sender)
         
         state.currentTableSession = session

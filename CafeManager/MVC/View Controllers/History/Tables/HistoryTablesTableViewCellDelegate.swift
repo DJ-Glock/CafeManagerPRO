@@ -10,5 +10,5 @@ import Foundation
 
 //Protocol for tableView to support segues with sending data to new view
 protocol HistoryTablesTableViewCellDelegate : class {
-    func didPressTablesCellButton(table: TablesTable)
+    func didPressTablesCellButton(table: Table)
 }

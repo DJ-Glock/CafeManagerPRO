@@ -9,13 +9,12 @@
 
 import Foundation
 
-class MenuTable {
+class MenuItem {
     public var itemName: String
     public var itemDescription: String?
     public var itemPrice: Float = 0.0
     public var isHidden: Bool = false
-    public var orders: [OrdersTable] = []
-    public weak var category: MenuCategoryTable?
+    public weak var category: MenuCategory?
     
     init (itemName: String, itemDescription: String?, itemPrice: Float) {
         self.itemName = itemName
@@ -23,15 +22,14 @@ class MenuTable {
         self.itemPrice = itemPrice
     }
     
-    convenience init (itemName: String, itemDescription: String?, itemPrice: Float, isHidden: Bool, orders: [OrdersTable], category: MenuCategoryTable?) {
+    convenience init (itemName: String, itemDescription: String?, itemPrice: Float, isHidden: Bool, category: MenuCategory?) {
         self.init(itemName: itemName, itemDescription: itemDescription, itemPrice: itemPrice)
         self.isHidden = isHidden
-        self.orders = orders
     }
     
     
     // MARK: methods
-    func changeMenuItemTo (newMenuItem: Menu) {
+    func changeMenuItemTo (newMenuItem: MenuStruct) {
 //        self.itemName = newMenuItem.itemName
 //        self.itemPrice = newMenuItem.itemPrice
 //        self.itemDescription = newMenuItem.itemDescription
@@ -66,7 +64,7 @@ class MenuTable {
     }
     
     // MARK: Class functions
-    class func getOrdersFor (menuItem: MenuTable) -> [OrdersTable] {
+    class func getOrdersFor (menuItem: MenuItem) -> [Order] {
 //        //let ordersPredicate = appDelegate.smStore?.predicate(for: "menuItem", referencing: menuItem) ?? NSPredicate()
 //        let request: NSFetchRequest<OrdersTable> = OrdersTable.fetchRequest()
 //        request.predicate = ordersPredicate
@@ -79,7 +77,7 @@ class MenuTable {
         return []
     }
     
-    class func getGuestOrdersFor (menuItem: MenuTable) -> [GuestOrdersTable] {
+    class func getGuestOrdersFor (menuItem: MenuItem) -> [GuestOrder] {
 //        //let ordersPredicate = appDelegate.smStore?.predicate(for: "menuItem", referencing: menuItem) ?? NSPredicate()
 //        let request: NSFetchRequest<GuestOrdersTable> = GuestOrdersTable.fetchRequest()
 //        request.predicate = ordersPredicate
@@ -93,7 +91,7 @@ class MenuTable {
     }
 
     
-    class func addMenuItem (item: Menu) {
+    class func addMenuItem (item: MenuStruct) {
 //        if let itemCategory = MenuCategoryTable.getOrCreateCategory(category: item.itemCategory) {
 //            do {
 //                try viewContext.save()
@@ -121,7 +119,7 @@ class MenuTable {
 //        }
     }
     
-    class func getActiveMenuItem (withName name: String) -> MenuTable? {
+    class func getActiveMenuItem (withName name: String) -> MenuItem? {
 //        let request: NSFetchRequest<MenuTable> = MenuTable.fetchRequest()
 //        request.predicate = NSPredicate(format: "itemName = %@ AND isHidden = %@", name, NSNumber(value: false))
 //        if let result = try? viewContext.fetch(request) {
@@ -130,7 +128,7 @@ class MenuTable {
         return nil
     }
 //
-    class func getActiveMenuItems () -> [MenuTable] {
+    class func getActiveMenuItems () -> [MenuItem] {
 //        let request: NSFetchRequest<MenuTable> = MenuTable.fetchRequest()
 //        request.predicate = NSPredicate(format: "isHidden = %@", NSNumber(value: false))
 //        let theFirstSortDescriptor = NSSortDescriptor(key: "category.categoryName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
@@ -142,7 +140,7 @@ class MenuTable {
         return []
     }
     
-    class func getActiveMenuItems (withNameContains text: String) -> [MenuTable] {
+    class func getActiveMenuItems (withNameContains text: String) -> [MenuItem] {
 //        let request: NSFetchRequest<MenuTable> = MenuTable.fetchRequest()
 //        request.predicate = NSPredicate(format: "isHidden = %@ AND itemName CONTAINS[cd] %@", NSNumber(value: false), text)
 //        let theFirstSortDescriptor = NSSortDescriptor(key: "category.categoryName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
@@ -154,7 +152,7 @@ class MenuTable {
         return []
     }
     
-    class func bulkAddMenuItems (items: [Menu]) throws {
+    class func bulkAddMenuItems (items: [MenuStruct]) throws {
 //        do {
 //            for item in items {
 //                if let itemCategory = MenuCategoryTable.getOrCreateCategory(category: item.itemCategory) {

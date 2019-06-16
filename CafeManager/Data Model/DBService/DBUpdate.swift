@@ -11,7 +11,7 @@ import Firebase
 import Dispatch
 
 class DBUpdate {
-    class func changeTableInDatabase (tableToChange table: TablesTable, completion: @escaping (Error?)-> Void) {
+    class func changeTableInDatabase (tableToChange table: Table, completion: @escaping (Error?)-> Void) {
         guard let documentID = table.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(table.name)")); return }
         
         var tableData = [String:Any]()

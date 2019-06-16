@@ -9,21 +9,21 @@
 
 import Foundation
 
-class OrdersTable {
+class Order {
     public var menuItemName: String
     public var quantity: Int16
     public var price: Float
-    public weak var orderedTable: TableSessionTable?
-    public weak var orderedGuest: GuestsTable?
+    public weak var orderedTable: TableSession?
+    public weak var orderedGuest: Guest?
     
-    init (menuItemName: String, quantity: Int16, price: Float, orderedTable: TableSessionTable) {
+    init (menuItemName: String, quantity: Int16, price: Float, orderedTable: TableSession) {
         self.menuItemName = menuItemName
         self.quantity = quantity
         self.price = price
         self.orderedTable = orderedTable
     }
     
-    init (menuItemName: String, quantity: Int16, price: Float, orderedGuest: GuestsTable) {
+    init (menuItemName: String, quantity: Int16, price: Float, orderedGuest: Guest) {
         self.menuItemName = menuItemName
         self.quantity = quantity
         self.price = price
@@ -48,7 +48,7 @@ class OrdersTable {
     }
     
     // MARK: class functions
-    class func addOrIncreaseOrder (tableSession: TableSessionTable, menuItem: MenuTable) {
+    class func addOrIncreaseOrder (tableSession: TableSession, menuItem: MenuItem) {
 //
 //        //let sessionPredicate = appDelegate.smStore?.predicate(for: "orderedTable", referencing: tableSession) ?? NSPredicate()
 //        let request : NSFetchRequest<OrdersTable> = OrdersTable.fetchRequest()
@@ -77,7 +77,7 @@ class OrdersTable {
 //        try? viewContext.save()
     }
     
-    class func getOrdersFor (tableSession: TableSessionTable) -> [OrdersTable] {
+    class func getOrdersFor (tableSession: TableSession) -> [Order] {
 //        //let sessionPredicate = appDelegate.smStore?.predicate(for: "orderedTable", referencing: tableSession) ?? NSPredicate()
 //        let request : NSFetchRequest<OrdersTable> = OrdersTable.fetchRequest()
 //        request.predicate = sessionPredicate

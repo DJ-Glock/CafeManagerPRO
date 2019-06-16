@@ -8,10 +8,10 @@
 
 protocol AddOrderRouterInterface {
     /// Method shows Menu view for adding order for guest
-    func showMenuItemsToAddOrder(forGuest guest: GuestsTable, sender: AnyObject)
+    func showMenuItemsToAddOrder(forGuest guest: Guest, sender: AnyObject)
     
     /// Method shows Menu view for adding order for session
-    func showMenuItemsToAddOrder(forSession session: TableSessionTable, sender: AnyObject)
+    func showMenuItemsToAddOrder(forSession session: TableSession, sender: AnyObject)
     
     // Method is getting called when item is chosen. It calls respective delegate method
     func didChooseMenuItem()

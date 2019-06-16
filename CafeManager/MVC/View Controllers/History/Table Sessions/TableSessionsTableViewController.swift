@@ -12,8 +12,8 @@ import CoreData
 class TableSessionsTableViewController: FetchedResultsTableViewController {
     
     //MARK: Variables
-    var currentTable: TablesTable? = nil
-    private var currentTableSession: TableSessionTable?
+    var currentTable: Table? = nil
+    private var currentTableSession: TableSession?
 //    private var fetchedResultsController: NSFetchedResultsController<TableSessionTable>?
     private var overlayView = UIView()
     private var activityIndicator = UIActivityIndicatorView()

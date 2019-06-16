@@ -14,8 +14,8 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     //Variables
     //The following three variables will be set before segue to this view.
     var tableName: String? = nil
-    var currentTable: TablesTable? = nil
-    var currentTableSession: TableSessionTable? = nil
+    var currentTable: Table? = nil
+    var currentTableSession: TableSession? = nil
     
     private var selectedCellIndexPath: IndexPath?
     private var selectedCellHeight: CGFloat {
@@ -33,9 +33,9 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         }
     }
     private var guestNameTextField: UITextField!
-    private var currentGuest: GuestsTable? = nil
-    private var guests: [GuestsTable] = []
-    private var orders: [OrdersTable] = []
+    private var currentGuest: Guest? = nil
+    private var guests: [Guest] = []
+    private var orders: [Order] = []
     private var actualTotalAmount: Float = 0
     private var totalAmount: Float = 0
     private var countOfGuests: Int = 0
@@ -131,11 +131,11 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             self.totalAmount = 0
             self.countOfGuests = 0
         } else {
-            self.guests = GuestsTable.getAllGuestsForTableSorted(tableSession: currentTableSession!)
-            self.orders = OrdersTable.getOrdersFor(tableSession: currentTableSession!)
-            self.actualTotalAmount = TableSessionTable.calculateActualTotalAmount(for: currentTableSession)
-            self.totalAmount = TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)
-            self.countOfGuests = GuestsTable.getActiveGuestsFor(tableSession: currentTableSession!).count
+            self.guests = Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!)
+            self.orders = Order.getOrdersFor(tableSession: currentTableSession!)
+            self.actualTotalAmount = TableSession.calculateActualTotalAmount(for: currentTableSession)
+            self.totalAmount = TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
+            self.countOfGuests = Guest.getActiveGuestsFor(tableSession: currentTableSession!).count
         }
     }
     
@@ -152,7 +152,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     }
     
     private func updateGUI() {
-        currentTableSession = TableSessionTable.getCurrentTableSession(table: currentTable!)
+        currentTableSession = TableSession.getCurrentTableSession(table: currentTable!)
         self.reloadDataFromCoreData()
         updateGuestsTableView()
         updateOrdersTableView()
@@ -168,10 +168,10 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     private func addQuickGuest () {
         guard tableCapacity > countOfGuests else {return}
         if currentTableSession == nil {
-            currentTableSession = TableSessionTable.createTableSession(table: currentTable!)
+            currentTableSession = TableSession.createTableSession(table: currentTable!)
             addOrderButton.isEnabled = true
         }
-        GuestsTable.addNewGuest(tableSession: currentTableSession!)
+        Guest.addNewGuest(tableSession: currentTableSession!)
         self.updateGUI()
     }
     
@@ -225,7 +225,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             cell.openTimeLabel.textColor = ColorThemes.textColorNormal
             cell.guestAmountLabel.textColor = ColorThemes.textColorNormal
             
-            cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: TableSessionTable.calculateIndividualAmount(guest: guest)), number: .decimal) + UserSettings.currencySymbol
+            cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: TableSession.calculateIndividualAmount(guest: guest)), number: .decimal) + UserSettings.currencySymbol
             if guest.closeTime != nil {
                 cell.addGuestOrderButton.isEnabled = false
                 cell.closeGuestButton.isEnabled = false
@@ -388,7 +388,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
 // MARK: Delegates
 // Delegate of GuestsTableView
 extension TableUIViewController: GuestAtTableTableViewCellDelegate {
-    func didPressAddGuestOrderButton(guest: GuestsTable, sender: AnyObject) {
+    func didPressAddGuestOrderButton(guest: Guest, sender: AnyObject) {
         self.currentGuest = guest
         
         let addOrder = AddOrderAssembly.assembleModule()
@@ -396,7 +396,7 @@ extension TableUIViewController: GuestAtTableTableViewCellDelegate {
         addOrder.showMenuItemsToAddOrder(forGuest: self.currentGuest!, sender: sender)
     }
     
-    func didPressCloseGuestButton(guest: GuestsTable) {
+    func didPressCloseGuestButton(guest: Guest) {
         let alert = UIAlertController(title: NSLocalizedString("alertConfirmGuestHasGone", comment: ""), message: NSLocalizedString("alertConfirmGuestHasGoneMessage", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertCancel", comment: ""), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .destructive, handler: { (UIAlertAction) in
@@ -416,7 +416,7 @@ extension TableUIViewController: GuestOrdersTableViewRefreshDelegate {
 
 // Delegate of OrdersTableView
 extension TableUIViewController: OrderInTableTableViewCellDelegate {
-    func didPressIncreaseOrDecreaseOrderQuantityButton(order: OrdersTable, menuItem: MenuTable, action: String) {
+    func didPressIncreaseOrDecreaseOrderQuantityButton(order: Order, menuItem: MenuItem, action: String) {
         if action == "+" {
             order.increaseQuantity()
         } else {
@@ -439,13 +439,13 @@ extension TableUIViewController: PeriodPickerDelegate {
 
 // Delegate of AddOrder module that allows user to choose items to order
 extension TableUIViewController: AddOrderDelegate {
-    func didChoose(menuItem item: MenuTable, forGuest guest: GuestsTable) {
-        GuestOrdersTable.addOrIncreaseOrder(for: guest, menuItem: item)
+    func didChoose(menuItem item: MenuItem, forGuest guest: Guest) {
+        GuestOrder.addOrIncreaseOrder(for: guest, menuItem: item)
         self.updateGUI()
     }
     
-    func didChoose(menuItem item: MenuTable, forSession session: TableSessionTable) {
-        OrdersTable.addOrIncreaseOrder(tableSession: session, menuItem: item)
+    func didChoose(menuItem item: MenuItem, forSession session: TableSession) {
+        Order.addOrIncreaseOrder(tableSession: session, menuItem: item)
         self.updateGUI()
     }
 }
@@ -454,10 +454,10 @@ extension TableUIViewController: AddOrderDelegate {
 extension TableUIViewController: CustomGuestDelegate {
     func didChooseCustomGuest(name: String) {
         if let session = self.currentTableSession {
-            GuestsTable.addNewCustomGuest(guestName: name, tableSession: session)
+            Guest.addNewCustomGuest(guestName: name, tableSession: session)
         } else {
-            let session = TableSessionTable.createTableSession(table: self.currentTable!)
-            GuestsTable.addNewCustomGuest(guestName: name, tableSession: session)
+            let session = TableSession.createTableSession(table: self.currentTable!)
+            Guest.addNewCustomGuest(guestName: name, tableSession: session)
         }
         self.updateGUI()
     }
@@ -465,13 +465,13 @@ extension TableUIViewController: CustomGuestDelegate {
 
 // Delegate of MoveGuests module that allows user to choose target table/table session to move session/guest
 extension TableUIViewController: MoveGuestsDelegate {
-    func didChoose(targetTableSession: TableSessionTable, forGuest guest: GuestsTable) {
+    func didChoose(targetTableSession: TableSession, forGuest guest: Guest) {
         guest.moveGuest(to: targetTableSession)
         self.updateGUI()
     }
     
-    func didChoose(targetTable: TablesTable, forSession session: TableSessionTable) {
-        TableSessionTable.moveTableSessionTo(targetTable: targetTable, currentSession: session)
+    func didChoose(targetTable: Table, forSession session: TableSession) {
+        TableSession.moveTableSessionTo(targetTable: targetTable, currentSession: session)
         self.updateGUI()
     }
 }
@@ -480,7 +480,7 @@ extension TableUIViewController: MoveGuestsDelegate {
 extension TableUIViewController: CheckoutDelegate {
     func didPerformCheckout(totalAmount: Float, discount: Int16, tips: Float) {
         do {
-            try TableSessionTable.checkout(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
+            try TableSession.checkout(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
         } catch {
             CommonAlert.shared.show(title: "Failed to close session", text: error.localizedDescription)
         }

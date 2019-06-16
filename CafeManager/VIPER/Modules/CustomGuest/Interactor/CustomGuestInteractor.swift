@@ -12,7 +12,7 @@ class CustomGuestInteractor: NSObject, CustomGuestInteractorInterface {
     
     func getGetListOfKnownGuests() -> [String] {
         var guestNames: [String] = []
-        guestNames = GuestsTable.getPopularGuestNames()
+        guestNames = Guest.getPopularGuestNames()
         return guestNames
     }
 }

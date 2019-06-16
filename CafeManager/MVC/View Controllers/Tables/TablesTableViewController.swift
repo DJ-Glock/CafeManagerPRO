@@ -11,9 +11,9 @@ import CoreData
 
 class TablesTableViewController: FetchedResultsTableViewController {
     // MARK: variables
-    private var currentTable: TablesTable?
-    private var currentTableSession: TableSessionTable?
-    private var tablesArray: [TablesTable] = []
+    private var currentTable: Table?
+    private var currentTableSession: TableSession?
+    private var tablesArray: [Table] = []
     private var tableNameTextField: UITextField!
     private var tableCapacityTextField: UITextField!
     internal var tableViewRefreshControl: UIRefreshControl?
@@ -141,7 +141,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
             guard let capacityInt = self.tableCapacityTextField.text!.getIntNumber() else {self.showAlertParamsNotFilledProperly(); return}
             let capacity = Int16(capacityInt)
             
-            let newTable = TablesTable(firebaseID: nil, tableName: tableName, tableCapacity: capacity)
+            let newTable = Table(firebaseID: nil, tableName: tableName, tableCapacity: capacity)
             DBPersist.createTableInDatabase(newTable: newTable, completion: { (error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred while saving table data in the database", text: error.localizedDescription)
@@ -152,7 +152,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         self.presentAlert(alert: alert, animated: true)
     }
     
-    private func editTable (table: TablesTable) {
+    private func editTable (table: Table) {
         let alert = UIAlertController(title: NSLocalizedString("inputTableParams", comment: ""), message: nil, preferredStyle: .alert)
         alert.addTextField(configurationHandler: configureTableNameTextField)
         alert.textFields?[0].text = table.name
@@ -207,7 +207,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         if tableSession != nil {
             cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
             cell.tableStatusLabel.text = NSLocalizedString("tableOpened", comment: "") + "\(tableSession!.openTime.convertToString())"
-            cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)))" + UserSettings.currencySymbol
+            cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSession.calculateTotalAmount(currentTableSession: currentTableSession)))" + UserSettings.currencySymbol
         } else {
             cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
             cell.tableStatusLabel.text = NSLocalizedString("tableIsClosed", comment: "")
