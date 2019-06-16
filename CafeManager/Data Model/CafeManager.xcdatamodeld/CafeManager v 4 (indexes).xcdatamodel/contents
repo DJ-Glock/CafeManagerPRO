@@ -55,9 +55,9 @@
         </fetchIndex>
     </entity>
     <entity name="TablesTable" representedClassName=".TablesTable" versionHashModifier="byLinkToSession index added" syncable="YES">
-        <attribute name="tableCapacity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="capacity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="tableDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tableName" attributeType="String" syncable="YES"/>
         <relationship name="tableSession" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TableSessionTable" inverseName="table" inverseEntity="TableSessionTable" syncable="YES"/>
     </entity>
     <elements>

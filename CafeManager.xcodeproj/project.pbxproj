@@ -15,6 +15,8 @@
 		2101CB2B20624A2700AB9C49 /* CheckoutViewControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101CB2A20624A2700AB9C49 /* CheckoutViewControllerInterface.swift */; };
 		210BB5C81FC3325E002A23A2 /* LaunchScreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 21AC21DF1FC32EA3007FE282 /* LaunchScreen.jpg */; };
 		2118EFF42018DDE6008BC6CE /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2118EFF32018DDE6008BC6CE /* ParentViewController.swift */; };
+		211A643222B6C9450079FAE8 /* DBPersist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211A643122B6C9450079FAE8 /* DBPersist.swift */; };
+		211A643422B6DB960079FAE8 /* DBUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211A643322B6DB960079FAE8 /* DBUpdate.swift */; };
 		211ABAED1FF56D3F008A0AE7 /* SearchTextField.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211ABAEE1FF56D3F008A0AE7 /* SearchTextField.framework */; };
 		211D2A481F1FE74900A67186 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211D2A4A1F1FE74900A67186 /* InfoPlist.strings */; };
 		211D2A521F1FE74A00A67186 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211D2A541F1FE74A00A67186 /* InfoPlist.strings */; };
@@ -239,6 +241,8 @@
 		2101CB2820623E1600AB9C49 /* MoveGuestsViewControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveGuestsViewControllerInterface.swift; sourceTree = "<group>"; };
 		2101CB2A20624A2700AB9C49 /* CheckoutViewControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewControllerInterface.swift; sourceTree = "<group>"; };
 		2118EFF32018DDE6008BC6CE /* ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
+		211A643122B6C9450079FAE8 /* DBPersist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPersist.swift; sourceTree = "<group>"; };
+		211A643322B6DB960079FAE8 /* DBUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUpdate.swift; sourceTree = "<group>"; };
 		211ABAEE1FF56D3F008A0AE7 /* SearchTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SearchTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		211D2A431F1FDD9200A67186 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		211D2A441F1FE74800A67186 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -1103,6 +1107,8 @@
 			isa = PBXGroup;
 			children = (
 				2172396B22B2579600527607 /* DBQuery.swift */,
+				211A643122B6C9450079FAE8 /* DBPersist.swift */,
+				211A643322B6DB960079FAE8 /* DBUpdate.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -1704,6 +1710,7 @@
 				214504D1203DC93C006F8E2D /* UIDevice+Extension.swift in Sources */,
 				2101CB2320616D2100AB9C49 /* AddOrderViewControllerInterface.swift in Sources */,
 				21230681205DDA2500F89C03 /* CustomGuestPresenterInterface.swift in Sources */,
+				211A643422B6DB960079FAE8 /* DBUpdate.swift in Sources */,
 				2123065C205DAA3100F89C03 /* MoveGuestsPresenterInterface.swift in Sources */,
 				21BF72A11F49E26F00D508AA /* TablesTableViewCell.swift in Sources */,
 				21230685205E5A7B00F89C03 /* CustomGuestRouterInterface.swift in Sources */,
@@ -1715,6 +1722,7 @@
 				21E0A8581EC23EF800DB10CE /* MenuTableViewController.swift in Sources */,
 				21230658205DA2A600F89C03 /* MoveGuestsTableViewCell.swift in Sources */,
 				21C2894B20694C0B00CA0CA8 /* EnumsForStatistics.swift in Sources */,
+				211A643222B6C9450079FAE8 /* DBPersist.swift in Sources */,
 				21C733061ED5D5370051AF77 /* MenuTable.swift in Sources */,
 				21922EEE206409F400DF4CF5 /* LineChartViewControllerInterface.swift in Sources */,
 				2123066E205DD59600F89C03 /* CustomGuestAssembly.swift in Sources */,

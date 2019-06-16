@@ -41,7 +41,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     private var countOfGuests: Int = 0
     private var tableCapacity: Int {
         get {
-            return Int(currentTable!.tableCapacity)
+            return Int(currentTable!.capacity)
         }
     }
     
@@ -141,7 +141,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     
     // MARK: GUI update functions
     private func updateLabels() {
-        tableCapacityLabel.text = String(describing: currentTable!.tableCapacity)
+        tableCapacityLabel.text = String(describing: currentTable!.capacity)
         tableCountOfGuestsLabel.text = String(describing: countOfGuests)
         if currentTableSession != nil, currentTableSession?.openTime != nil {
             tableOpenTimeLabel.text = currentTableSession!.openTime.convertToString()

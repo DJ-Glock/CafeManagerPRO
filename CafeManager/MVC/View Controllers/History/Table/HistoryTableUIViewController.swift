@@ -144,7 +144,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
      
     // MARK: GUI update functions
     private func updateLabelsViewWillAppear() {
-        tableCapacityLabel.text = String(describing: currentTable!.tableCapacity)
+        tableCapacityLabel.text = String(describing: currentTable!.capacity)
         tableCountOfGuestsLabel.text = String(describing: countOfGuests)
         tableOpenTimeLabel.text = currentTableSession!.openTime.convertToString() + "-" + currentTableSession!.closeTime!.convertToString()
         
@@ -156,7 +156,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     }
     
     private func updateLabels() {
-        tableCapacityLabel.text = String(describing: currentTable!.tableCapacity)
+        tableCapacityLabel.text = String(describing: currentTable!.capacity)
         tableCountOfGuestsLabel.text = String(describing: countOfGuests)
         tableOpenTimeLabel.text = currentTableSession!.openTime.convertToString() + "-" + currentTableSession!.closeTime!.convertToString()
         

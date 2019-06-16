@@ -1,6 +1,7 @@
 //Generic stuff
 "alertNoCanDo" = "Невозможно выполнить";
 "paramsNotFilledProperly" = "Поля были заполнены некорректно";
+"tableNameAlreadyExists" = "Имя столика уже занято";
 "alertUnableToSaveData" = "Невозможно сохранить данные";
 "checkInputParameters" = "Проверьте введенные параметры";
 "Import of menu performed successfully!" = "Импорт выполнен успешно!";

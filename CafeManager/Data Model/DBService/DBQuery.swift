@@ -32,9 +32,8 @@ class DBQuery {
                     let firebaseID = document.documentID
                     let tableName = data["name"] as! String
                     let tableCapacity = data["capacity"] as! Int16
-                    let tableDescription = data["description"] as? String
                     
-                    let table = TablesTable(firebaseID: firebaseID, tableName: tableName, tableCapacity: tableCapacity, tableDescription: tableDescription)
+                    let table = TablesTable(firebaseID: firebaseID, tableName: tableName, tableCapacity: tableCapacity)
                     tables.append(table)
                 }
             }
@@ -134,7 +133,7 @@ class DBQuery {
                 
                 // Check if database contains more than one active session for table (INCORRECT!!!) and throw an error
                 if snapshot.documents.count > 1 {
-                    let myError = iCafeManagerError.DatabaseError("Ambiguous sessions for table \(table.tableName) found. Notify iCafeManager support. UserID: \(userId)")
+                    let myError = iCafeManagerError.DatabaseError("Ambiguous sessions for table \(table.name) found. Notify iCafeManager support. UserID: \(userId)")
                     completion(tableSession, myError)
                     return
                 } else {

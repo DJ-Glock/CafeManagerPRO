@@ -1,6 +1,7 @@
 //Generic stuff
 "alertNoCanDo" = "Unable to complete";
 "paramsNotFilledProperly" = "Fields were not filled properly";
+"tableNameAlreadyExists" = "This table name is already in use";
 "alertUnableToSaveData" = "Unable to save data";
 "checkInputParameters" = "Chek input parameters";
 "Import of menu performed successfully!" = "Import of menu performed successfully!";
