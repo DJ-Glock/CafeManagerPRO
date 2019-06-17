@@ -40,22 +40,28 @@ class DBQuery {
         
             // Get active sessions for each table.
             // Run completion only when the last one is processed.
-            let dispatchGroup = DispatchGroup()
+//            let dispatchGroup = DispatchGroup()
+            var counter = tables.count
             
             for table in tables {
-                dispatchGroup.enter()
+//                dispatchGroup.enter()
                 DBQuery.getActiveTableSessionAsync(forTable: table, completion: { (tableSession, error) in
                     if let error = error {
                         completion([], error)
                         return
                     }
                     table.tableSession = tableSession
-                    dispatchGroup.leave()
+//                    dispatchGroup.leave()
+                    
+                    counter = counter - 1
+                    if (counter <= 0) {
+                        completion(tables, nil)
+                    }
                 })
             }
-            dispatchGroup.notify(queue: DispatchQueue.main) {
-                completion(tables, nil)
-            }
+//            dispatchGroup.notify(queue: DispatchQueue.main) {
+//                completion(tables, nil)
+//            }
         }
     }
     
@@ -77,6 +83,7 @@ class DBQuery {
                 
                 let document = snapshot.documents[0]
                 let data = document.data()
+                let firebaseID = document.documentID
                 
                 let openTimeStamp = data["openTime"] as! Timestamp
                 let openTime = openTimeStamp.dateValue()
@@ -86,7 +93,7 @@ class DBQuery {
                 let tips = data["tips"] as? Float ?? 0.0
                 let discount = data["discount"] as? Int16 ?? 0
                 
-                let tableSession = TableSession(table: table, openTime: openTime, closeTime: closeTime, guests: [], orderedItems: [], totalAmount: totalAmount, tips: tips, discount: discount)
+                let tableSession = TableSession(firebaseID: firebaseID, table: table, openTime: openTime, closeTime: closeTime, guests: [], orders: [], amount: totalAmount, tips: tips, discount: discount)
                 
                 var guests = [Guest]()
                 let guestsData = data["Guests"] as? [[String:Any]] ?? []
@@ -100,10 +107,10 @@ class DBQuery {
                     let guestCloseTime = guestCloseTimeStamp?.dateValue()
                     let guestTotalAmount = guestData["totalAmount"] as? Float ?? 0.0
                     
-                    let guest = Guest(guestName: guestName, openTime: guestOpenTime, tableSession: tableSession, closeTime: guestCloseTime, totalAmount: guestTotalAmount)
+                    let guest = Guest(name: guestName, openTime: guestOpenTime, tableSession: tableSession, closeTime: guestCloseTime, totalAmount: guestTotalAmount)
                     
                     var guestOrders = [Order]()
-                    let guestOrdersData = guestData["Orders"] as! [[String:Any]]
+                    let guestOrdersData = guestData["Orders"] as? [[String:Any]] ?? []
                     for guestOrderData in guestOrdersData {
                         let menuItemName = guestOrderData["name"] as! String
                         let price = guestOrderData["price"] as! Float
@@ -128,7 +135,7 @@ class DBQuery {
                     orders.append(order)
                 }
                 
-                tableSession.orderedItems = orders
+                tableSession.orders = orders
                 tableSession.guests = guests
                 
                 // Check if database contains more than one active session for table (INCORRECT!!!) and throw an error

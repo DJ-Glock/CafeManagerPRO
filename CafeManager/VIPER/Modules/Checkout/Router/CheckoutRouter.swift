@@ -13,7 +13,7 @@ class CheckoutRouter: NSObject, CheckoutRouterInterface, CheckoutInterface {
     weak var view : UIViewController!
     
     // Ingoing
-    func checkoutWithParams(session: TableSessionStruct, originalTotalAmount: Float, sender: AnyObject) {
+    func checkoutWithParams(session: TableSession, originalTotalAmount: Float, sender: AnyObject) {
         // Present view
         view.modalPresentationStyle = .popover
         if sender is UIView {

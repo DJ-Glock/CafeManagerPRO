@@ -11,34 +11,37 @@ import Foundation
 
 class TableSession {
     
+    public var firebaseID: String?
     public weak var table: Table?
     public var openTime: Date
     public var closeTime: Date?
     public var guests: [Guest] = []
-    public var orderedItems: [Order] = []
-    public var totalAmount: Float = 0.0
+    public var orders: [Order] = []
+    public var amount: Float = 0.0
     public var tips: Float = 0.0
     public var discount: Int16 = 0
 
     
-    init (table: Table, openTime: Date) {
+    init (firebaseID: String?, table: Table, openTime: Date) {
+        self.firebaseID = firebaseID
         self.table = table
         self.openTime = openTime
     }
     
-    convenience init (table: Table,
+    convenience init (firebaseID: String?,
+                     table: Table,
                      openTime: Date,
                      closeTime: Date?,
                      guests: [Guest],
-                     orderedItems: [Order],
-                     totalAmount: Float,
+                     orders: [Order],
+                     amount: Float,
                      tips :Float,
                      discount: Int16) {
-        self.init(table: table, openTime: openTime)
+        self.init(firebaseID: firebaseID, table: table, openTime: openTime)
         self.closeTime = closeTime
         self.guests = guests
-        self.orderedItems = orderedItems
-        self.totalAmount = totalAmount
+        self.orders = orders
+        self.amount = amount
         self.tips = tips
         self.discount = discount
     }
@@ -58,26 +61,9 @@ class TableSession {
     }
     
     
-    
-    
     // MARK: functions for managing sessions
-    class func createTableSession (table: Table) -> TableSession {
-//        if #available(iOS 10.0, *) {
-//            let newTableSession = TableSessionTable(context: viewContext)
-//            newTableSession.openTime = Date() as NSDate
-//            newTableSession.closeTime = nil
-//            table.addToTableSession(newTableSession)
-//            try? viewContext.save()
-//            return newTableSession
-//        } else {
-//            let newTableSession = TableSessionTable(entity: NSEntityDescription.entity(forEntityName: "TableSessionTable", in: viewContext)!, insertInto: viewContext)
-//            newTableSession.openTime = Date() as NSDate
-//            newTableSession.closeTime = nil
-//            table.addToTableSession(newTableSession)
-//            try? viewContext.save()
-//            return newTableSession
-//        }
-        return TableSession(table: table, openTime: Date())
+    class func createTableSession (table: Table) -> TableSession? {
+        return TableSession(firebaseID: nil, table: table, openTime: Date())
     }
     
     class func saveRecalculated (tableSession: TableSession, totalAmount: Float, discount: Int16, tips: Float) throws {
@@ -105,65 +91,19 @@ class TableSession {
     }
     
     class func getCurrentTableSession (table: Table) -> TableSession? {
-//        //let tablePredicate = appDelegate.smStore?.predicate(for: "table", referencing: table) ?? NSPredicate()
-//        let timePredicate = NSPredicate(format: "closeTime = %@", NSNull() as CVarArg)
-//        let request: NSFetchRequest<TableSessionTable> = TableSessionTable.fetchRequest()
-//        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [tablePredicate, timePredicate])
-//
-//        let matchedSessions = try? viewContext.fetch(request)
-//
-//        if matchedSessions?.count != 0 {
-//            var sessions = [TableSessionTable]()
-//            for session in matchedSessions! {
-//                sessions.append(session)
-//            }
-//            if sessions.count == 1 {
-//                return sessions.first
-//            } else if (sessions.count) > 1 {
-//                print("CRITICAL ERROR: More than one opened session for table found! Returning the oldest one.")
-//                sessions = sessions.sorted(by: { $0.openTime?.compare($1.openTime! as Date) == ComparisonResult.orderedAscending })
-//                return sessions.first
-//            }
-//        }
         return nil
     }
     
     class func moveTableSessionTo (targetTable: Table, currentSession: TableSession) {
-//        currentSession.table = targetTable
-//        try? viewContext.save()
     }
     
     private static func removeSession(_ session: TableSession) {
-//        let guests = GuestsTable.getAllGuestsFor(tableSession: session)
-//
-//        for guest in guests {
-//            let guestOrders = GuestOrdersTable.getOrders(for: guest)
-//            for order in guestOrders {
-//                viewContext.delete(order)
-//            }
-//            viewContext.delete(guest)
-//        }
-//
-//        let orders = OrdersTable.getOrdersFor(tableSession: session)
-//        for order in orders {
-//            viewContext.delete(order)
-//        }
-//
-//        viewContext.delete(session)
-//        try? viewContext.save()
     }
     
     class func removeTableSessionsForTable (table: Table) {
-//        //let predicate = appDelegate.smStore?.predicate(for: "table", referencing: table)
-//        tableSessionRequest.predicate = predicate
-//        if let matchedTableSessions = try? viewContext.fetch(tableSessionRequest) {
-//            for session in matchedTableSessions {
-//                removeSession(session)
-//            }
-//        }
     }
     
-    // MARK: functions for amounts calculation
+    // MARK: functions for amount calculation
     class func calculateAmountForTime(tableSession: TableSession) -> Float {
         var amount: Float = 0
         guard UserSettings.isTimeCafe == true else {return amount}
@@ -176,75 +116,29 @@ class TableSession {
         return amount
     }
     
-    class func calculateIndividualAmount (guest: Guest) -> Float {
-        var amount: Float = 0
-        var ordersAmount: Float = 0
-        var amountForTime: Float = 0
-        
-//        if UserSettings.isTimeCafe {
-//            let closeOrCurrentTime = guest.closeTime ?? Date() as NSDate
-//            amountForTime = roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime! as Date))/60) * UserSettings.pricePerMinute
-//        }
-//
-//        let orders = GuestOrdersTable.getOrders(for: guest)
-//        if orders.count > 0 {
-//            for order in orders {
-//                var currentAmount: Float = 0
-//                let currentOrderQuantity = order.quantityOfItems
-//                if let currentOrderPrice = order.menuItem?.itemPrice {
-//                    currentAmount = currentOrderPrice * Float(currentOrderQuantity)
-//                }
-//                ordersAmount += currentAmount
-//            }
-//        }
-//        amount = amountForTime + ordersAmount
-        
-        return amount
-    }
-    
     class func calculateActualTotalAmount (for currentTableSession: TableSession?) -> Float {
         guard currentTableSession != nil else {return 0}
         
         var totalAmount: Float = 0
-        var ordersAmount: Float = 0
-        var guestsAmount: Float = 0
         
-//        let currentOrders = OrdersTable.getOrdersFor(tableSession: currentTableSession!)
-//        for order in currentOrders {
-//            ordersAmount += Float(order.quantityOfItems) * (order.menuItem?.itemPrice)!
-//        }
-//
-//        let guests = GuestsTable.getActiveGuestsFor(tableSession: currentTableSession!)
-//        for guest in guests {
-//            guestsAmount += TableSessionTable.calculateIndividualAmount(guest: guest)
-//        }
-//
-//        totalAmount = ordersAmount + guestsAmount
+        let currentOrders = currentTableSession?.orders ?? []
+        for order in currentOrders {
+            let price = order.price
+            let quantity = order.quantity
+            let amount = price * Float(quantity)
+            totalAmount += amount
+        }
+        
+        let currentGuests = currentTableSession?.guests ?? []
+        for guest in currentGuests {
+            let guestAmount = Guest.calculateCurrentAmount(forGuest: guest)
+            totalAmount += guestAmount
+        }
         
         return totalAmount
     }
     
-    class func calculateTotalAmount (currentTableSession: TableSession?) -> Float {
-        guard currentTableSession != nil else {return 0}
-        
-        var totalAmount: Float = 0
-        var ordersAmount: Float = 0
-        var guestsAmount: Float = 0
-//
-//        let currentOrders = OrdersTable.getOrdersFor(tableSession: currentTableSession!)
-//        for order in currentOrders {
-//            ordersAmount += Float(order.quantityOfItems) * (order.menuItem?.itemPrice)!
-//        }
-//
-//        let guests = GuestsTable.getAllGuestsFor(tableSession: currentTableSession!)
-//        for guest in guests {
-//            guestsAmount += TableSessionTable.calculateIndividualAmount(guest: guest)
-//        }
-//
-//        totalAmount = ordersAmount + guestsAmount
-        
-        return totalAmount
-    }
+    
     
     
     // MARK: functions for statistics

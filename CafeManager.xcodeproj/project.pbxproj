@@ -78,7 +78,6 @@
 		21386EE72056FFFF00A14D30 /* CheckoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386EE62056FFFF00A14D30 /* CheckoutPresenter.swift */; };
 		21386EE92057001F00A14D30 /* CheckoutPresenterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386EE82057001F00A14D30 /* CheckoutPresenterInterface.swift */; };
 		21386EEB2057003F00A14D30 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386EEA2057003F00A14D30 /* CheckoutViewController.swift */; };
-		21386F2F2057D52200A14D30 /* TableSessionStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F2E2057D52200A14D30 /* TableSessionStruct.swift */; };
 		21386F312057EF4B00A14D30 /* CommonAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F302057EF4B00A14D30 /* CommonAlert.swift */; };
 		21386F332058073200A14D30 /* CheckoutInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F322058073200A14D30 /* CheckoutInterface.swift */; };
 		21386F382058323200A14D30 /* CheckoutModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21386F35205830D800A14D30 /* CheckoutModule.swift */; };
@@ -327,7 +326,6 @@
 		21386EE62056FFFF00A14D30 /* CheckoutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPresenter.swift; sourceTree = "<group>"; };
 		21386EE82057001F00A14D30 /* CheckoutPresenterInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPresenterInterface.swift; sourceTree = "<group>"; };
 		21386EEA2057003F00A14D30 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
-		21386F2E2057D52200A14D30 /* TableSessionStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSessionStruct.swift; sourceTree = "<group>"; };
 		21386F302057EF4B00A14D30 /* CommonAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAlert.swift; sourceTree = "<group>"; };
 		21386F322058073200A14D30 /* CheckoutInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutInterface.swift; sourceTree = "<group>"; };
 		21386F35205830D800A14D30 /* CheckoutModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutModule.swift; sourceTree = "<group>"; };
@@ -851,7 +849,6 @@
 			children = (
 				219DF7181EE0BF83004070A3 /* MenuStruct.swift */,
 				21C733261ED63B1B0051AF77 /* TableStruct.swift */,
-				21386F2E2057D52200A14D30 /* TableSessionStruct.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1763,7 +1760,6 @@
 				2191DF68205E671F00786030 /* AddOrderInteractor.swift in Sources */,
 				213B451720548A4D00D04CF8 /* PeriodPickerViewController.swift in Sources */,
 				21A8BDD01EDF32FE0066F9C5 /* GuestAtTableTableViewCellDelegate.swift in Sources */,
-				21386F2F2057D52200A14D30 /* TableSessionStruct.swift in Sources */,
 				21BF72A41F4A08F000D508AA /* HistoryTableUIViewController.swift in Sources */,
 				21377B331FBA2FAF003689F2 /* ColorThemes.swift in Sources */,
 				21386F3C20585C6300A14D30 /* CheckoutAssembly.swift in Sources */,

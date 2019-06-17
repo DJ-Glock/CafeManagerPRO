@@ -14,17 +14,17 @@ class CheckoutPresenter: NSObject, CheckoutPresenterInterface {
     
     // Public properties
     var originalTotalAmount: Float = 0
-    var currentSession: TableSessionStruct!
+    var currentSession: TableSession!
     
     var totalAmount: Float = 0 {
         didSet {
-            currentSession.totalAmount = totalAmount
+            currentSession.amount = totalAmount
             let discount = interactor?.calculateDiscount(totalAmount: totalAmount, originalTotalAmount: originalTotalAmount) ?? 0
             let tips = interactor?.calculateTipsAmount(totalAmount: totalAmount, originalTotalAmount: originalTotalAmount) ?? 0
             view?.discountTextField?.text = String(describing: discount)
             view?.tipsAmountTextField?.text = String(describing: tips)
             self.currentSession.discount = discount
-            self.currentSession.totalTips = tips
+            self.currentSession.tips = tips
         }
     }
     var discount: Int16 = 0 {
@@ -34,24 +34,24 @@ class CheckoutPresenter: NSObject, CheckoutPresenterInterface {
             let tips = interactor?.calculateTipsAmount(totalAmount: totalAmount, originalTotalAmount: originalTotalAmount) ?? 0
             view?.totalAmountTextField?.text = String(describing: amount)
             view?.tipsAmountTextField?.text = String(describing: tips)
-            self.currentSession.totalAmount = amount
-            self.currentSession.totalTips = tips
+            self.currentSession.amount = amount
+            self.currentSession.tips = tips
         }
     }
     var tips: Float = 0 {
         didSet {
             if tips != oldValue {
-                currentSession.totalTips = tips
+                currentSession.tips = tips
             }
         }
     }
 
     
     // Public methods
-    func configureViewWithParams(session: TableSessionStruct, originalTotalAmount: Float) {
+    func configureViewWithParams(session: TableSession, originalTotalAmount: Float) {
         self.currentSession = session
         self.originalTotalAmount = originalTotalAmount
-        self.totalAmount = session.totalAmount
+        self.totalAmount = session.amount
         self.discount = session.discount
         
         // Configure GUI
@@ -63,7 +63,7 @@ class CheckoutPresenter: NSObject, CheckoutPresenterInterface {
     }
     
     func saveTableSession() {
-        router?.didPerformCheckout(totalAmount: currentSession.totalAmount, discount: currentSession.discount, tips: currentSession.totalTips)
+        router?.didPerformCheckout(totalAmount: currentSession.amount, discount: currentSession.discount, tips: currentSession.tips)
     }
     
     func getFloatValueFromTextField (textField: UITextField) -> Float {

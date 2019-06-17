@@ -10,27 +10,27 @@ import Foundation
 
 class Guest {
     
-    public var guestName: String
+    public var name: String
     public var openTime: Date
-    public weak var table: TableSession?
+    public weak var tableSession: TableSession?
     public var closeTime: Date?
-    public var totalAmount: Float = 0.0
+    public var amount: Float = 0.0
     public var orders: [Order] = []
     
-    init (guestName: String, openTime: Date, tableSession: TableSession) {
-        self.guestName = guestName
+    init (name: String, openTime: Date, tableSession: TableSession) {
+        self.name = name
         self.openTime = openTime
-        self.table = tableSession
+        self.tableSession = tableSession
     }
     
-    convenience init(guestName: String,
+    convenience init(name: String,
                      openTime: Date,
                      tableSession: TableSession,
                      closeTime: Date?,
                      totalAmount: Float) {
-        self.init(guestName: guestName, openTime: openTime, tableSession: tableSession)
+        self.init(name: name, openTime: openTime, tableSession: tableSession)
         self.closeTime = closeTime
-        self.totalAmount = totalAmount
+        self.amount = totalAmount
     }
     
     // Supporting properties
@@ -42,8 +42,28 @@ class Guest {
     
     
     // MARK: methods
+    class func calculateCurrentAmount(forGuest guest: Guest) -> Float {
+        var totalAmount: Float = 0.0
+        
+        if UserSettings.isTimeCafe {
+            let closeOrCurrentTime = guest.closeTime ?? Date()
+            let amountForTime = roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.pricePerMinute
+            totalAmount += amountForTime
+        }
+        
+        let orders = guest.orders
+        for order in orders {
+            let price = order.price
+            let quantity = order.quantity
+            let amount = price * Float(quantity)
+            totalAmount += amount
+        }
+        return totalAmount
+    }
+    
+    
     func renameTo (newName name: String) {
-        self.guestName = name
+        self.name = name
         //try? viewContext.save()
     }
     
@@ -59,7 +79,7 @@ class Guest {
     }
     
     func moveGuest (to targetTableSesion: TableSession) {
-        self.table = targetTableSesion
+        self.tableSession = targetTableSesion
         //try? viewContext.save()
     }
     
@@ -74,24 +94,6 @@ class Guest {
     }
     
     // MARK: Class functions
-    class func addNewGuest (tableSession: TableSession) {
-//        let allGuests = self.getAllGuestsForTableSorted(tableSession: tableSession)
-//        let name = NSLocalizedString("guestNameForInsert", comment: "") + " \((allGuests.count) + 1)"
-//        if #available(iOS 10.0, *) {
-//            let newGuest = GuestsTable(context: viewContext)
-//            newGuest.guestName = name
-//            newGuest.openTime = Date() as NSDate
-//            newGuest.closeTime = nil
-//            tableSession.addToGuest(newGuest)
-//        } else {
-//            let newGuest = GuestsTable(entity: NSEntityDescription.entity(forEntityName: "GuestsTable", in: viewContext)!, insertInto: viewContext)
-//            newGuest.guestName = name
-//            newGuest.openTime = Date() as NSDate
-//            newGuest.closeTime = nil
-//            tableSession.addToGuest(newGuest)
-//        }
-        //try? viewContext.save()
-    }
     
     class func addNewGuestHistorical (tableSession: TableSession, openTime: Date, closeTime: Date) {
 //        let allGuests = self.getAllGuestsForTableSorted(tableSession: tableSession)

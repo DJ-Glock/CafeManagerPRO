@@ -11,5 +11,5 @@ protocol CheckoutInterface: class {
     var delegate: CheckoutDelegate! {get set}
     
     /// Method opens view where user will be able to perform final checkout. Once done - newly calculated values will be returned to delegate for further processing
-    func checkoutWithParams (session: TableSessionStruct, originalTotalAmount: Float, sender: AnyObject)
+    func checkoutWithParams (session: TableSession, originalTotalAmount: Float, sender: AnyObject)
 }

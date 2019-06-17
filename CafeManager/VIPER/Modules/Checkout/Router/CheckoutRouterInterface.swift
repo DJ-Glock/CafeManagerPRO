@@ -8,7 +8,7 @@
 
 protocol CheckoutRouterInterface: class {
     /// Method calls presenter to show view with parameters for checkout
-    func checkoutWithParams(session: TableSessionStruct, originalTotalAmount: Float, sender: AnyObject)
+    func checkoutWithParams(session: TableSession, originalTotalAmount: Float, sender: AnyObject)
     
     /// Method just dismiss opened view without any further actions
     func dismissCheckoutView()

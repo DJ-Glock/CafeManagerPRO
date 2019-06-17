@@ -8,7 +8,7 @@
 
 protocol CheckoutPresenterInterface: class {
     /// Method present view with given parameters
-    func configureViewWithParams(session: TableSessionStruct, originalTotalAmount: Float)
+    func configureViewWithParams(session: TableSession, originalTotalAmount: Float)
     
     /// Method is getting called when cancel button pressed
     func cancelButtonPressed()

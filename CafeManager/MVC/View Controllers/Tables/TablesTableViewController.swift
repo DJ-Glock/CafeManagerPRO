@@ -10,6 +10,11 @@ import UIKit
 import CoreData
 
 class TablesTableViewController: FetchedResultsTableViewController {
+    
+    /// To do:
+    /// Table deletion function
+    
+    
     // MARK: variables
     private var currentTable: Table?
     private var currentTableSession: TableSession?
@@ -17,6 +22,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
     private var tableNameTextField: UITextField!
     private var tableCapacityTextField: UITextField!
     internal var tableViewRefreshControl: UIRefreshControl?
+    private weak var currentTableViewController: TableUIViewController?
     
     // MARK: IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -29,7 +35,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
     
     //MARK: system functions for view
     override func viewWillAppear(_ animated: Bool) {
-        updateGUI()
+//        updateGUI()
     }
     
     // MARK: Functions
@@ -38,6 +44,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         super.viewDidLoad()
         sideMenu()
         configureRefreshControl()
+        updateGUI()
     }
     
     // Menu
@@ -52,7 +59,6 @@ class TablesTableViewController: FetchedResultsTableViewController {
 
     // UI Update
     @objc private func updateGUI() {
-        print("updateGUI was called")
         DBQuery.getTablesWithActiveSessionsAsync { [weak self] (tables, error) in
             guard let self = self else {return}
             
@@ -142,9 +148,9 @@ class TablesTableViewController: FetchedResultsTableViewController {
             let capacity = Int16(capacityInt)
             
             let newTable = Table(firebaseID: nil, tableName: tableName, tableCapacity: capacity)
-            DBPersist.createTableInDatabase(newTable: newTable, completion: { (error) in
+            DBPersist.createTable(newTable: newTable, completion: { (error) in
                 if let error = error {
-                    CommonAlert.shared.show(title: "Error occurred while saving table data in the database", text: error.localizedDescription)
+                    CommonAlert.shared.show(title: "Error occurred while saving table data in the database", text: error as! String)
                 }
             })
             
@@ -184,9 +190,9 @@ class TablesTableViewController: FetchedResultsTableViewController {
             table.name = newName
             table.capacity = newCapacity
             
-            DBUpdate.changeTableInDatabase(tableToChange: table, completion: { (error) in
+            DBUpdate.updateTable(tableToChange: table, completion: { (error) in
                 if let error = error {
-                    CommonAlert.shared.show(title: "Error occurred while saving table data in the database", text: error.localizedDescription)
+                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving table data in the database: \(error)")
                     table.name = oldName
                     table.capacity = oldCapacity
                 }
@@ -207,7 +213,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         if tableSession != nil {
             cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
             cell.tableStatusLabel.text = NSLocalizedString("tableOpened", comment: "") + "\(tableSession!.openTime.convertToString())"
-            cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSession.calculateTotalAmount(currentTableSession: currentTableSession)))" + UserSettings.currencySymbol
+            cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSession.calculateActualTotalAmount(for: tableSession)))" + UserSettings.currencySymbol
         } else {
             cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
             cell.tableStatusLabel.text = NSLocalizedString("tableIsClosed", comment: "")
@@ -255,13 +261,12 @@ class TablesTableViewController: FetchedResultsTableViewController {
                 tableTVC.tableName = currentTable!.name
                 tableTVC.currentTable = currentTable!
                 tableTVC.currentTableSession = currentTableSession
+                self.currentTableViewController = tableTVC
             }
         }
     }
 }
 
-
-// Common extension for fetchedResultsController
 extension TablesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

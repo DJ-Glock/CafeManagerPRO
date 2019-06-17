@@ -49,19 +49,19 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
         }
     }
     private var originalAmount: Float {
-        return TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
+        return TableSession.calculateActualTotalAmount(for: currentTableSession)
     }
     private var totalAmount: Float {
         guard currentTableSession != nil else {return 0}
-        if currentTableSession!.totalAmount != -1 {
-            return currentTableSession!.totalAmount
+        if currentTableSession!.amount != -1 {
+            return currentTableSession!.amount
         } else {
-            return TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
+            return TableSession.calculateActualTotalAmount(for: currentTableSession)
         }
     }
     private var discount: Int16 {
         guard currentTableSession != nil else {return 0}
-        if currentTableSession!.totalAmount != -1 {
+        if currentTableSession!.amount != -1 {
             return currentTableSession!.discount
         } else {
             return 0
@@ -106,10 +106,9 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     }
     @IBAction func recalculateButtonPressed(_ sender: UIBarButtonItem) {
         if let session = currentTableSession {
-            let plainSession = TableSessionStruct(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.tips, discount: session.discount)
             let checkout = CheckoutAssembly.assembleModule()
             checkout.delegate = self as CheckoutDelegate
-            checkout.checkoutWithParams(session: plainSession, originalTotalAmount: self.originalAmount, sender: sender)
+            checkout.checkoutWithParams(session: session, originalTotalAmount: self.originalAmount, sender: sender)
         }
     }
     
@@ -227,10 +226,10 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
             cell.guestOrdersTableView.delegate = cell
             cell.guestOrdersTableView.dataSource = cell
             
-            cell.guestNameLabel.text = guest.guestName
+            cell.guestNameLabel.text = guest.name
             cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime.convertToString()
             if UserSettings.isTimeCafe == true {
-                cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Float(TableSession.calculateIndividualAmount(guest: guest))), number: .decimal) + UserSettings.currencySymbol
+                cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Float(Guest.calculateCurrentAmount(forGuest: guest))), number: .decimal) + UserSettings.currencySymbol
             } else {
                 cell.guestAmountLabel.text = NSLocalizedString("guestGoneTime", comment: "") + guest.closeTime!.convertToString()
             }
@@ -322,7 +321,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
                     if self.guestNameTextField.text != "" {
                         newGuestName = self.guestNameTextField.text!
                     } else {
-                        newGuestName = guest.guestName
+                        newGuestName = guest.name
                     }
                     guest.renameTo(newName: newGuestName)
                     self.updateLabels()

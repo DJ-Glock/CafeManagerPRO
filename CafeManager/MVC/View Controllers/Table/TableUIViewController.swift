@@ -9,6 +9,10 @@
 import UIKit
 import NotificationCenter
 
+/// To do:
+/// Move table session - needs to be refactored
+/// Add order - needs to be refactored
+
 class TableUIViewController: ParentViewController, UITableViewDataSource, UITableViewDelegate {
     
     //Variables
@@ -34,11 +38,35 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     }
     private var guestNameTextField: UITextField!
     private var currentGuest: Guest? = nil
-    private var guests: [Guest] = []
-    private var orders: [Order] = []
-    private var actualTotalAmount: Float = 0
-    private var totalAmount: Float = 0
-    private var countOfGuests: Int = 0
+    private var guests: [Guest] {
+        get {
+            return self.currentTableSession?.guests ?? []
+        }
+    }
+    private var orders: [Order] {
+        get {
+            return self.currentTableSession?.orders ?? []
+        }
+    }
+    private var actualAmount: Float = 0
+    private var amount: Float = 0
+    private var countOfGuests: Int {
+        get {
+            return guests.count
+        }
+    }
+    private var countOfActiveGuests: Int {
+        get {
+            let guests = self.guests
+            var activeGuests = 0
+            for guest in guests {
+                if guest.closeTime == nil {
+                    activeGuests += 1
+                }
+            }
+            return activeGuests
+        }
+    }
     private var tableCapacity: Int {
         get {
             return Int(currentTable!.capacity)
@@ -61,34 +89,23 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     //MARK: IBActions
     //@IBAction func saveDescriptionButtonPressed(_ sender: UIButton) {saveTableDescription()}
     @IBAction func closeTableBarButtonPressed(_ sender: UIBarButtonItem) {
-        if let session = currentTableSession {
-            let plainSession = TableSessionStruct(openTime: session.openTime as Date, closeTime: session.closeTime as Date?, totalAmount: session.totalAmount, totalTips: session.tips, discount: session.discount)
-            let checkout = CheckoutAssembly.assembleModule()
-            checkout.delegate = self
-            checkout.checkoutWithParams(session: plainSession, originalTotalAmount: self.totalAmount, sender: sender)
-        }
-
+        self.closeTableSession(sender: sender)
     }
-    @IBAction func addCustomGuest(_ sender: UIButton) {
-        guard tableCapacity > countOfGuests else {return}
-        let customGuest = CustomGuestAssembly.assembleModule()
-        customGuest.delegate = self
-        customGuest.chooseCustomGuest(sender: sender)
+    
+    @IBAction func addCustomGuestButtonPressed(_ sender: UIButton) {
+        self.addCustomGuest(sender: sender)
     }
-    @IBAction func addGuestButtonPressed(_ sender: UIButton) {addQuickGuest()}
+    
+    @IBAction func addGuestButtonPressed(_ sender: UIButton) {
+        self.addQuickGuest(sender: sender)
+    }
+    
     @IBAction func addOrderButtonPressed(_ sender: UIButton) {
-        guard currentTableSession != nil else {return}
-        
-        let addOrder = AddOrderAssembly.assembleModule()
-        addOrder.delegate = self
-        addOrder.showMenuItemsToAddOrder(forSession: currentTableSession!, sender: sender)
+        self.addOrder(sender: sender)
     }
+    
     @IBAction func moveSessionButtonPressed(_ sender: UIButton) {
-        if let session = currentTableSession {
-            let move = MoveGuestsAssembly.assembleModule()
-            move.delegate = self
-            move.chooseTargetTable(forSession: session, sender: sender)
-        }
+        self.moveTableSession(sender: sender)
     }
     @IBAction func refreshButtonPressed(_ sender: UIButton) {
         updateGUI()
@@ -123,21 +140,21 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
-    private func reloadDataFromCoreData() {
-        if self.currentTableSession == nil {
-            self.guests = []
-            self.orders = []
-            self.actualTotalAmount = 0
-            self.totalAmount = 0
-            self.countOfGuests = 0
-        } else {
-            self.guests = Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!)
-            self.orders = Order.getOrdersFor(tableSession: currentTableSession!)
-            self.actualTotalAmount = TableSession.calculateActualTotalAmount(for: currentTableSession)
-            self.totalAmount = TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
-            self.countOfGuests = Guest.getActiveGuestsFor(tableSession: currentTableSession!).count
-        }
-    }
+//    private func reloadDataFromCoreData() {
+//        if self.currentTableSession == nil {
+//            self.guests = []
+//            self.orders = []
+//            self.actualTotalAmount = 0
+//            self.totalAmount = 0
+//            self.countOfGuests = 0
+//        } else {
+//            self.guests = Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!)
+//            self.orders = Order.getOrdersFor(tableSession: currentTableSession!)
+//            self.actualTotalAmount = TableSession.calculateActualTotalAmount(for: currentTableSession)
+//            self.totalAmount = TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
+//            self.countOfGuests = Guest.getActiveGuestsFor(tableSession: currentTableSession!).count
+//        }
+//    }
     
     // MARK: GUI update functions
     private func updateLabels() {
@@ -148,35 +165,82 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         } else {
             tableOpenTimeLabel.text = " - "
         }
-        totalAmountLabel.text = NumberFormatter.localizedString(from: NSNumber(value: actualTotalAmount), number: .decimal) + UserSettings.currencySymbol + " (\(NumberFormatter.localizedString(from: NSNumber(value: totalAmount), number: .decimal))\(UserSettings.currencySymbol))"
+        totalAmountLabel.text = NumberFormatter.localizedString(from: NSNumber(value: actualAmount), number: .decimal) + UserSettings.currencySymbol + " (\(NumberFormatter.localizedString(from: NSNumber(value: amount), number: .decimal))\(UserSettings.currencySymbol))"
     }
     
     private func updateGUI() {
-        currentTableSession = TableSession.getCurrentTableSession(table: currentTable!)
-        self.reloadDataFromCoreData()
-        updateGuestsTableView()
-        updateOrdersTableView()
-        updateLabels()
-        if currentTableSession == nil {
-            addOrderButton.isEnabled = false
-        } else {
-            addOrderButton.isEnabled = true
-        }
+        self.updateLabels()
+        self.guestsTableView.reloadData()
+        self.ordersTableView.reloadData()
     }
     
     // MARK: Functions for managing table, orders, guests
-    private func addQuickGuest () {
-        guard tableCapacity > countOfGuests else {return}
-        if currentTableSession == nil {
-            currentTableSession = TableSession.createTableSession(table: currentTable!)
-            addOrderButton.isEnabled = true
+    private func addQuickGuest(sender: Any) {
+        guard tableCapacity > countOfActiveGuests else {return}
+        
+        let name = NSLocalizedString("guestNameForInsert", comment: "") + " \((self.countOfGuests) + 1)"
+        
+        if self.currentTableSession == nil {
+            let tableSession = TableSession(firebaseID: nil, table: self.currentTable!, openTime: Date())
+            let newGuest = Guest(name: name, openTime: Date(), tableSession: tableSession)
+            tableSession.guests.append(newGuest)
+            self.currentTableSession = tableSession
+            
+            DBPersist.createActiveTableSession(newTableSession: tableSession) { [weak self] (error) in
+                guard let self = self else {return}
+                if let error = error {
+                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving session data in the database: \(error)")
+                }
+                self.updateGUI()
+            }
+        } else {
+            let newGuest = Guest(name: name, openTime: Date(), tableSession: self.currentTableSession!)
+            self.currentTableSession?.guests.append(newGuest)
+            DBUpdate.updateGuestsOfActiveTableSession(tableSessionToUpdate: self.currentTableSession!) { [weak self] (error) in
+                guard let self = self else {return}
+                if let error = error {
+                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving guests data in the database: \(error)")
+                }
+                self.updateGUI()
+            }
         }
-        Guest.addNewGuest(tableSession: currentTableSession!)
-        self.updateGUI()
+    }
+    
+    private func addCustomGuest(sender: AnyObject) {
+        guard tableCapacity > countOfActiveGuests else {return}
+        
+        let customGuest = CustomGuestAssembly.assembleModule()
+        customGuest.delegate = self
+        customGuest.chooseCustomGuest(sender: sender)
+    }
+    
+    private func addOrder(sender: AnyObject) {
+        guard currentTableSession != nil else {return}
+        
+        let addOrder = AddOrderAssembly.assembleModule()
+        addOrder.delegate = self
+        addOrder.showMenuItemsToAddOrder(forSession: currentTableSession!, sender: sender)
+    }
+    
+    // To be refactored
+    private func moveTableSession (sender: AnyObject) {
+        if let session = currentTableSession {
+            let move = MoveGuestsAssembly.assembleModule()
+            move.delegate = self
+            move.chooseTargetTable(forSession: session, sender: sender)
+        }
+    }
+    
+    private func closeTableSession (sender: AnyObject) {
+        if let session = currentTableSession {
+            let checkout = CheckoutAssembly.assembleModule()
+            checkout.delegate = self
+            checkout.checkoutWithParams(session: session, originalTotalAmount: self.amount, sender: sender)
+        }
     }
     
     // MARK: functions for tables update
-    private func updateGuestsTableView () {
+    private func updateGuestsTableView() {
         let tableView = guestsTableView
         if currentTableSession != nil {
             tableView?.reloadData()
@@ -188,7 +252,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         }
     }
     
-    private func updateOrdersTableView () {
+    private func updateOrdersTableView() {
         let tableView = ordersTableView
         tableView?.reloadData()
     }
@@ -214,7 +278,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             cell.guestOrdersTableView.delegate = cell
             cell.guestOrdersTableView.dataSource = cell
             
-            cell.guestNameLabel.text = guest.guestName
+            cell.guestNameLabel.text = guest.name
             cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime.convertToString()
             cell.closeGuestButton.isEnabled = true
             
@@ -225,7 +289,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             cell.openTimeLabel.textColor = ColorThemes.textColorNormal
             cell.guestAmountLabel.textColor = ColorThemes.textColorNormal
             
-            cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: TableSession.calculateIndividualAmount(guest: guest)), number: .decimal) + UserSettings.currencySymbol
+            cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Guest.calculateCurrentAmount(forGuest: guest)), number: .decimal) + UserSettings.currencySymbol
             if guest.closeTime != nil {
                 cell.addGuestOrderButton.isEnabled = false
                 cell.closeGuestButton.isEnabled = false
@@ -320,7 +384,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
                     if self.guestNameTextField.text != "" {
                         newGuestName = self.guestNameTextField.text!
                     } else {
-                        newGuestName = guest.guestName
+                        newGuestName = guest.name
                     }
                     guest.renameTo(newName: newGuestName)
                     self.updateGUI()
@@ -457,7 +521,7 @@ extension TableUIViewController: CustomGuestDelegate {
             Guest.addNewCustomGuest(guestName: name, tableSession: session)
         } else {
             let session = TableSession.createTableSession(table: self.currentTable!)
-            Guest.addNewCustomGuest(guestName: name, tableSession: session)
+            Guest.addNewCustomGuest(guestName: name, tableSession: session!)
         }
         self.updateGUI()
     }
