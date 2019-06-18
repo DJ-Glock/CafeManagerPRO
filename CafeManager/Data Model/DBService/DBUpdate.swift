@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class DBUpdate {
-    class func updateTable (tableToChange table: Table, completion: @escaping (Error?)-> Void) {
+    class func updateTableAsync (tableToChange table: Table, completion: @escaping (Error?)-> Void) {
         guard let documentID = table.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(table.name)")); return }
         
         var tableData = [String:Any]()
@@ -30,7 +30,7 @@ class DBUpdate {
         }
     }
     
-    class func updateGuestsOfActiveTableSession (tableSessionToUpdate tableSession: TableSession, completion: @escaping (Error?)->Void) {
+    class func updateGuestsOfActiveTableSessionAsync (tableSessionToUpdate tableSession: TableSession, completion: @escaping (Error?)->Void) {
         guard let tableDocumentID = tableSession.table?.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: tableSession.table!.name))")); return }
         guard let tableSessionDocumentID = tableSession.firebaseID else {completion(iCafeManagerError.DatabaseError("firebaseID is null for tableSession of table: \(String(describing: tableSession.table!.name))")); return}
         
@@ -68,7 +68,7 @@ class DBUpdate {
         }
         tableSessionData["Guests"] = guestsData
         
-        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSessions").document(tableSessionDocumentID)
+        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").document(tableSessionDocumentID)
         sessionDocument.updateData(tableSessionData) { (error) in
             if let error = error {
                 completion(error)
@@ -80,7 +80,7 @@ class DBUpdate {
         }
     }
     
-    class func updateOrdersOfActiveTableSession (tableSessionToUpdate tableSession: TableSession, completion: @escaping (Error?)->Void) {
+    class func updateOrdersOfActiveTableSessionAsync (tableSessionToUpdate tableSession: TableSession, completion: @escaping (Error?)->Void) {
         guard let tableDocumentID = tableSession.table!.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: tableSession.table!.name))")); return }
         guard let tableSessionDocumentID = tableSession.firebaseID else {completion(iCafeManagerError.DatabaseError("firebaseID is null for tableSession of table: \(String(describing: tableSession.table!.name))")); return}
         
@@ -100,7 +100,7 @@ class DBUpdate {
         }
         tableSessionData["Orders"] = ordersData
         
-        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSessions").document(tableSessionDocumentID)
+        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").document(tableSessionDocumentID)
         sessionDocument.updateData(tableSessionData) { (error) in
             if let error = error {
                 completion(error)

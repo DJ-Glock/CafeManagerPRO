@@ -59,7 +59,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
 
     // UI Update
     @objc private func updateGUI() {
-        DBQuery.getTablesWithActiveSessionsAsync { [weak self] (tables, error) in
+        DBQuery.getTablesWithActiveSessionAsync { [weak self] (tables, error) in
             guard let self = self else {return}
             
             if let error = error {
@@ -148,7 +148,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
             let capacity = Int16(capacityInt)
             
             let newTable = Table(firebaseID: nil, tableName: tableName, tableCapacity: capacity)
-            DBPersist.createTable(newTable: newTable, completion: { (error) in
+            DBPersist.createTableAsync(newTable: newTable, completion: { (error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred while saving table data in the database", text: error as! String)
                 }
@@ -190,7 +190,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
             table.name = newName
             table.capacity = newCapacity
             
-            DBUpdate.updateTable(tableToChange: table, completion: { (error) in
+            DBUpdate.updateTableAsync(tableToChange: table, completion: { (error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving table data in the database: \(error)")
                     table.name = oldName

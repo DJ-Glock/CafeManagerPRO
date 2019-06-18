@@ -140,22 +140,6 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
-//    private func reloadDataFromCoreData() {
-//        if self.currentTableSession == nil {
-//            self.guests = []
-//            self.orders = []
-//            self.actualTotalAmount = 0
-//            self.totalAmount = 0
-//            self.countOfGuests = 0
-//        } else {
-//            self.guests = Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!)
-//            self.orders = Order.getOrdersFor(tableSession: currentTableSession!)
-//            self.actualTotalAmount = TableSession.calculateActualTotalAmount(for: currentTableSession)
-//            self.totalAmount = TableSession.calculateTotalAmount(currentTableSession: currentTableSession)
-//            self.countOfGuests = Guest.getActiveGuestsFor(tableSession: currentTableSession!).count
-//        }
-//    }
-    
     // MARK: GUI update functions
     private func updateLabels() {
         tableCapacityLabel.text = String(describing: currentTable!.capacity)
@@ -169,9 +153,13 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     }
     
     private func updateGUI() {
-        self.updateLabels()
-        self.guestsTableView.reloadData()
-        self.ordersTableView.reloadData()
+        DBQuery.getActiveTableSessionAsync(forTable: self.currentTable!) { (tableSession, error) in
+            self.currentTableSession = tableSession
+            self.updateLabels()
+            self.guestsTableView.reloadData()
+            self.ordersTableView.reloadData()
+        }
+        
     }
     
     // MARK: Functions for managing table, orders, guests
@@ -186,22 +174,18 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             tableSession.guests.append(newGuest)
             self.currentTableSession = tableSession
             
-            DBPersist.createActiveTableSession(newTableSession: tableSession) { [weak self] (error) in
-                guard let self = self else {return}
+            DBPersist.createActiveTableSessionAsync(newTableSession: tableSession) {(error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving session data in the database: \(error)")
                 }
-                self.updateGUI()
             }
         } else {
             let newGuest = Guest(name: name, openTime: Date(), tableSession: self.currentTableSession!)
             self.currentTableSession?.guests.append(newGuest)
-            DBUpdate.updateGuestsOfActiveTableSession(tableSessionToUpdate: self.currentTableSession!) { [weak self] (error) in
-                guard let self = self else {return}
+            DBUpdate.updateGuestsOfActiveTableSessionAsync(tableSessionToUpdate: self.currentTableSession!) {(error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving guests data in the database: \(error)")
                 }
-                self.updateGUI()
             }
         }
     }
@@ -360,7 +344,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
                 let order = self.orders[editActionsForRowAt.row]
                 order.remove()
-                self.updateGUI()
+//                self.updateGUI()
             }
             deleteButton.backgroundColor = .red
             return [deleteButton]
@@ -369,7 +353,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
                 let guest = self.guests[editActionsForRowAt.row]
                 guest.removeFromTable()
-                self.updateGUI()
+//                self.updateGUI()
             }
             deleteButton.backgroundColor = .red
             
@@ -387,7 +371,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
                         newGuestName = guest.name
                     }
                     guest.renameTo(newName: newGuestName)
-                    self.updateGUI()
+//                    self.updateGUI()
                 }))
                 self.presentAlert(alert: alert, animated: true)
             }
@@ -465,7 +449,7 @@ extension TableUIViewController: GuestAtTableTableViewCellDelegate {
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertCancel", comment: ""), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .destructive, handler: { (UIAlertAction) in
             guest.close()
-            self.updateGUI()
+//            self.updateGUI()
         }))
         self.presentAlert(alert: alert, animated: true)
     }
@@ -474,7 +458,7 @@ extension TableUIViewController: GuestAtTableTableViewCellDelegate {
 // Delegate for GuestOrders table view refresh - to refresh Table GUI
 extension TableUIViewController: GuestOrdersTableViewRefreshDelegate {
     func didRefreshGuestOrdersTableView() {
-        self.updateGUI()
+//        self.updateGUI()
     }
 }
 
@@ -490,7 +474,7 @@ extension TableUIViewController: OrderInTableTableViewCellDelegate {
                 return
             }
         }
-        self.updateGUI()
+//        self.updateGUI()
     }
 }
 
@@ -505,25 +489,38 @@ extension TableUIViewController: PeriodPickerDelegate {
 extension TableUIViewController: AddOrderDelegate {
     func didChoose(menuItem item: MenuItem, forGuest guest: Guest) {
         GuestOrder.addOrIncreaseOrder(for: guest, menuItem: item)
-        self.updateGUI()
+//        self.updateGUI()
     }
     
     func didChoose(menuItem item: MenuItem, forSession session: TableSession) {
         Order.addOrIncreaseOrder(tableSession: session, menuItem: item)
-        self.updateGUI()
+//        self.updateGUI()
     }
 }
 
 // Delegate of CustomGuest module that allows user to choose custom guest name
 extension TableUIViewController: CustomGuestDelegate {
     func didChooseCustomGuest(name: String) {
-        if let session = self.currentTableSession {
-            Guest.addNewCustomGuest(guestName: name, tableSession: session)
+        if self.currentTableSession == nil {
+            let tableSession = TableSession(firebaseID: nil, table: self.currentTable!, openTime: Date())
+            let newGuest = Guest(name: name, openTime: Date(), tableSession: tableSession)
+            tableSession.guests.append(newGuest)
+            self.currentTableSession = tableSession
+            
+            DBPersist.createActiveTableSessionAsync(newTableSession: tableSession) {(error) in
+                if let error = error {
+                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving session data in the database: \(error)")
+                }
+            }
         } else {
-            let session = TableSession.createTableSession(table: self.currentTable!)
-            Guest.addNewCustomGuest(guestName: name, tableSession: session!)
+            let newGuest = Guest(name: name, openTime: Date(), tableSession: self.currentTableSession!)
+            self.currentTableSession?.guests.append(newGuest)
+            DBUpdate.updateGuestsOfActiveTableSessionAsync(tableSessionToUpdate: self.currentTableSession!) {(error) in
+                if let error = error {
+                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving guests data in the database: \(error)")
+                }
+            }
         }
-        self.updateGUI()
     }
 }
 
@@ -531,12 +528,12 @@ extension TableUIViewController: CustomGuestDelegate {
 extension TableUIViewController: MoveGuestsDelegate {
     func didChoose(targetTableSession: TableSession, forGuest guest: Guest) {
         guest.moveGuest(to: targetTableSession)
-        self.updateGUI()
+//        self.updateGUI()
     }
     
     func didChoose(targetTable: Table, forSession session: TableSession) {
         TableSession.moveTableSessionTo(targetTable: targetTable, currentSession: session)
-        self.updateGUI()
+//        self.updateGUI()
     }
 }
 
@@ -548,7 +545,7 @@ extension TableUIViewController: CheckoutDelegate {
         } catch {
             CommonAlert.shared.show(title: "Failed to close session", text: error.localizedDescription)
         }
-        self.updateGUI()
+//        self.updateGUI()
         self.navigationController?.popViewController(animated: true)
     }
 }
