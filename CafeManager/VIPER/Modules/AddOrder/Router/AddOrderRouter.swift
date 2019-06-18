@@ -53,6 +53,9 @@ class AddOrderRouter: NSObject, AddOrderInterface, AddOrderRouterInterface {
                 view.popoverPresentationController?.sourceView = imageView
         }
         
-        appDelegate.window?.rootViewController?.present(view, animated: true, completion: nil)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.present(view, animated: true, completion: nil)
+            presenter.configureView()
+        }
     }
 }

@@ -12,11 +12,11 @@ class LineChartRouter: NSObject, LineChartInterface, LineChartRouterInterface {
     weak var view: UIViewController!
     
     func showChart (forDataPoints dataPoints: [String], withValues values: [[Double]], andLabels labels: [String]) {
-        if let topView = UIApplication.topViewController()?.view {
-            view.popoverPresentationController?.sourceView = topView
+        if let topViewController = UIApplication.topViewController(){
+            view.popoverPresentationController?.sourceView = topViewController.view
+            topViewController.present(view, animated: true, completion: nil)
+            presenter.showChart(forDataPoints: dataPoints, withValues: values, andLabels: labels)
         }
-        appDelegate.window?.rootViewController?.present(view, animated: true, completion: nil)
-        presenter.showChart(forDataPoints: dataPoints, withValues: values, andLabels: labels)
     }
     
     func didPressDoneButton() {

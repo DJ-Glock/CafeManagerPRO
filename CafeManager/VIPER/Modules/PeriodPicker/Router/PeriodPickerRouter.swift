@@ -26,9 +26,11 @@ class PeriodPickerRouter: NSObject, PeriodPickerRouterInterface, PeriodPickerInt
                     let imageView = button?.imageView
                     view.popoverPresentationController?.sourceView = imageView
         }
-        appDelegate.window?.rootViewController?.present(view!, animated: true, completion: nil)
         
-        presenter.configureDatePickers(startDateLimit: startDateLimit, endDateLimit: endDateLimit, currentStartDate: currentStartDate, currentEndDate: currentEndDate)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.present(view, animated: true, completion: nil)
+            presenter.configureDatePickers(startDateLimit: startDateLimit, endDateLimit: endDateLimit, currentStartDate: currentStartDate, currentEndDate: currentEndDate)
+        } 
     }
     
     // Outgoing

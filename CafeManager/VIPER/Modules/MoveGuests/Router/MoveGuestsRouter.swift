@@ -53,6 +53,9 @@ class MoveGuestsRouter: NSObject, MoveGuestsInterface, MoveGuestsRouterInterface
                     let imageView = button?.imageView
                     view.popoverPresentationController?.sourceView = imageView
         }
-        appDelegate.window?.rootViewController?.present(view!, animated: true, completion: nil)
+        
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.present(view, animated: true, completion: nil)
+        }        
     }
 }
