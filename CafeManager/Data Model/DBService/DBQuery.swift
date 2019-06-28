@@ -146,5 +146,44 @@ class DBQuery {
         }
     }
     
+    class func getUserSettingsAndMenu(completion: @escaping (Error?) -> Void) {
+        
+        let userDocument = userData
+        userDocument.addSnapshotListener { (snapshot, error) in
+            if let error = error {
+                completion (error)
+            }
+            if let snapshot = snapshot {
+                guard let data = snapshot.data() else {return}
+                
+                let settings = data["Settings"] as! [String:Any]
+                let cafeName = settings["cafeName"] as? String ?? ""
+                let currencyCode = settings["currencyCode"] as? String ?? "USD"
+                let isTimeCafe = settings["isTimeCafe"] as? Bool ?? false
+                let pricePerMinute = settings["pricePerMinute"] as? Float ?? 0.0
+                UserSettings.shared.cafeName = cafeName
+                UserSettings.shared.currencyCode = currencyCode
+                UserSettings.shared.isTimeCafe = isTimeCafe
+                UserSettings.shared.pricePerMinute = pricePerMinute
+                
+                let menu = Menu.shared
+                let menuData = data["Menu"] as? [String:Any] ?? [:]
+                for (name, items) in menuData {
+                    let items = items as? [[String:Any]] ?? []
+                    let menuCategory = MenuCategory(categoryName: name)
+                    menu.categories.append(menuCategory)
+                    
+                    for item in items {
+                        let name = item["name"] as! String
+                        let description = item["description"] as? String
+                        let price = item["price"] as! Float
+                        let menuItem = MenuItem(itemName: name, itemDescription: description, itemPrice: price, category: menuCategory)
+                        menuCategory.menuItems.append(menuItem)
+                    }
+                }
+                completion (nil)
+            }
+        }
+    }
 
 }

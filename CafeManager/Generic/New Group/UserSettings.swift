@@ -9,12 +9,37 @@
 import Foundation
 
 class UserSettings {
+    public var isTimeCafe: Bool = false
+    public var currencyCode: String = "USD"
+    public var pricePerMinute: Float = 0.0
+    public var cafeName: String = ""
+    
+    static let shared = UserSettings()
+    
+    
+    // Needs to be refactored
+    static var currencySymbol: String {
+        get {
+            switch currencyOld {
+            case "USD": return "$"
+            case "EUR": return "€"
+            case "RUR": return " руб."
+            case "UAH": return " грн."
+            case "BYN": return " руб."
+            case "NIS": return "₪"
+            default: return "$"
+            }
+        }
+    }
+    
+    
+    
     //Variables
     private static let defaults = UserDefaults.standard
     
     /// Is time cafe is taken from app settings (user defaults).
     /// Can be set or get. Set is used only in settings.
-    static var isTimeCafe: Bool {
+    static var isTimeCafeOld: Bool {
         get {
             return UserSettings.defaults.bool(forKey: "isTimeCafe")
         }
@@ -36,7 +61,7 @@ class UserSettings {
     
     /// Price per minute is taken from app settings (user defaults).
     /// Can be set or get. Set is used only in settings.
-    static var pricePerMinute: Float {
+    static var pricePerMinuteOld: Float {
         get {
             return UserSettings.defaults.float(forKey: "pricePerMinute")
         }
@@ -47,7 +72,7 @@ class UserSettings {
     
     /// Default currency is taken from app settings (user defaults).
     /// Can be set or get. Set is used only in settings.
-    static var currency: String {
+    static var currencyOld: String {
         get {
             if let currency = defaults.string(forKey: "currency") {
                 return currency
@@ -70,38 +95,23 @@ class UserSettings {
             defaults.set(newValue, forKey: "syncStatus")
         }
     }
-    
-    /// Currency symbol value is taken from app settings (user defaults).
-    static var currencySymbol: String {
-        get {
-            switch currency {
-            case "USD": return "$"
-            case "EUR": return "€"
-            case "RUR": return " руб."
-            case "UAH": return " грн."
-            case "BYN": return " руб."
-            case "NIS": return "₪"
-            default: return "$"
-            }
-        }
-    }
 }
 
 // Sync user defaults function
-extension UserSettings {
-    class func syncUserDefaults() {
-        let keyStore = NSUbiquitousKeyValueStore()
-        if UserSettings.syncStatus == "N/A" {
-            UserSettings.currency = keyStore.string(forKey: "currency") ?? UserSettings.currency
-            UserSettings.pricePerMinute = Float(keyStore.double(forKey: "pricePerMinute"))
-            UserSettings.isTimeCafe = keyStore.bool(forKey: "isTimeCafe")
-            UserSettings.isDarkThemeEnabled = keyStore.bool(forKey: "isDarkThemeEnabled")
-        } else {
-            keyStore.set(UserSettings.currency, forKey: "currency")
-            keyStore.set(UserSettings.pricePerMinute, forKey: "pricePerMinute")
-            keyStore.set(UserSettings.isTimeCafe, forKey: "isTimeCafe")
-            keyStore.set(UserSettings.isDarkThemeEnabled, forKey: "isDarkThemeEnabled")
-            keyStore.synchronize()
-        }
-    }
-}
+//extension UserSettings {
+//    class func syncUserDefaults() {
+//        let keyStore = NSUbiquitousKeyValueStore()
+//        if UserSettings.syncStatus == "N/A" {
+//            UserSettings.currency = keyStore.string(forKey: "currency") ?? UserSettings.currency
+//            UserSettings.pricePerMinute = Float(keyStore.double(forKey: "pricePerMinute"))
+//            UserSettings.isTimeCafe = keyStore.bool(forKey: "isTimeCafe")
+//            UserSettings.isDarkThemeEnabled = keyStore.bool(forKey: "isDarkThemeEnabled")
+//        } else {
+//            keyStore.set(UserSettings.currency, forKey: "currency")
+//            keyStore.set(UserSettings.pricePerMinute, forKey: "pricePerMinute")
+//            keyStore.set(UserSettings.isTimeCafe, forKey: "isTimeCafe")
+//            keyStore.set(UserSettings.isDarkThemeEnabled, forKey: "isDarkThemeEnabled")
+//            keyStore.synchronize()
+//        }
+//    }
+//}

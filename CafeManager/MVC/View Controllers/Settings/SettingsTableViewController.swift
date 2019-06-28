@@ -33,7 +33,7 @@ class SettingsTableViewController: UITableViewController {
     // IBActions
     // UISwitches
     @IBAction func isTimeCafeSwitchValueChanged(_ sender: UISwitch) {
-        UserSettings.isTimeCafe = sender.isOn
+        UserSettings.isTimeCafeOld = sender.isOn
     }
     
     @IBAction func isDarkThemeEnabledValueChanged(_ sender: UISwitch) {
@@ -49,7 +49,7 @@ class SettingsTableViewController: UITableViewController {
 //    }
     
     @IBAction func pricePerHourTextFieldDidEdit(_ sender: UITextField) {
-        UserSettings.pricePerMinute = pricePerHourTextField.text!.getFloatNumber() ?? 0
+        UserSettings.pricePerMinuteOld = pricePerHourTextField.text!.getFloatNumber() ?? 0
     }
     @IBAction func runSyncButtonPressed(_ sender: UIButton) {
         //self.showSyncAlert()
@@ -95,9 +95,9 @@ class SettingsTableViewController: UITableViewController {
     
     // Configure view before it appears
     private func configureViewWillAppear() {
-        currencyPicker.selectRow(currencies.index(of: UserSettings.currency)!, inComponent: 0, animated: true)
-        pricePerHourTextField.text = NumberFormatter.localizedString(from: NSNumber(value: UserSettings.pricePerMinute), number: .decimal)
-        isTimeCafeSwitch.isOn = UserSettings.isTimeCafe
+        currencyPicker.selectRow(currencies.index(of: UserSettings.currencyOld)!, inComponent: 0, animated: true)
+        pricePerHourTextField.text = NumberFormatter.localizedString(from: NSNumber(value: UserSettings.pricePerMinuteOld), number: .decimal)
+        isTimeCafeSwitch.isOn = UserSettings.isTimeCafeOld
         isDarkThemeEnabled.isOn = UserSettings.isDarkThemeEnabled
         //isAutoSyncEnabled.isOn = UserSettings.isAutosyncEnabled
         syncStatusLabel.text = UserSettings.syncStatus
@@ -110,7 +110,7 @@ class SettingsTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: NSLocalizedString("synchronizationWarningConfirm", comment: ""), style: .default, handler: {(UIAlertAction) in
             
             //appDelegate.validateCloudKitAnd(runSync: true){}
-            UserSettings.syncUserDefaults()
+//            UserSettings.syncUserDefaults()
             self.configureViewWillAppear()
         }))
         self.presentAlert(alert: alert, animated: true)
@@ -172,7 +172,7 @@ extension SettingsTableViewController: UIPickerViewDelegate, UIPickerViewDataSou
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        UserSettings.currency = currencies[row]
+        UserSettings.currencyOld = currencies[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {

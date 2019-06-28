@@ -28,8 +28,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.db = Firestore.firestore()
         self.auth = Auth.auth()
         
-        // AppRater for rating app
-        let _ = AppRater.sharedInstance
+        
+        // Read user settings and menu from database. Set data to variables of UserSettings and MenuCategory/Menu classes
+        DBQuery.getUserSettingsAndMenu { (error) in
+            CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while retrieving settings and menu from the database \(String(describing: error))")
+        }
+        
+        // AppRater for rating app - needs to be fixed.
+        //let _ = AppRater.sharedInstance
         
         /// UIAppearance configuration
         ChangeGUITheme.configureThemeForApplication()

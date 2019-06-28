@@ -22,7 +22,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
     private var filtered:[MenuItem] = []
     private var selectedLanguage = GenericStuff.MenuLanguage.english
     private var menuCategories: [String] {
-        return MenuCategory.getAllCategories()
+        return []
     }
     private var addingItemView = UIView()
     
@@ -184,15 +184,15 @@ class MenuTableViewController: FetchedResultsTableViewController {
 //            menuItem = fetchedResultsController!.object(at: indexPath)
         }
         
-        if menuItem.isHidden {
-            cell.menuItemNameLabel.textColor = ColorThemes.textColorDisabled
-            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorDisabled
-            cell.menuItemPriceLabel.textColor = ColorThemes.textColorDisabled
-        } else {
-            cell.menuItemNameLabel.textColor = ColorThemes.textColorNormal
-            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorNormal
-            cell.menuItemPriceLabel.textColor = ColorThemes.textColorNormal
-        }
+//        if menuItem.isHidden {
+//            cell.menuItemNameLabel.textColor = ColorThemes.textColorDisabled
+//            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorDisabled
+//            cell.menuItemPriceLabel.textColor = ColorThemes.textColorDisabled
+//        } else {
+//            cell.menuItemNameLabel.textColor = ColorThemes.textColorNormal
+//            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorNormal
+//            cell.menuItemPriceLabel.textColor = ColorThemes.textColorNormal
+//        }
         
         cell.menuItemNameLabel.text = menuItem!.itemName
         cell.menuItemDescriptionLabel.text = menuItem!.itemDescription
@@ -232,20 +232,20 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }
         editButton.backgroundColor = .lightGray
         
-        let isMenuItemAlreadyHidden = menuItem.isHidden
-        let showHideButtonText = isMenuItemAlreadyHidden ? "Activate" : "Deactivate"
+//        let isMenuItemAlreadyHidden = menuItem.isHidden
+//        let showHideButtonText = isMenuItemAlreadyHidden ? "Activate" : "Deactivate"
         
-        let showHideButton = UITableViewRowAction(style: .normal, title: showHideButtonText) { action, index in
-            if isMenuItemAlreadyHidden {
-                menuItem.showMenuItem()
-            } else {
-                menuItem.hideMenuItem()
-            }
-            self.updateGUI()
-        }
-        showHideButton.backgroundColor = UIColor.blue
+//        let showHideButton = UITableViewRowAction(style: .normal, title: showHideButtonText) { action, index in
+//            if isMenuItemAlreadyHidden {
+//                menuItem.showMenuItem()
+//            } else {
+//                menuItem.hideMenuItem()
+//            }
+//            self.updateGUI()
+//        }
+//        showHideButton.backgroundColor = UIColor.blue
         
-        return [deleteButton, editButton, showHideButton]
+        return [deleteButton, editButton]
     }
 }
 
