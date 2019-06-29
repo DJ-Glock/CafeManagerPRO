@@ -45,9 +45,9 @@ class Guest {
     class func calculateCurrentAmount(forGuest guest: Guest) -> Float {
         var totalAmount: Float = 0.0
         
-        if UserSettings.isTimeCafeOld {
+        if UserSettings.shared.isTimeCafe {
             let closeOrCurrentTime = guest.closeTime ?? Date()
-            let amountForTime = roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.pricePerMinuteOld
+            let amountForTime = roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.shared.pricePerMinute
             totalAmount += amountForTime
         }
         

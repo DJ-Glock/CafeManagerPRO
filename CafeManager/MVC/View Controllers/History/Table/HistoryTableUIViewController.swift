@@ -228,7 +228,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
             
             cell.guestNameLabel.text = guest.name
             cell.openTimeLabel.text = NSLocalizedString("guestComeTime", comment: "") + guest.openTime.convertToString()
-            if UserSettings.isTimeCafeOld == true {
+            if UserSettings.shared.isTimeCafe == true {
                 cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Float(Guest.calculateCurrentAmount(forGuest: guest))), number: .decimal) + UserSettings.currencySymbol
             } else {
                 cell.guestAmountLabel.text = NSLocalizedString("guestGoneTime", comment: "") + guest.closeTime!.convertToString()
