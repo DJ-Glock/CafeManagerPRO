@@ -146,7 +146,7 @@ class DBQuery {
         }
     }
     
-    class func getUserSettingsAndMenu(completion: @escaping (Error?) -> Void) {
+    class func getUserSettingsAndMenuAsync(completion: @escaping (Error?) -> Void) {
         
         let userDocument = userData
         userDocument.addSnapshotListener { (snapshot, error) in

@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         
         // Read user settings and menu from database. Set data to variables of UserSettings and MenuCategory/Menu classes
-        DBQuery.getUserSettingsAndMenu { (error) in
+        DBQuery.getUserSettingsAndMenuAsync { (error) in
             if let error = error {
                 CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while retrieving settings and menu from the database \(String(describing: error))")
             }

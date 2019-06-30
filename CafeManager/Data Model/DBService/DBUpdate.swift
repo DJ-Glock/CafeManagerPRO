@@ -20,13 +20,7 @@ class DBUpdate {
         
         let tableDocument = userData.collection("Tables").document(documentID)
         tableDocument.updateData(tableData) { (error) in
-            if let error = error {
-                completion(error)
-                return
-            } else {
-                completion(nil)
-                return
-            }
+            completion(error)
         }
     }
     
@@ -70,13 +64,7 @@ class DBUpdate {
         
         let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").document(tableSessionDocumentID)
         sessionDocument.updateData(tableSessionData) { (error) in
-            if let error = error {
-                completion(error)
-                return
-            } else {
-                completion(nil)
-                return
-            }
+            completion(error)
         }
     }
     
@@ -102,15 +90,22 @@ class DBUpdate {
         
         let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").document(tableSessionDocumentID)
         sessionDocument.updateData(tableSessionData) { (error) in
-            if let error = error {
-                completion(error)
-                return
-            } else {
-                completion(nil)
-                return
-            }
+            completion(error)
         }
     }
     
     
+    class func updateUserSettingsAsync (completion: @escaping (Error?)-> Void) {
+    var settings = [String:Any]()
+    
+    settings["cafeName"] = UserSettings.shared.cafeName
+    settings["isTimeCafe"] = UserSettings.shared.isTimeCafe
+    settings["currencyCode"] = UserSettings.shared.currencyCode
+    settings["pricePerMinute"] = UserSettings.shared.pricePerMinute
+    
+    let userDocument = userData
+        userDocument.updateData(["Settings" : settings]) { (error) in
+            completion(error)
+        }
+    }
 }

@@ -8,6 +8,13 @@
 
 import Foundation
 
+enum SettingType {
+    case cafeName
+    case isTimeCafe
+    case currencyCode
+    case pricePerMinute
+}
+
 class UserSettings {
     
     private static let defaults = UserDefaults.standard
@@ -15,36 +22,21 @@ class UserSettings {
     static let shared = UserSettings()
     
     // These settings are stored in the Firestore and loaded during application startup
-    public var isTimeCafe: Bool = false {
-        didSet {
-            // Call DBUpdate to update setting in FireStore
-        }
-    }
-    public var currencyCode: String = "USD" {
-        didSet {
-            // Call DBUpdate to update setting in FireStore
-        }
-    }
-    public var pricePerMinute: Float = 0.0 {
-        didSet {
-            // Call DBUpdate to update setting in FireStore
-        }
-    }
-    public var cafeName: String = "" {
-        didSet {
-            // Call DBUpdate to update setting in FireStore
-        }
-    }
+    public var isTimeCafe: Bool = false
+    public var currencyCode: String = "USD"
+    public var pricePerMinute: Float = 0.0
+    public var cafeName: String = ""
     
     static var currencySymbol: String {
         get {
             switch UserSettings.shared.currencyCode {
             case "USD": return "$"
             case "EUR": return "€"
-            case "RUR": return " руб."
+            case "RUB": return " руб."
             case "UAH": return " грн."
             case "BYN": return " руб."
             case "NIS": return "₪"
+            case "INS": return "Rs."
             default: return "$"
             }
         }
