@@ -26,6 +26,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var isTimeCafeSwitch: UISwitch!
     @IBOutlet weak var isDarkThemeEnabled: UISwitch!
     @IBOutlet weak var pricePerHourTextField: UITextField!
+    @IBOutlet weak var cafeNameTextField: UITextField!
     @IBOutlet var currencyPicker: UIPickerView!
     
     // IBActions
@@ -56,6 +57,16 @@ class SettingsTableViewController: UITableViewController {
             }
         }
     }
+    
+    @IBAction func cafeNameTextFieldDidEdit(_ sender: UITextField) {
+        UserSettings.shared.cafeName = cafeNameTextField.text ?? ""
+        DBUpdate.updateUserSettingsAsync { (error) in
+            if let error = error {
+                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving setting in the Firestore: \(String(describing: error))")
+            }
+        }
+    }
+    
     
     // LifeCycle functions
     override func viewDidLoad() {
@@ -97,6 +108,7 @@ class SettingsTableViewController: UITableViewController {
     @objc private func updateGUI() {
         currencyPicker.selectRow(currencies.index(of: UserSettings.shared.currencyCode)!, inComponent: 0, animated: true)
         pricePerHourTextField.text = NumberFormatter.localizedString(from: NSNumber(value: UserSettings.shared.pricePerMinute), number: .decimal)
+        cafeNameTextField.text = UserSettings.shared.cafeName
         isTimeCafeSwitch.isOn = UserSettings.shared.isTimeCafe
         isDarkThemeEnabled.isOn = UserSettings.isDarkThemeEnabled
         self.tableViewRefreshControl?.endRefreshing()
