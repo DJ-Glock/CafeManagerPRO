@@ -52,9 +52,9 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
         cell.order = order
         cell.menuItem = order.menuItem
         
-        cell.itemNameLabel.text = order.menuItem.itemName
+        cell.itemNameLabel.text = order.menuItem.name
         cell.itemQuantityLabel.text = String(describing: order.quantityOfItems)
-        cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem.itemPrice)), number: .decimal) + UserSettings.currencySymbol
+        cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem.price)), number: .decimal) + UserSettings.currencySymbol
         
         // Change cell buttons color theme
         cell.plusButton = ChangeGUITheme.setColorThemeFor(button: cell.plusButton)

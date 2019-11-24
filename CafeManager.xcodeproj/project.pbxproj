@@ -54,7 +54,6 @@
 		2132012F201F50270096CDB5 /* csv.png in Resources */ = {isa = PBXBuildFile; fileRef = 2132012E201F50270096CDB5 /* csv.png */; };
 		21356D981FEAB8990052E897 /* CommonMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21356D971FEAB8990052E897 /* CommonMenuTableViewController.swift */; };
 		21356D9A1FEBB1400052E897 /* CommonMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21356D991FEBB1400052E897 /* CommonMenuTableViewCell.swift */; };
-		21375C741FEA78D90080DA7F /* MenuCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21375C731FEA78D90080DA7F /* MenuCategory.swift */; };
 		21377B051FB8F51F003689F2 /* ChangeGUITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21377B041FB8F51E003689F2 /* ChangeGUITheme.swift */; };
 		21377B221FB9FA54003689F2 /* AddGuestLightTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 21377B151FB9FA4C003689F2 /* AddGuestLightTheme.png */; };
 		21377B231FB9FA54003689F2 /* AddKnownGuestLightTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 21377B161FB9FA4C003689F2 /* AddKnownGuestLightTheme.png */; };
@@ -148,7 +147,6 @@
 		21922EFC20640B1D00DF4CF5 /* LineChartAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21922EFB20640B1D00DF4CF5 /* LineChartAssembly.swift */; };
 		21922EFF20640B3100DF4CF5 /* LineChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21922EFE20640B3100DF4CF5 /* LineChartInterface.swift */; };
 		21922F0120640B3800DF4CF5 /* LineChartDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21922F0020640B3800DF4CF5 /* LineChartDelegate.swift */; };
-		219DF7191EE0BF83004070A3 /* MenuStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219DF7181EE0BF83004070A3 /* MenuStruct.swift */; };
 		21A7411C1FB61B2E001B0725 /* HamMenuBarButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A7411A1FB61B29001B0725 /* HamMenuBarButton.png */; };
 		21A7411D1FB61B2E001B0725 /* PlusBarButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 21A7411B1FB61B29001B0725 /* PlusBarButton.png */; };
 		21A8BDD01EDF32FE0066F9C5 /* GuestAtTableTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A8BDCF1EDF32FE0066F9C5 /* GuestAtTableTableViewCellDelegate.swift */; };
@@ -168,7 +166,6 @@
 		21C7330A1ED5D57C0051AF77 /* TableSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733091ED5D57C0051AF77 /* TableSession.swift */; };
 		21C7330C1ED5D58F0051AF77 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C7330B1ED5D58F0051AF77 /* Table.swift */; };
 		21C733251ED621A90051AF77 /* TableUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733241ED621A90051AF77 /* TableUIViewController.swift */; };
-		21C733271ED63B1B0051AF77 /* TableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733261ED63B1B0051AF77 /* TableStruct.swift */; };
 		21D055D91EE9C92E00620E28 /* ReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D055D81EE9C92E00620E28 /* ReportsViewController.swift */; };
 		21D760B11EBA60FE00E72A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D760B01EBA60FE00E72A8F /* AppDelegate.swift */; };
 		21D760B61EBA60FE00E72A8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21D760B41EBA60FE00E72A8F /* Main.storyboard */; };
@@ -303,7 +300,6 @@
 		2132012E201F50270096CDB5 /* csv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = csv.png; sourceTree = "<group>"; };
 		21356D971FEAB8990052E897 /* CommonMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMenuTableViewController.swift; sourceTree = "<group>"; };
 		21356D991FEBB1400052E897 /* CommonMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMenuTableViewCell.swift; sourceTree = "<group>"; };
-		21375C731FEA78D90080DA7F /* MenuCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCategory.swift; sourceTree = "<group>"; };
 		21377B041FB8F51E003689F2 /* ChangeGUITheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeGUITheme.swift; sourceTree = "<group>"; };
 		21377B141FB9FA4C003689F2 /* ReportsLightTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ReportsLightTheme.png; sourceTree = "<group>"; };
 		21377B151FB9FA4C003689F2 /* AddGuestLightTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddGuestLightTheme.png; sourceTree = "<group>"; };
@@ -383,7 +379,6 @@
 		21922EFB20640B1D00DF4CF5 /* LineChartAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartAssembly.swift; sourceTree = "<group>"; };
 		21922EFE20640B3100DF4CF5 /* LineChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartInterface.swift; sourceTree = "<group>"; };
 		21922F0020640B3800DF4CF5 /* LineChartDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartDelegate.swift; sourceTree = "<group>"; };
-		219DF7181EE0BF83004070A3 /* MenuStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuStruct.swift; sourceTree = "<group>"; };
 		21A7411A1FB61B29001B0725 /* HamMenuBarButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HamMenuBarButton.png; sourceTree = "<group>"; };
 		21A7411B1FB61B29001B0725 /* PlusBarButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlusBarButton.png; sourceTree = "<group>"; };
 		21A8BDCF1EDF32FE0066F9C5 /* GuestAtTableTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestAtTableTableViewCellDelegate.swift; sourceTree = "<group>"; };
@@ -404,7 +399,6 @@
 		21C733091ED5D57C0051AF77 /* TableSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSession.swift; sourceTree = "<group>"; };
 		21C7330B1ED5D58F0051AF77 /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		21C733241ED621A90051AF77 /* TableUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableUIViewController.swift; sourceTree = "<group>"; };
-		21C733261ED63B1B0051AF77 /* TableStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableStruct.swift; sourceTree = "<group>"; };
 		21D055D81EE9C92E00620E28 /* ReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsViewController.swift; sourceTree = "<group>"; };
 		21D760AD1EBA60FD00E72A8F /* CafeManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CafeManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D760B01EBA60FE00E72A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -849,8 +843,6 @@
 		21386F0C205706D800A14D30 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
-				219DF7181EE0BF83004070A3 /* MenuStruct.swift */,
-				21C733261ED63B1B0051AF77 /* TableStruct.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -880,7 +872,6 @@
 				21C733071ED5D54F0051AF77 /* Order.swift */,
 				21F92D281FE19512004A4201 /* GuestOrder.swift */,
 				21C733051ED5D5370051AF77 /* MenuItem.swift */,
-				21375C731FEA78D90080DA7F /* MenuCategory.swift */,
 				211A643622B8E8E10079FAE8 /* Menu.swift */,
 				21ED04D81FE80F7E002671A7 /* CommonMenuItem.swift */,
 			);
@@ -1439,10 +1430,9 @@
 			};
 			buildConfigurationList = 21D760A81EBA60FD00E72A8F /* Build configuration list for PBXProject "CafeManager" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				ru,
@@ -1546,7 +1536,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
@@ -1566,7 +1556,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
@@ -1586,8 +1576,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CafeManager/Pods-CafeManager-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAnonymousAuthUI.bundle",
@@ -1600,8 +1588,6 @@
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterKitResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAnonymousAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
@@ -1726,7 +1712,6 @@
 				21F92D2B1FE402F4004A4201 /* GuestOrdersTableViewRefreshDelegate.swift in Sources */,
 				218C6CDF201FA943003CCE6D /* iCafeManagerError.swift in Sources */,
 				2123063C205D90D500F89C03 /* MoveGuestsRouter.swift in Sources */,
-				21375C741FEA78D90080DA7F /* MenuCategory.swift in Sources */,
 				21922EEC206408B600DF4CF5 /* LineChartViewController.swift in Sources */,
 				21E145051F489E1500879F01 /* TableSessionsTableViewController.swift in Sources */,
 				2101CB27206172A900AB9C49 /* CustomGuestViewControllerInterface.swift in Sources */,
@@ -1770,10 +1755,8 @@
 				2123065E205DB20200F89C03 /* MoveGuestsInteractorInterface.swift in Sources */,
 				21922EE02063DCE400DF4CF5 /* ReportsTableViewCell.swift in Sources */,
 				21386EEB2057003F00A14D30 /* CheckoutViewController.swift in Sources */,
-				219DF7191EE0BF83004070A3 /* MenuStruct.swift in Sources */,
 				21A8BDD21EDF34720066F9C5 /* OrderInTableTableViewCellDelegate.swift in Sources */,
 				21E0A8541EC23E6600DB10CE /* TablesTableViewController.swift in Sources */,
-				21C733271ED63B1B0051AF77 /* TableStruct.swift in Sources */,
 				2156E08321065BD7004D5647 /* Double+Extension.swift in Sources */,
 				21C733251ED621A90051AF77 /* TableUIViewController.swift in Sources */,
 				21386F3E205878CD00A14D30 /* UIApplication+Extension.swift in Sources */,

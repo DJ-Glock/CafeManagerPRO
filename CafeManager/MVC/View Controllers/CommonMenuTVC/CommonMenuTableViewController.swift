@@ -63,63 +63,63 @@ class CommonMenuTableViewController: UITableViewController, NSFetchedResultsCont
     }
     
     @objc private func showEditing() {
-        self.view.endEditing(false)
-        
-        // If we were selecting items, reload tableView and add items if everything is valid.
-        if self.tableView.isEditing {
-            if self.selectedIndexPaths.count == 0 {
-                self.tableView.setEditing(!tableView.isEditing, animated: true)
-                self.navigationItem.rightBarButtonItem?.title = tableView.isEditing ? NSLocalizedString("Add selected", comment: "") : NSLocalizedString("Choose", comment: "")
-                self.invalidSelectedIndexPaths = []
-                self.tableView.reloadData()
-                return
-            }
-            
-            self.invalidSelectedIndexPaths = []
-            var menuItems: [MenuStruct] = []
-            
-            // If search is active, use filtered data
-            if self.isSearchActive {
-                for index in selectedIndexPaths {
-                    if let price = pricesForSelectedMenuItems[index] {
-                        let commonMenuItem = self.filtered[index.row]
-                        let menuItem = MenuStruct(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
-                        menuItems.append(menuItem)
-                    } else {
-                        self.invalidSelectedIndexPaths.insert(index)
-                    }
-                }
-            } else {
-                for index in selectedIndexPaths {
-                    if let price = pricesForSelectedMenuItems[index] {
-//                        if let commonMenuItem = fetchedResultsController?.object(at: index) {
-//                            let menuItem = Menu(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
-//                            menuItems.append(menuItem)
-//                        }
-                    } else {
-                        self.invalidSelectedIndexPaths.insert(index)
-                    }
-                }
-            }
-            
-            // Check if all prices are set
-            if self.invalidSelectedIndexPaths.count > 0 {
-                tableView.scrollToRow(at: self.invalidSelectedIndexPaths.min()!, at: .top, animated: true)
-            } else {
-                // Add selected menu items to database and close this view
-                tableView.reloadData()
-                for item in menuItems {
-                    MenuItem.addMenuItem(item: item)
-                }
-                self.navigationController?.popViewController(animated: true)
-            }
-        } else {
-            // If we were not selecting, enable tableView editing with updating table view (for formatting)
-            self.tableView.setEditing(!tableView.isEditing, animated: true)
-            self.navigationItem.rightBarButtonItem?.title = tableView.isEditing ? NSLocalizedString("Add selected", comment: "") : NSLocalizedString("Choose", comment: "")
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-        }
+//        self.view.endEditing(false)
+//
+//        // If we were selecting items, reload tableView and add items if everything is valid.
+//        if self.tableView.isEditing {
+//            if self.selectedIndexPaths.count == 0 {
+//                self.tableView.setEditing(!tableView.isEditing, animated: true)
+//                self.navigationItem.rightBarButtonItem?.title = tableView.isEditing ? NSLocalizedString("Add selected", comment: "") : NSLocalizedString("Choose", comment: "")
+//                self.invalidSelectedIndexPaths = []
+//                self.tableView.reloadData()
+//                return
+//            }
+//
+//            self.invalidSelectedIndexPaths = []
+//            var menuItems: [MenuStruct] = []
+//
+//            // If search is active, use filtered data
+//            if self.isSearchActive {
+//                for index in selectedIndexPaths {
+//                    if let price = pricesForSelectedMenuItems[index] {
+//                        let commonMenuItem = self.filtered[index.row]
+//                        let menuItem = MenuStruct(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
+//                        menuItems.append(menuItem)
+//                    } else {
+//                        self.invalidSelectedIndexPaths.insert(index)
+//                    }
+//                }
+//            } else {
+//                for index in selectedIndexPaths {
+//                    if let price = pricesForSelectedMenuItems[index] {
+////                        if let commonMenuItem = fetchedResultsController?.object(at: index) {
+////                            let menuItem = Menu(itemName: commonMenuItem.itemName!, itemDescription: commonMenuItem.itemDescription, itemPrice: price, itemCategory: commonMenuItem.itemCategory)
+////                            menuItems.append(menuItem)
+////                        }
+//                    } else {
+//                        self.invalidSelectedIndexPaths.insert(index)
+//                    }
+//                }
+//            }
+//
+//            // Check if all prices are set
+//            if self.invalidSelectedIndexPaths.count > 0 {
+//                tableView.scrollToRow(at: self.invalidSelectedIndexPaths.min()!, at: .top, animated: true)
+//            } else {
+//                // Add selected menu items to database and close this view
+//                tableView.reloadData()
+//                for item in menuItems {
+//                    MenuItem.addMenuItem(item: item)
+//                }
+//                self.navigationController?.popViewController(animated: true)
+//            }
+//        } else {
+//            // If we were not selecting, enable tableView editing with updating table view (for formatting)
+//            self.tableView.setEditing(!tableView.isEditing, animated: true)
+//            self.navigationItem.rightBarButtonItem?.title = tableView.isEditing ? NSLocalizedString("Add selected", comment: "") : NSLocalizedString("Choose", comment: "")
+//            self.tableView.beginUpdates()
+//            self.tableView.endUpdates()
+//        }
     }
 }
 

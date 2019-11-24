@@ -36,7 +36,7 @@ class OrdersStatisticsModel: NSObject {
     }
     
     private func getPlainDataFromDatabase() {
-        self.plainData = MenuItem.getDetailedOrdersStatistics(from: self.startDate, to: self.endDate)
+//        self.plainData = MenuItem.getDetailedOrdersStatistics(from: self.startDate, to: self.endDate)
     }
     
     // Function to calculate general numbers

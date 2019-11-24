@@ -26,21 +26,4 @@ class Table {
         self.init(firebaseID: firebaseID, tableName: tableName, tableCapacity: tableCapacity)
         self.tableSession = tableSession
     }
-    
-    
-    // MARK: methods
-    func changeTable (to changedTable: TableStruct) {
-    }
-    
-    func remove () {
-    }
-    
-    
-    class func getTable (withName name: String) -> Table? {
-        return nil
-    }
-    
-    class func getAllTables () -> [Table]? {
-        return []
-    }
 }

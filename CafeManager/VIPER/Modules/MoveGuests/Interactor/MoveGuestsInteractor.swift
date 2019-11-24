@@ -23,48 +23,54 @@ class MoveGuestsInteractor: NSObject, MoveGuestsInteractorInterface {
     }
     
     func getTablesArrayForMovingSession() -> [String] {
-        if let tables = Table.getAllTables() {
-            var tablesNames: [String] = []
-            
-            for table in tables {
-                let session = TableSession.getCurrentTableSession(table: table)
-                if session == nil {
-                    tablesNames.append(table.name)
-                }
-            }
-            return tablesNames
-        }
+        
+        
+//        if let tables = Table.getAllTables() {
+//            var tablesNames: [String] = []
+//
+//            for table in tables {
+//                let session = TableSession.getCurrentTableSession(table: table)
+//                if session == nil {
+//                    tablesNames.append(table.name)
+//                }
+//            }
+//            return tablesNames
+//        }
+//        return []
         return []
     }
     
     func getTablesArrayForMovingGuest() -> [String] {
-        if let tables = Table.getAllTables() {
-            var tablesNames: [String] = []
-            
-            for table in tables {
-                if let _ = TableSession.getCurrentTableSession(table: table) {
-                    tablesNames.append(table.name)
-                }
-            }
-            return tablesNames
-        }
+//        if let tables = Table.getAllTables() {
+//            var tablesNames: [String] = []
+//
+//            for table in tables {
+//                if let _ = TableSession.getCurrentTableSession(table: table) {
+//                    tablesNames.append(table.name)
+//                }
+//            }
+//            return tablesNames
+//        }
+//        return []
         return []
     }
     
     // Private functions
     private func getTableForSession (tableName: String) -> Table? {
-        if let table = Table.getTable(withName: tableName) {
-            return table
-        }
+//        if let table = Table.getTable(withName: tableName) {
+//            return table
+//        }
+//        return nil
         return nil
     }
     
     private func getTableSessionForGuest (tableName: String) -> TableSession? {
-        if let table = Table.getTable(withName: tableName) {
-            if let session = TableSession.getCurrentTableSession(table: table) {
-                return session
-            }
-        }
+//        if let table = Table.getTable(withName: tableName) {
+//            if let session = TableSession.getCurrentTableSession(table: table) {
+//                return session
+//            }
+//        }
+//        return nil
         return nil
     }
 }

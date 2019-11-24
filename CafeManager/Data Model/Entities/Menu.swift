@@ -9,10 +9,8 @@
 import Foundation
 
 class Menu {
-    var categories: [MenuCategory] = []
-    
-    private init (){}
-    
+    var menuItems: [String:[MenuItem]] = [:]
     static let shared = Menu()
     
+    private init (){}
 }
