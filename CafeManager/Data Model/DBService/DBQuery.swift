@@ -26,7 +26,6 @@ class DBQuery {
     
     /// Async function returns all tables with active sessions (if any)
     class func getTablesWithActiveSessionAsync(completion: @escaping ([Table], Error?) -> Void) {
-        
         let tablesCollection = userData
             .collection("Tables")
             .order(by: "name", descending: false)
@@ -146,7 +145,7 @@ class DBQuery {
                 
                 // Check if database contains more than one active session for table (INCORRECT!!!) and throw an error
                 if snapshot.documents.count > 1 {
-                    let myError = iCafeManagerError.DatabaseError("Ambiguous sessions for table \(table.name) found. Notify iCafeManager support. UserID: \(userId)")
+                    let myError = iCafeManagerError.DatabaseError("Ambiguous sessions for table \(table.name) found. Notify iCafeManager support. UserID: \(String(describing: userId))")
                     completion(tableSession, myError)
                     return
                 } else {
@@ -159,7 +158,6 @@ class DBQuery {
     }
     
     class func getUserSettingsAndMenuAsync(completion: @escaping (Error?) -> Void) {
-        
         let userDocument = userData
         userDocument!.addSnapshotListener { (snapshot, error) in
             if let error = error {

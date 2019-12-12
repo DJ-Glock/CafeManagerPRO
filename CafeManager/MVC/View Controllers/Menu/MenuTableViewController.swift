@@ -12,7 +12,7 @@ import NotificationCenter
 import SearchTextField
 
 class MenuTableViewController: FetchedResultsTableViewController {
-    // MARK: variables
+    // MARK: Variables
 //    private var fetchedResultsController: NSFetchedResultsController<MenuTable>?
     private var itemNameTextField: UITextField!
     private var itemDescriptionTextField: UITextField!
@@ -25,6 +25,9 @@ class MenuTableViewController: FetchedResultsTableViewController {
     private var selectedLanguage = GenericStuff.MenuLanguage.english
     private var menuCategories: [String] {
         return menu.menuItems.keys.sorted()
+    }
+    private var menuItems: [String : [MenuItem]] {
+        return menu.menuItems
     }
     private var addingItemView = UIView()
     
@@ -43,6 +46,37 @@ class MenuTableViewController: FetchedResultsTableViewController {
         showActionSheet()
     }
     
+    // MARK: Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCommonMenu" {
+            let targetVC = segue.destination as! CommonMenuTableViewController
+            targetVC.selectedLanguage = self.selectedLanguage
+        }
+    }
+    
+    // MARK: View lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sideMenu()
+        updateGUI()
+        self.searchBar.delegate = self
+        
+        // To dismiss keyboard
+        self.addGestureRecognizer()
+        
+        // Configure refresh control for TableView
+        configureRefreshControl()
+        
+        // To move view when keyboard appears/hides
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateGUI()
+    }
+    
+    // MARK: Action Sheet
     private func showActionSheet () {
         guard self.isAddingOrChangingMenuItem == false else {return}
         
@@ -87,42 +121,11 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }))
         actionSheet.addAction(UIAlertAction.init(title: NSLocalizedString("alertCancel", comment: ""), style: UIAlertActionStyle.cancel, handler: { (action) in
         }))
-        // Present the controller
-        actionSheet.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         
+        actionSheet.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         self.presentAlert(alert: actionSheet, animated: true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showCommonMenu" {
-            let targetVC = segue.destination as! CommonMenuTableViewController
-            targetVC.selectedLanguage = self.selectedLanguage
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        sideMenu()
-        updateGUI()
-        self.searchBar.delegate = self
-        
-        // To dismiss keyboard
-        self.addGestureRecognizer()
-        
-        // Configure refresh control for TableView
-        configureRefreshControl()
-        
-        // To move view when keyboard appears/hides
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        updateGUI()
-    }
-    
-    // MARK: Functions
-    // Menu
     private func sideMenu() {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -132,25 +135,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }
     }
     
-    // TableView refresh control
-    func configureRefreshControl () {
-        self.tableViewRefreshControl = UIRefreshControl()
-        
-        // Add Refresh Control to Table View
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = tableViewRefreshControl
-        } else {
-            tableView.addSubview(tableViewRefreshControl!)
-        }
-        tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
-    }
-    
-    private func removeMenuItem(menuItem: MenuItem) {
-//        menuItem.remove()
-        self.updateGUI()
-    }
-    
-    // MARK: Functioms for table view update
+    // MARK: Functions for table view update
     @objc private func updateGUI () {
         self.tableView.reloadData()
         self.tableViewRefreshControl?.endRefreshing()
@@ -165,21 +150,12 @@ class MenuTableViewController: FetchedResultsTableViewController {
             menuItem = filtered[indexPath.row]
         } else {
             let menuCategoryName = menuCategories[indexPath.section]
-            
+            guard let menuItems = self.menuItems[menuCategoryName] else {return cell}
+            menuItem = menuItems[indexPath.row]
         }
         
-//        if menuItem.isHidden {
-//            cell.menuItemNameLabel.textColor = ColorThemes.textColorDisabled
-//            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorDisabled
-//            cell.menuItemPriceLabel.textColor = ColorThemes.textColorDisabled
-//        } else {
-//            cell.menuItemNameLabel.textColor = ColorThemes.textColorNormal
-//            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorNormal
-//            cell.menuItemPriceLabel.textColor = ColorThemes.textColorNormal
-//        }
-        
-        cell.menuItemNameLabel.text = menuItem!.name
-        cell.menuItemDescriptionLabel.text = menuItem!.description
+        cell.menuItemNameLabel.text = menuItem.name
+        cell.menuItemDescriptionLabel.text = menuItem.description
         cell.menuItemPriceLabel.text = NumberFormatter.localizedString(from: NSNumber(value: menuItem!.price), number: .decimal) + UserSettings.currencySymbol
         cell.menuItem = menuItem
         
@@ -231,6 +207,23 @@ class MenuTableViewController: FetchedResultsTableViewController {
         
         return [deleteButton, editButton]
     }
+    
+    func configureRefreshControl () {
+            self.tableViewRefreshControl = UIRefreshControl()
+            
+            // Add Refresh Control to Table View
+            if #available(iOS 10.0, *) {
+                tableView.refreshControl = tableViewRefreshControl
+            } else {
+                tableView.addSubview(tableViewRefreshControl!)
+            }
+            tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
+        }
+        
+        private func removeMenuItem(menuItem: MenuItem) {
+    //        menuItem.remove()
+            self.updateGUI()
+        }
 }
 
 
@@ -313,6 +306,7 @@ extension MenuTableViewController: UISearchBarDelegate {
 }
 
 extension MenuTableViewController {
+    // MARK: Export to CSV
     private func exportMenuToCSV() throws -> URL {
         var items: [MenuItem]
         if isSearchActive {
