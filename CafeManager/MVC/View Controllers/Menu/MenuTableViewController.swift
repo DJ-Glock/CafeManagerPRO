@@ -283,10 +283,6 @@ extension MenuTableViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if self.filteredMenuItems.count == 0 {
-            isSearchActive = false
-            self.tableView.reloadData()
-        }
         self.view.endEditing(false)
     }
     
@@ -325,12 +321,6 @@ extension MenuTableViewController: UISearchBarDelegate {
                     self.filteredMenuItems[category] = self.menuItems[category]
                 }
             }
-        }
-        
-        if self.filteredMenuCategories.count == 0 {
-            self.isSearchActive = false
-        } else {
-            self.isSearchActive = true
         }
 
         self.tableView.reloadData()
