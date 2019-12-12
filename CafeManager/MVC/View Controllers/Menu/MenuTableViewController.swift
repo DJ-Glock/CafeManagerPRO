@@ -12,31 +12,6 @@ import NotificationCenter
 import SearchTextField
 
 class MenuTableViewController: FetchedResultsTableViewController {
-    // MARK: Variables
-//    private var fetchedResultsController: NSFetchedResultsController<MenuTable>?
-    private var itemNameTextField: UITextField!
-    private var itemDescriptionTextField: UITextField!
-    private var itemPriceTextField: UITextField!
-    internal var tableViewRefreshControl: UIRefreshControl?
-    
-    private let menu = Menu.shared
-    private var isSearchActive : Bool = false
-    private var filtered:[MenuItem] = []
-    private var selectedLanguage = GenericStuff.MenuLanguage.english
-    private var menuCategories: [String] {
-        return menu.menuItems.keys.sorted()
-    }
-    private var menuItems: [String : [MenuItem]] {
-        return menu.menuItems
-    }
-    private var addingItemView = UIView()
-    
-    // Variable is used for adding or changing menuItem
-//    private var menuItem = MenuStruct(itemName: "", itemDescription: nil, itemPrice: -1, itemCategory: nil)
-    // Flag for disabling actions with tableView while adding or changing menuItem
-    private var isAddingOrChangingMenuItem = false
-    private var currentMenuItem: MenuItem?
-    
     // MARK: IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -45,6 +20,31 @@ class MenuTableViewController: FetchedResultsTableViewController {
     @IBAction func addMenuItemBarButtonPressed(_ sender: UIBarButtonItem) {
         showActionSheet()
     }
+    
+    // MARK: UI variables
+    private var itemNameTextField: UITextField!
+    private var itemDescriptionTextField: UITextField!
+    private var itemPriceTextField: UITextField!
+    private var addingItemView = UIView()
+    internal var tableViewRefreshControl: UIRefreshControl?
+    
+    // MARK: Variables
+    private var selectedLanguage = GenericStuff.MenuLanguage.english
+    private let menu = Menu.shared
+    private var isSearchActive : Bool = false
+    private var filteredMenuCategories: [String] = []
+    private var filteredMenuItems: [String : [MenuItem]] = [:]
+    private var menuCategories: [String] {
+        return menu.menuItems.keys.sorted()
+    }
+    private var menuItems: [String : [MenuItem]] {
+        return menu.menuItems
+    }
+    
+    // Variable is used for adding or changing menuItem
+    // Flag for disabling actions with tableView while adding or changing menuItem
+    private var isAddingOrChangingMenuItem = false
+    private var currentMenuItem: MenuItem?
     
     // MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -147,9 +147,11 @@ class MenuTableViewController: FetchedResultsTableViewController {
         var menuItem: MenuItem!
         
         if isSearchActive {
-            menuItem = filtered[indexPath.row]
+            let menuCategoryName = self.filteredMenuCategories[indexPath.section]
+            guard let menuItems = self.filteredMenuItems[menuCategoryName] else {return cell}
+            menuItem = menuItems[indexPath.row]
         } else {
-            let menuCategoryName = menuCategories[indexPath.section]
+            let menuCategoryName = self.menuCategories[indexPath.section]
             guard let menuItems = self.menuItems[menuCategoryName] else {return cell}
             menuItem = menuItems[indexPath.row]
         }
@@ -167,7 +169,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         guard self.isAddingOrChangingMenuItem == false else {return []}
         var menuItem: MenuItem!
         if self.isSearchActive {
-            menuItem = self.filtered[editActionsForRowAt.row]
+//            menuItem = self.filteredMenuItems[editActionsForRowAt.row]
         } else {
 //            menuItem = self.fetchedResultsController?.object(at: editActionsForRowAt)
         }
@@ -226,18 +228,20 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }
 }
 
-
+// MARK: TableView numbers
 extension MenuTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         if isSearchActive {
-            return 1
+            return self.filteredMenuCategories.count
         }
         return self.menuCategories.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearchActive {
-            return filtered.count
+            let category = self.filteredMenuCategories[section]
+            let items = self.filteredMenuItems[category]
+            return items?.count ?? 0
         }
         
         let categoryName = menuCategories[section]
@@ -246,7 +250,7 @@ extension MenuTableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if isSearchActive {
-            return nil
+            return self.filteredMenuCategories[section]
         }
         
         return menuCategories[section]
@@ -258,7 +262,7 @@ extension MenuTableViewController {
 //    }
 }
 
-// UISearchBar delegate
+// MARK: UISearchBar
 extension MenuTableViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         isSearchActive = true
@@ -266,7 +270,7 @@ extension MenuTableViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        if self.filtered.count == 0 {
+        if self.filteredMenuItems.count == 0 {
             isSearchActive = false
             self.tableView.reloadData()
         }
@@ -279,7 +283,7 @@ extension MenuTableViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if self.filtered.count == 0 {
+        if self.filteredMenuItems.count == 0 {
             isSearchActive = false
             self.tableView.reloadData()
         }
@@ -287,20 +291,48 @@ extension MenuTableViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        self.filtered = []
-//        if let objects = self.fetchedResultsController?.fetchedObjects {
-//            for object in objects {
-//                let tmp: String = object.itemName!
-//                if tmp.range(of: searchText, options: String.CompareOptions.caseInsensitive, range: nil, locale: nil) != nil {
-//                    self.filtered.append(object)
-//                }
-//            }
-//            if self.filtered.count == 0 {
-//                self.isSearchActive = false
-//            } else {
-//                self.isSearchActive = true
-//            }
-//        }
+        let searchTextLower = searchText.lowercased()
+        let searchForPrice = searchText.getFloatNumber() ?? 0
+        self.filteredMenuCategories = []
+        self.filteredMenuItems = [:]
+        
+        // Filter menu items by name, description or price
+        for category in self.menuCategories {
+            guard let items = self.menuItems[category] else {continue}
+            for item in items {
+                let name = item.name.lowercased()
+                let description = item.description?.lowercased() ?? ""
+                let price = item.price
+                
+                if name.contains(searchTextLower) || description.contains(searchTextLower) || price == searchForPrice {
+                    let alreadyIn = self.filteredMenuCategories.contains(category)
+                    if (!alreadyIn) {
+                        self.filteredMenuCategories.append(category)
+                    }
+                    var filtered = self.filteredMenuItems[category] ?? []
+                    filtered.append(item)
+                    self.filteredMenuItems[category] = filtered
+                }
+            }
+        }
+        
+        // Filter categories by name if no items were filtered
+        if self.filteredMenuCategories.count == 0 {
+            for category in self.menuCategories {
+                let name = category.lowercased()
+                if name.contains(searchTextLower) {
+                    self.filteredMenuCategories.append(category)
+                    self.filteredMenuItems[category] = self.menuItems[category]
+                }
+            }
+        }
+        
+        if self.filteredMenuCategories.count == 0 {
+            self.isSearchActive = false
+        } else {
+            self.isSearchActive = true
+        }
+
         self.tableView.reloadData()
     }
 }
@@ -310,7 +342,7 @@ extension MenuTableViewController {
     private func exportMenuToCSV() throws -> URL {
         var items: [MenuItem]
         if isSearchActive {
-            items = self.filtered
+//            items = self.filteredMenuItems
         } else {
 //            items = fetchedResultsController?.fetchedObjects ?? []
         }
@@ -631,8 +663,8 @@ extension MenuTableViewController {
 }
 
 
-// Alert window for wrong params
 extension MenuTableViewController {
+    // MARK: Alert window for wrong params
     private func showAlertParamsNotFilledProperly() {
         let alertNoCanDo = UIAlertController(title: NSLocalizedString("alertNoCanDo", comment: ""), message: NSLocalizedString("paramsNotFilledProperly", comment: ""), preferredStyle: .alert)
         alertNoCanDo.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .cancel, handler: nil))
@@ -641,7 +673,8 @@ extension MenuTableViewController {
 }
 
 extension MenuTableViewController {
-    // Function to scroll view when keyboard appears/disappears
+    // MARK: Keyboard handle
+    /// Function to scroll view when keyboard appears/disappears
     @objc func keyboardWillChangeFrame (notification: NSNotification) {
         let mainViewFrame = self.view.frame
         if let userInfo = notification.userInfo {
@@ -678,6 +711,7 @@ extension MenuTableViewController {
 }
 
 extension MenuTableViewController {
+    // MARK: Gesture Recognizer
     func addGestureRecognizerForSubView() {
         if let gestureRecognizers = self.addingItemView.gestureRecognizers {
             for recognizer in gestureRecognizers {
