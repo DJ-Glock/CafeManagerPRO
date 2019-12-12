@@ -13,8 +13,8 @@ import FirebaseUI
 
 // Global constants
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
-let userId = appDelegate.auth?.currentUser?.uid ?? ""
-let userData = appDelegate.db.collection("UserData").document(userId)
+let userId: String! = appDelegate.auth?.currentUser?.uid
+var userData: DocumentReference! = nil
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -27,14 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         self.db = Firestore.firestore()
         self.auth = Auth.auth()
-        
-        
-        // Read user settings and menu from database. Set data to variables of UserSettings and MenuCategory/Menu classes
-        DBQuery.getUserSettingsAndMenuAsync { (error) in
-            if let error = error {
-                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while retrieving settings and menu from the database \(String(describing: error))")
-            }
-        }
+        DBQuery.readUserSettingsFromDB()
         
         // AppRater for rating app - needs to be fixed.
         //let _ = AppRater.sharedInstance
@@ -51,6 +44,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // Handle Google Authentication URL
     func application(_ app: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication ?? "") ?? false
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
+        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
+            DBQuery.readUserSettingsFromDB()
+            return true
+        }
+        return false
     }
     
     // Remote notification

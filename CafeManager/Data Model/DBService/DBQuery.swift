@@ -12,6 +12,18 @@ import Dispatch
 
 class DBQuery {
     
+    /// Read user settings and menu from database. Set data to variables of UserSettings and MenuCategory/Menu classes
+    class func readUserSettingsFromDB() {
+        if (userId != nil) {
+            userData = appDelegate.db.collection("UserData").document(userId)
+            DBQuery.getUserSettingsAndMenuAsync { (error) in
+                if let error = error {
+                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while retrieving settings and menu from the database \(String(describing: error))")
+                }
+            }
+        }
+    }
+    
     /// Async function returns all tables with active sessions (if any)
     class func getTablesWithActiveSessionAsync(completion: @escaping ([Table], Error?) -> Void) {
         
@@ -149,7 +161,7 @@ class DBQuery {
     class func getUserSettingsAndMenuAsync(completion: @escaping (Error?) -> Void) {
         
         let userDocument = userData
-        userDocument.addSnapshotListener { (snapshot, error) in
+        userDocument!.addSnapshotListener { (snapshot, error) in
             if let error = error {
                 completion (error)
             }

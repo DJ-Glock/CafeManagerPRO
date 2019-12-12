@@ -104,7 +104,7 @@ class DBUpdate {
     settings["pricePerMinute"] = UserSettings.shared.pricePerMinute
     
     let userDocument = userData
-        userDocument.updateData(["Settings" : settings]) { (error) in
+        userDocument!.updateData(["Settings" : settings]) { (error) in
             completion(error)
         }
     }
