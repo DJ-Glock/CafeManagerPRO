@@ -11,19 +11,6 @@ import Firebase
 import Dispatch
 
 class DBQuery {
-    
-    /// Read user settings and menu from database. Set data to variables of UserSettings and MenuCategory/Menu classes
-    class func readUserSettingsFromDB() {
-        if (userId != nil) {
-            userData = appDelegate.db.collection("UserData").document(userId)
-            DBQuery.getUserSettingsAndMenuAsync { (error) in
-                if let error = error {
-                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while retrieving settings and menu from the database \(String(describing: error))")
-                }
-            }
-        }
-    }
-    
     /// Async function returns all tables with active sessions (if any)
     class func getTablesWithActiveSessionAsync(completion: @escaping ([Table], Error?) -> Void) {
         let tablesCollection = userData
@@ -72,7 +59,6 @@ class DBQuery {
     
     /// Async function returns table session for table or nil if no active session is opened.
     class func getActiveTableSessionAsync (forTable table: Table, completion: @escaping (TableSession?, Error?) -> Void) {
-        
         let tableSessionCollection = userData
             .collection("Tables")
             .document(table.firebaseID!)

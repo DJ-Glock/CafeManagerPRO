@@ -95,16 +95,40 @@ class DBUpdate {
     }
     
     
-    class func updateUserSettingsAsync (completion: @escaping (Error?)-> Void) {
-    var settings = [String:Any]()
-    
-    settings["cafeName"] = UserSettings.shared.cafeName
-    settings["isTimeCafe"] = UserSettings.shared.isTimeCafe
-    settings["currencyCode"] = UserSettings.shared.currencyCode
-    settings["pricePerMinute"] = UserSettings.shared.pricePerMinute
-    
-    let userDocument = userData
-        userDocument!.updateData(["Settings" : settings]) { (error) in
+    class func updateUserSettingsAndMenuAsync (completion: @escaping (Error?)-> Void) {
+        var settings = [String:Any]()
+        settings["cafeName"] = UserSettings.shared.cafeName
+        settings["isTimeCafe"] = UserSettings.shared.isTimeCafe
+        settings["currencyCode"] = UserSettings.shared.currencyCode
+        settings["pricePerMinute"] = UserSettings.shared.pricePerMinute
+        
+        var menu = [String:[[String:Any]]]()
+        let categories = Menu.shared.menuItems.keys
+        for category in categories {
+            if let items = Menu.shared.menuItems[category] {
+                for item in items {
+                    let name = item.name
+                    let description = item.description
+                    let price = item.price
+                    
+                    var plainItem = [String:Any]()
+                    plainItem["name"] = name
+                    plainItem["description"] = description
+                    plainItem["price"] = price
+                    
+                    var currentItems = menu[category] ?? []
+                    currentItems.append(plainItem)
+                    menu[category] = currentItems
+                }
+            }
+        }
+        
+        var data = [String:Any]()
+        data["Settings"] = settings
+        data["Menu"] = menu
+        
+        let userDocument = userData
+        userDocument!.updateData(data) { (error) in
             completion(error)
         }
     }

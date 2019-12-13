@@ -33,11 +33,7 @@ class SettingsTableViewController: UITableViewController {
     // UISwitches
     @IBAction func isTimeCafeSwitchValueChanged(_ sender: UISwitch) {
         UserSettings.shared.isTimeCafe = sender.isOn
-        DBUpdate.updateUserSettingsAsync { (error) in
-            if let error = error {
-                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving setting in the Firestore: \(String(describing: error))")
-            }
-        }
+        ViewModel.updateMenuAndSettings()
     }
     
     @IBAction func isDarkThemeEnabledValueChanged(_ sender: UISwitch) {
@@ -51,20 +47,12 @@ class SettingsTableViewController: UITableViewController {
 
     @IBAction func pricePerHourTextFieldDidEdit(_ sender: UITextField) {
         UserSettings.shared.pricePerMinute = pricePerHourTextField.text!.getFloatNumber() ?? 0
-        DBUpdate.updateUserSettingsAsync { (error) in
-            if let error = error {
-                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving setting in the Firestore: \(String(describing: error))")
-            }
-        }
+        ViewModel.updateMenuAndSettings()
     }
     
     @IBAction func cafeNameTextFieldDidEdit(_ sender: UITextField) {
         UserSettings.shared.cafeName = cafeNameTextField.text ?? ""
-        DBUpdate.updateUserSettingsAsync { (error) in
-            if let error = error {
-                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving setting in the Firestore: \(String(describing: error))")
-            }
-        }
+        ViewModel.updateMenuAndSettings()
     }
     
     
@@ -175,11 +163,7 @@ extension SettingsTableViewController: UIPickerViewDelegate, UIPickerViewDataSou
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         UserSettings.shared.currencyCode = currencies[row]
-        DBUpdate.updateUserSettingsAsync { (error) in
-            if let error = error {
-                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving setting in the Firestore: \(String(describing: error))")
-            }
-        }
+        ViewModel.updateMenuAndSettings()
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {

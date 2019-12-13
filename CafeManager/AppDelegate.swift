@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         self.db = Firestore.firestore()
         self.auth = Auth.auth()
-        DBQuery.readUserSettingsFromDB()
+        ViewModel.readUserSettingsFromDB()
         
         // AppRater for rating app - needs to be fixed.
         //let _ = AppRater.sharedInstance
@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
         if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
-            DBQuery.readUserSettingsFromDB()
+            ViewModel.readUserSettingsFromDB()
             return true
         }
         return false

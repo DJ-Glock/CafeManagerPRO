@@ -368,16 +368,17 @@ extension MenuTableViewController {
     }
 }
 
-// MARK: Alerts for adding and changing menu items
 extension MenuTableViewController {
+    // MARK: Adding menu item subview
     private func addSubViewForAddingMenuItem () {
         self.isAddingOrChangingMenuItem = true
-//        self.menuItem = MenuStruct(itemName: "", itemDescription: "", itemPrice: -1, itemCategory: nil)
+        self.currentMenuItem = MenuItem(itemName: "", itemDescription: nil, itemPrice: 0)
+        
         let viewWidth = self.view.myCustomAlertViewWidth()
         let viewHeight = 200
         addingItemView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
         let centerX = self.view.center.x
-        let centerY = self.view.center.y //(self.navigationController?.navigationBar.bounds.height)! + CGFloat(viewHeight/2)
+        let centerY = self.view.center.y
         let center = CGPoint(x: centerX, y: centerY)
         addingItemView.center = center
         addingItemView.backgroundColor = ColorThemes.backgroundColor
@@ -473,11 +474,18 @@ extension MenuTableViewController {
     @objc private func addMenuItemDoneButtonPressed (sender: UIButton) {
         let senderView = sender.superview
         senderView?.endEditing(true)
-//        if self.menuItem.itemName == "" || self.menuItem.itemPrice < 0 {
-//            self.showAlertParamsNotFilledProperly()
-//            return
-//        }
-//        MenuItem.addMenuItem(item: self.menuItem)
+        guard let item = self.currentMenuItem else {return}
+        
+        if item.name == "" || item.price < 0 || item.category == nil {
+            self.showAlertParamsNotFilledProperly()
+            return
+        }
+        
+        var items = Menu.shared.menuItems[item.category!] ?? []
+        items.append(item)
+        Menu.shared.menuItems[item.category!] = items
+        ViewModel.updateMenuAndSettings()
+        
         self.updateGUI()
         self.searchBar.isHidden = false
         Overlay.shared.hideOverlayView()
@@ -628,27 +636,29 @@ extension MenuTableViewController {
         self.isAddingOrChangingMenuItem = false
     }
     
-    // TextField handlers for adding or changing menuItems
+    // MARK: TextField handlers for subviews
     @objc private func assignValueToItemName (sender: UITextField) {
         if let name = sender.text {
-//            self.menuItem.itemName = name
+            self.currentMenuItem?.name = name
         }
     }
     
     @objc private func assignValueToItemDescription (sender: UITextField) {
         if let description = sender.text {
-//            self.menuItem.itemDescription = description
+            self.currentMenuItem?.description = description
         }
     }
     
     @objc private func assignValueToItemPrice (sender: UITextField) {
         if let number = sender.text?.getFloatNumber() {
-//            self.menuItem.itemPrice = number
+            self.currentMenuItem?.price = number
         }
     }
     
     @objc private func assignValueToItemCategory (sender: UITextField) {
-//        self.menuItem.itemCategory = sender.text
+        if let category = sender.text {
+            self.currentMenuItem?.category = category
+        }
     }
 }
 
