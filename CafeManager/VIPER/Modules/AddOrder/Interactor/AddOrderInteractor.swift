@@ -10,10 +10,11 @@ class AddOrderInteractor: NSObject, AddOrderInteractorInterface {
     weak var presenter: AddOrderPresenterInterface!
     weak var state: AddOrderState!
     
-    func getMenuItem (withName name: String) {
-//        if let item = MenuItem.getActiveMenuItem(withName: name) {
-//            state.selectedMenuItem = item
-//        }
+    func getMenuItem(forIndexPath indexPath: IndexPath) {
+        let category = state.categories[indexPath.section]
+        if let menuItems = state.menuItems[category] {
+            state.selectedMenuItem = menuItems[indexPath.row]
+        }
     }
     
     func getMenuItems (withText text: String?) -> [String : [[String : String]]] {
@@ -62,6 +63,7 @@ class AddOrderInteractor: NSObject, AddOrderInteractorInterface {
             finalMenuItems = menuItems
         }
         
+        state.menuItems = finalMenuItems
         
         // Get plain data
         var result = [String : [[String : String]]]()

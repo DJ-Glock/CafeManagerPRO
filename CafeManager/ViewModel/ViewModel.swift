@@ -32,4 +32,13 @@ class ViewModel {
         }
     }
     
+    class func updateActiveSessionsOrders(tableSession: TableSession) {
+        DBUpdate.updateOrdersOfActiveTableSessionAsync(tableSessionToUpdate: tableSession) { (error) in
+            if let error = error {
+                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while updating active session data in the Firestore: \(String(describing: error))")
+            }
+            
+        }
+    }
+    
 }

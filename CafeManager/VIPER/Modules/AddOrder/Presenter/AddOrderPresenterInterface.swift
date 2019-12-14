@@ -28,6 +28,6 @@ protocol AddOrderPresenterInterface: class {
     func getTitleForHeaderInSection (withNumber section: Int) -> String?
     
     /// Method get called when menu item is chosen. It gets data from interactor and calls respective method in router
-    func didChoose (itemName name: String, withDescription description: String)
+    func didChoose (indexPath: IndexPath)
 
 }

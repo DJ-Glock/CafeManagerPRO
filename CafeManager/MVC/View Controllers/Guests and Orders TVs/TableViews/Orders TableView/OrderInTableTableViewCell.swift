@@ -21,6 +21,6 @@ class OrderInTableTableViewCell: UITableViewCell {
     @IBOutlet weak var minusButton: UIButton!
     
     @IBAction func didPressOrderCellButton(_ sender: UIButton) {
-        cellDelegate?.didPressIncreaseOrDecreaseOrderQuantityButton(order: order!, menuItem: menuItem!, action: sender.accessibilityIdentifier!)
+        cellDelegate?.didPressIncreaseOrDecreaseOrderQuantityButton(order: order!, action: sender.accessibilityIdentifier!)
     }
 }

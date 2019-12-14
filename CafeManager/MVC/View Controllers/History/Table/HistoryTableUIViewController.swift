@@ -397,7 +397,7 @@ extension HistoryTableUIViewController: GuestOrdersTableViewRefreshDelegate {
 
 // Delegate for OrdersTableView
 extension HistoryTableUIViewController: OrderInTableTableViewCellDelegate {
-    func didPressIncreaseOrDecreaseOrderQuantityButton(order: Order, menuItem: MenuItem, action: String) {
+    func didPressIncreaseOrDecreaseOrderQuantityButton(order: Order, action: String) {
         if action == "+" {
             order.increaseQuantity()
         } else {

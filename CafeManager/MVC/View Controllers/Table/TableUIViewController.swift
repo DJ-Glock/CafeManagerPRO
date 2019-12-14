@@ -433,8 +433,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     }
 }
 
-// MARK: Delegates
-// Delegate of GuestsTableView
+// MARK: Delegate of GuestsTableView
 extension TableUIViewController: GuestAtTableTableViewCellDelegate {
     func didPressAddGuestOrderButton(guest: Guest, sender: AnyObject) {
         self.currentGuest = guest
@@ -462,9 +461,9 @@ extension TableUIViewController: GuestOrdersTableViewRefreshDelegate {
     }
 }
 
-// Delegate of OrdersTableView
+// MARK: Delegate of OrdersTableView
 extension TableUIViewController: OrderInTableTableViewCellDelegate {
-    func didPressIncreaseOrDecreaseOrderQuantityButton(order: Order, menuItem: MenuItem, action: String) {
+    func didPressIncreaseOrDecreaseOrderQuantityButton(order: Order, action: String) {
         if action == "+" {
             order.increaseQuantity()
         } else {
@@ -474,7 +473,8 @@ extension TableUIViewController: OrderInTableTableViewCellDelegate {
                 return
             }
         }
-//        self.updateGUI()
+        ViewModel.updateActiveSessionsOrders(tableSession: self.currentTableSession!)
+        self.updateGUI()
     }
 }
 

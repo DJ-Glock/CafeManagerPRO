@@ -59,8 +59,8 @@ class AddOrderPresenter: NSObject, AddOrderPresenterInterface {
 
 
     // Outgoing
-    func didChoose (itemName name: String, withDescription description: String) {
-        interactor.getMenuItem(withName: name)
+    func didChoose (indexPath: IndexPath) {
+        interactor.getMenuItem(forIndexPath: indexPath)
         router.didChooseMenuItem()
     }
     

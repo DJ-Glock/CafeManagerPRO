@@ -8,7 +8,7 @@
 
 protocol AddOrderInteractorInterface {
     /// Method gets MenuTable object for given name and saves it into "state.selectedMenuItem"
-    func getMenuItem (withName: String)
+    func getMenuItem (forIndexPath indexPath: IndexPath)
     
     /// Method returns array of menu items, item names of that contain given text
     func getMenuItems (withText text: String?) -> [String : [[String : String]]]

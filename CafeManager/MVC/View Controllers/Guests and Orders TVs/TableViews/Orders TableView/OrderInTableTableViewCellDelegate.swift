@@ -10,5 +10,5 @@ import Foundation
 
 //Protocol for tableView to support segues with sending data to new view
 protocol OrderInTableTableViewCellDelegate : class {
-    func didPressIncreaseOrDecreaseOrderQuantityButton (order: Order, menuItem: MenuItem, action: String)
+    func didPressIncreaseOrDecreaseOrderQuantityButton (order: Order, action: String)
 }

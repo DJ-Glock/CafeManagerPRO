@@ -33,11 +33,13 @@ class Order {
     
     // MARK: methods
     func increaseQuantity() {
+        self.quantity += 1
 //        self.quantityOfItems += 1
 //        try? viewContext.save()
     }
     
     func decreaseQuantity() {
+        self.quantity -= 1
 //        self.quantityOfItems -= 1
 //        try? viewContext.save()
     }
