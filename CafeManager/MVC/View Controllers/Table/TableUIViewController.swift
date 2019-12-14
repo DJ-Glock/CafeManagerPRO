@@ -474,7 +474,6 @@ extension TableUIViewController: OrderInTableTableViewCellDelegate {
             }
         }
         ViewModel.updateActiveSessionsOrders(tableSession: self.currentTableSession!)
-        self.updateGUI()
     }
 }
 
@@ -485,16 +484,18 @@ extension TableUIViewController: PeriodPickerDelegate {
     }
 }
 
-// Delegate of AddOrder module that allows user to choose items to order
+// MARK: Delegate of AddOrder view
 extension TableUIViewController: AddOrderDelegate {
     func didChoose(menuItem item: MenuItem, forGuest guest: Guest) {
-        GuestOrder.addOrIncreaseOrder(for: guest, menuItem: item)
-//        self.updateGUI()
+        let order = Order(menuItemName: item.name, quantity: 1, price: item.price, orderedGuest: guest)
+        guest.orders.append(order)
+        ViewModel.updateActiveSessionsOrders(tableSession: guest.tableSession!)
     }
     
     func didChoose(menuItem item: MenuItem, forSession session: TableSession) {
-        Order.addOrIncreaseOrder(tableSession: session, menuItem: item)
-//        self.updateGUI()
+        let order = Order(menuItemName: item.name, quantity: 1, price: item.price, orderedTable: session)
+        session.orders.append(order)
+        ViewModel.updateActiveSessionsOrders(tableSession: session)
     }
 }
 
