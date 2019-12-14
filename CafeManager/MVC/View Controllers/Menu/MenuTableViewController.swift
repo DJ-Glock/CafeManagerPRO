@@ -40,8 +40,6 @@ class MenuTableViewController: FetchedResultsTableViewController {
     private var menuItems: [String : [MenuItem]] {
         return menu.menuItems
     }
-    
-    // Variable is used for adding or changing menuItem
     // Flag for disabling actions with tableView while adding or changing menuItem
     private var isAddingOrChangingMenuItem = false
     private var currentMenuItem: MenuItem?
@@ -62,11 +60,10 @@ class MenuTableViewController: FetchedResultsTableViewController {
         updateGUI()
         self.searchBar.delegate = self
         
+        configureRefreshControl()
+        
         // To dismiss keyboard
         self.addGestureRecognizer()
-        
-        // Configure refresh control for TableView
-        configureRefreshControl()
         
         // To move view when keyboard appears/hides
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -103,6 +100,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         self.presentAlert(alert: actionSheet, animated: true)
     }
     
+    // MARK: Side Menu
     private func sideMenu() {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -112,7 +110,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }
     }
     
-    // MARK: Functions for table view update
+    // MARK: GUI Update
     @objc private func updateGUI () {
         self.tableView.reloadData()
         self.tableViewRefreshControl?.endRefreshing()
@@ -141,7 +139,6 @@ class MenuTableViewController: FetchedResultsTableViewController {
         return cell
     }
     
-    //Functions for Edit/Delete swipe buttons
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let indexPath = editActionsForRowAt
         var menuItem: MenuItem!
@@ -183,42 +180,6 @@ class MenuTableViewController: FetchedResultsTableViewController {
         return [deleteButton, editButton]
     }
     
-    func configureRefreshControl () {
-        self.tableViewRefreshControl = UIRefreshControl()
-        
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = tableViewRefreshControl
-        } else {
-            tableView.addSubview(tableViewRefreshControl!)
-        }
-        tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
-    }
-    
-    private func removeMenuItem(menuItem: MenuItem) {
-        let category = menuItem.category
-        var items = Menu.shared.menuItems[category] ?? []
-        
-        for i in 0..<items.count {
-            let item = items[i]
-            if item === menuItem {
-                items.remove(at: i)
-                break
-            }
-        }
-        
-        if items.count == 0 {
-            Menu.shared.menuItems.removeValue(forKey: category)
-        } else {
-            Menu.shared.menuItems[category] = items
-        }
-        
-        ViewModel.updateMenuAndSettings()
-        self.updateGUI()
-    }
-}
-
-// MARK: TableView numbers
-extension MenuTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         if isFilterApplied {
             return self.filteredMenuCategories.count
@@ -244,6 +205,18 @@ extension MenuTableViewController {
         
         return menuCategories[section]
     }
+    
+    private func configureRefreshControl () {
+        self.tableViewRefreshControl = UIRefreshControl()
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = tableViewRefreshControl
+        } else {
+            tableView.addSubview(tableViewRefreshControl!)
+        }
+        tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
+    }
+    
 }
 
 // MARK: UISearchBar
@@ -637,6 +610,31 @@ extension MenuTableViewController {
         if let category = sender.text {
             self.currentMenuItem?.category = category
         }
+    }
+}
+
+// MARK: Removing menu item
+extension MenuTableViewController {
+    private func removeMenuItem(menuItem: MenuItem) {
+        let category = menuItem.category
+        var items = Menu.shared.menuItems[category] ?? []
+        
+        for i in 0..<items.count {
+            let item = items[i]
+            if item === menuItem {
+                items.remove(at: i)
+                break
+            }
+        }
+        
+        if items.count == 0 {
+            Menu.shared.menuItems.removeValue(forKey: category)
+        } else {
+            Menu.shared.menuItems[category] = items
+        }
+        
+        ViewModel.updateMenuAndSettings()
+        self.updateGUI()
     }
 }
 
