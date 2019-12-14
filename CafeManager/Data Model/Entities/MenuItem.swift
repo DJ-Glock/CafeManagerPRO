@@ -13,11 +13,12 @@ class MenuItem {
     public var name: String
     public var description: String?
     public var price: Float = 0.0
-    public var category: String?
+    public var category: String
     
-    init (itemName: String, itemDescription: String?, itemPrice: Float) {
-        self.name = itemName
-        self.description = itemDescription
-        self.price = itemPrice
+    init (name: String, description: String?, price: Float, category: String) {
+        self.name = name
+        self.description = description
+        self.price = price
+        self.category = category
     }
 }

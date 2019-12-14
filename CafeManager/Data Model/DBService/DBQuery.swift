@@ -164,7 +164,7 @@ class DBQuery {
                 
                 let menu = Menu.shared
                 let menuData = data["Menu"] as? [String:Any] ?? [:]
-                for (categoryName, items) in menuData {
+                for (category, items) in menuData {
                     let items = items as? [[String:Any]] ?? []
                     var menuItems = [MenuItem]()
                     
@@ -172,11 +172,11 @@ class DBQuery {
                         let name = item["name"] as! String
                         let description = item["description"] as? String
                         let price = item["price"] as! Float
-                        let menuItem = MenuItem(itemName: name, itemDescription: description, itemPrice: price)
+                        let menuItem = MenuItem(name: name, description: description, price: price, category: category)
                         menuItems.append(menuItem)
                     }
                     menuItems = menuItems.sorted(by: { $0.name < $1.name })
-                    menu.menuItems[categoryName] = menuItems
+                    menu.menuItems[category] = menuItems
                 }
                 completion (nil)
             }

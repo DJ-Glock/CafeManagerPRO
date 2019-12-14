@@ -45,6 +45,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
     // Flag for disabling actions with tableView while adding or changing menuItem
     private var isAddingOrChangingMenuItem = false
     private var currentMenuItem: MenuItem?
+    private var currentMenuItemOriginal: MenuItem?
     
     // MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -166,12 +167,22 @@ class MenuTableViewController: FetchedResultsTableViewController {
     
     //Functions for Edit/Delete swipe buttons
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        guard self.isAddingOrChangingMenuItem == false else {return []}
+        let indexPath = editActionsForRowAt
         var menuItem: MenuItem!
+        guard self.isAddingOrChangingMenuItem == false else {return []}
+        
         if self.isSearchActive {
-//            menuItem = self.filteredMenuItems[editActionsForRowAt.row]
+            let category = self.filteredMenuCategories[indexPath.section]
+            let menuItems = self.filteredMenuItems[category]
+            if let item = menuItems?[indexPath.row] {
+                menuItem = item
+            }
         } else {
-//            menuItem = self.fetchedResultsController?.object(at: editActionsForRowAt)
+            let category = self.menuCategories[indexPath.section]
+            let menuItems = self.menuItems[category]
+            if let item = menuItems?[indexPath.row] {
+                menuItem = item
+            }
         }
         
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
@@ -193,19 +204,6 @@ class MenuTableViewController: FetchedResultsTableViewController {
             self.addSubViewForChangingMenuItem(menuItem: menuItem)
         }
         editButton.backgroundColor = .lightGray
-        
-//        let isMenuItemAlreadyHidden = menuItem.isHidden
-//        let showHideButtonText = isMenuItemAlreadyHidden ? "Activate" : "Deactivate"
-        
-//        let showHideButton = UITableViewRowAction(style: .normal, title: showHideButtonText) { action, index in
-//            if isMenuItemAlreadyHidden {
-//                menuItem.showMenuItem()
-//            } else {
-//                menuItem.hideMenuItem()
-//            }
-//            self.updateGUI()
-//        }
-//        showHideButton.backgroundColor = UIColor.blue
         
         return [deleteButton, editButton]
     }
@@ -369,10 +367,10 @@ extension MenuTableViewController {
 }
 
 extension MenuTableViewController {
-    // MARK: Adding menu item subview
+    // MARK: Adding item subview
     private func addSubViewForAddingMenuItem () {
         self.isAddingOrChangingMenuItem = true
-        self.currentMenuItem = MenuItem(itemName: "", itemDescription: nil, itemPrice: 0)
+        self.currentMenuItem = MenuItem(name: "", description: nil, price: 0, category: "")
         
         let viewWidth = self.view.myCustomAlertViewWidth()
         let viewHeight = 200
@@ -476,14 +474,14 @@ extension MenuTableViewController {
         senderView?.endEditing(true)
         guard let item = self.currentMenuItem else {return}
         
-        if item.name == "" || item.price < 0 || item.category == nil {
+        if item.name == "" || item.price < 0 || item.category == "" {
             self.showAlertParamsNotFilledProperly()
             return
         }
         
-        var items = Menu.shared.menuItems[item.category!] ?? []
+        var items = Menu.shared.menuItems[item.category] ?? []
         items.append(item)
-        Menu.shared.menuItems[item.category!] = items
+        Menu.shared.menuItems[item.category] = items
         ViewModel.updateMenuAndSettings()
         
         self.updateGUI()
@@ -503,14 +501,12 @@ extension MenuTableViewController {
         self.isAddingOrChangingMenuItem = false
     }
 
+    // MARK: Changing item subview
     private func addSubViewForChangingMenuItem (menuItem: MenuItem) {
         self.isAddingOrChangingMenuItem = true
-        let itemName = menuItem.name
-        let itemDescription = menuItem.description
-        let itemPrice = menuItem.price
-//        let itemCategory = menuItem.category?.categoryName
-//        self.menuItem = MenuStruct(itemName: itemName, itemDescription: itemDescription, itemPrice: itemPrice, itemCategory: itemCategory)
-        self.currentMenuItem = menuItem
+        self.currentMenuItem = MenuItem(name: menuItem.name, description: menuItem.description, price: menuItem.price, category: menuItem.category)
+        self.currentMenuItemOriginal = menuItem
+        
         let viewWidth = self.view.myCustomAlertViewWidth()
         let viewHeight = 200
         addingItemView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
@@ -565,7 +561,7 @@ extension MenuTableViewController {
         
         let itemCategorySearchTextField = SearchTextField(frame: CGRect(x: 20, y: 130, width: textFieldWidth, height: 25))
         itemCategorySearchTextField.placeholder = NSLocalizedString("category", comment: "")
-//        itemCategorySearchTextField.text = menuItem.category?.categoryName ?? ""
+        itemCategorySearchTextField.text = menuItem.category
         itemCategorySearchTextField.keyboardType = .default
         itemCategorySearchTextField.autocorrectionType = .no
         itemCategorySearchTextField.backgroundColor = ColorThemes.uiTextFieldBackgroundColor
@@ -614,11 +610,48 @@ extension MenuTableViewController {
     @objc private func changeMenuItemDoneButtonPressed (sender: UIButton) {
         let senderView = sender.superview
         senderView?.endEditing(true)
-//        if self.menuItem.itemName == "" || self.menuItem.itemPrice < 0 {
-//            self.showAlertParamsNotFilledProperly()
-//            return
-//        }
-//        currentMenuItem!.changeMenuItemTo(newMenuItem: self.menuItem)
+        guard let changedItem = self.currentMenuItem else {return}
+        guard let originalItem = self.currentMenuItemOriginal else {return}
+        
+        if changedItem.name == "" || changedItem.price < 0 || changedItem.category == "" {
+            self.showAlertParamsNotFilledProperly()
+            return
+        }
+        
+        var items = Menu.shared.menuItems[originalItem.category] ?? []
+
+        // If category was changed - remove item from old category
+        if originalItem.category == changedItem.category {
+            for i in 0..<items.count {
+                let item = items[i]
+                if item === originalItem {
+                    items[i] = changedItem
+                    break
+                }
+            }
+            Menu.shared.menuItems[originalItem.category] = items
+        } else {
+            for i in 0..<items.count {
+                let item = items[i]
+                if item === originalItem {
+                    items.remove(at: i)
+                    break
+                }
+            }
+            // If no items left, remove category
+            if items.count == 0 {
+                Menu.shared.menuItems.removeValue(forKey: originalItem.category)
+            } else {
+                Menu.shared.menuItems[originalItem.category] = items
+            }
+            
+            var newItems = Menu.shared.menuItems[changedItem.category] ?? []
+            newItems.append(changedItem)
+            Menu.shared.menuItems[changedItem.category] = newItems
+        }
+                
+        ViewModel.updateMenuAndSettings()
+
         self.updateGUI()
         self.searchBar.isHidden = false
         Overlay.shared.hideOverlayView()
