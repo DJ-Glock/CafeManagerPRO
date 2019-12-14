@@ -11,5 +11,5 @@ protocol AddOrderInteractorInterface {
     func getMenuItem (withName: String)
     
     /// Method returns array of menu items, item names of that contain given text
-    func getMenuItems (withNameContains text: String?) -> [String : [[String : String]]]
+    func getMenuItems (withText text: String?) -> [String : [[String : String]]]
 }

@@ -28,11 +28,11 @@ class AddOrderPresenter: NSObject, AddOrderPresenterInterface {
     
     // Functions for TableView
     func getData() {
-        data = interactor.getMenuItems(withNameContains: nil)
+        data = interactor.getMenuItems(withText: nil)
     }
     
     func getFilteredData (forSearchText key: String) {
-        data = interactor.getMenuItems(withNameContains: key)
+        data = interactor.getMenuItems(withText: key)
     }
     
     func getNumberOfRowsInSection (withNumber section: Int) -> Int {
