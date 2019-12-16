@@ -435,7 +435,7 @@ extension HistoryTableUIViewController: AddOrderDelegate {
     }
     
     func didChoose(menuItem item: MenuItem, forSession session: TableSession) {
-        Order.addOrIncreaseOrder(tableSession: session, menuItem: item)
+//        Order.addOrIncreaseOrder(tableSession: session, menuItem: item)
         self.updateGUI()
     }
 }

@@ -34,61 +34,41 @@ class Order {
     // MARK: methods
     func increaseQuantity() {
         self.quantity += 1
-//        self.quantityOfItems += 1
-//        try? viewContext.save()
     }
     
     func decreaseQuantity() {
         self.quantity -= 1
-//        self.quantityOfItems -= 1
-//        try? viewContext.save()
     }
     
-    func remove () {
-//        viewContext.delete(self)
-//        try? viewContext.save()
+    func remove() {
+        guard let tableSession = self.orderedTable ?? self.orderedGuest?.tableSession else {return}
+        
+        if let session = self.orderedTable {
+            let count = session.orders.count
+            for i in 0..<count {
+                let order = session.orders[i]
+                if order === self {
+                    session.orders.remove(at: i)
+                    break
+                }
+            }
+        } else if let session = self.orderedGuest {
+            let count = session.orders.count
+            for i in 0..<count {
+                let order = session.orders[i]
+                if order === self {
+                    session.orders.remove(at: i)
+                    break
+                }
+            }
+        }
+        
+        ViewModel.updateActiveSessionsOrders(tableSession: tableSession)
     }
     
     // MARK: class functions
-    class func addOrIncreaseOrder (tableSession: TableSession, menuItem: MenuItem) {
-//
-//        //let sessionPredicate = appDelegate.smStore?.predicate(for: "orderedTable", referencing: tableSession) ?? NSPredicate()
-//        let request : NSFetchRequest<OrdersTable> = OrdersTable.fetchRequest()
-//        request.predicate = sessionPredicate
-//
-//        if let matchedOrders = try? viewContext.fetch(request) {
-//            for order in matchedOrders {
-//                if order.menuItem == menuItem {
-//                    order.quantityOfItems = order.quantityOfItems + 1
-//                    try? viewContext.save()
-//                    return
-//                }
-//            }
-//        }
-//        if #available(iOS 10.0, *) {
-//            let newOrder = OrdersTable(context: viewContext)
-//            newOrder.menuItem = menuItem
-//            newOrder.orderedTable = tableSession
-//            newOrder.quantityOfItems = 1
-//        } else {
-//            let newOrder = OrdersTable(entity: NSEntityDescription.entity(forEntityName: "OrdersTable", in: viewContext)!, insertInto: viewContext)
-//            newOrder.menuItem = menuItem
-//            newOrder.orderedTable = tableSession
-//            newOrder.quantityOfItems = 1
-//        }
-//        try? viewContext.save()
-    }
     
     class func getOrdersFor (tableSession: TableSession) -> [Order] {
-//        //let sessionPredicate = appDelegate.smStore?.predicate(for: "orderedTable", referencing: tableSession) ?? NSPredicate()
-//        let request : NSFetchRequest<OrdersTable> = OrdersTable.fetchRequest()
-//        request.predicate = sessionPredicate
-//
-//        if let matchedOrders = try? viewContext.fetch(request) {
-//            return matchedOrders
-//        } else {
-//            return []
-//        }
         return []
     }
 }

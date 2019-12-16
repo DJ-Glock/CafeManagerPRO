@@ -344,7 +344,6 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
                 let order = self.orders[editActionsForRowAt.row]
                 order.remove()
-//                self.updateGUI()
             }
             deleteButton.backgroundColor = .red
             return [deleteButton]
@@ -448,7 +447,6 @@ extension TableUIViewController: GuestAtTableTableViewCellDelegate {
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertCancel", comment: ""), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .destructive, handler: { (UIAlertAction) in
             guest.close()
-//            self.updateGUI()
         }))
         self.presentAlert(alert: alert, animated: true)
     }
