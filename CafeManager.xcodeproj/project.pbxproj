@@ -22,7 +22,7 @@
 		211D2A481F1FE74900A67186 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211D2A4A1F1FE74900A67186 /* InfoPlist.strings */; };
 		211D2A521F1FE74A00A67186 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211D2A541F1FE74A00A67186 /* InfoPlist.strings */; };
 		211D2A6F1F238FBF00A67186 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211D2A711F238FBF00A67186 /* Localizable.strings */; };
-		21223A2223A421A000271A8A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21223A2123A421A000271A8A /* ViewModel.swift */; };
+		21223A2223A421A000271A8A /* DBGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21223A2123A421A000271A8A /* DBGeneral.swift */; };
 		21230636205D8ED200F89C03 /* MoveGuestsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21230635205D8ED200F89C03 /* MoveGuestsDelegate.swift */; };
 		21230638205D8EDC00F89C03 /* MoveGuestsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21230637205D8EDC00F89C03 /* MoveGuestsInterface.swift */; };
 		2123063A205D909400F89C03 /* MoveGuestsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21230639205D909400F89C03 /* MoveGuestsAssembly.swift */; };
@@ -249,7 +249,7 @@
 		211D2A531F1FE74A00A67186 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		211D2A701F238FBF00A67186 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		211D2A721F238FCC00A67186 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		21223A2123A421A000271A8A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		21223A2123A421A000271A8A /* DBGeneral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBGeneral.swift; sourceTree = "<group>"; };
 		21230635205D8ED200F89C03 /* MoveGuestsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveGuestsDelegate.swift; sourceTree = "<group>"; };
 		21230637205D8EDC00F89C03 /* MoveGuestsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveGuestsInterface.swift; sourceTree = "<group>"; };
 		21230639205D909400F89C03 /* MoveGuestsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveGuestsAssembly.swift; sourceTree = "<group>"; };
@@ -471,7 +471,6 @@
 		21223A2023A4214700271A8A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				21223A2123A421A000271A8A /* ViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1101,6 +1100,7 @@
 		2172396A22B177AC00527607 /* DBService */ = {
 			isa = PBXGroup;
 			children = (
+				21223A2123A421A000271A8A /* DBGeneral.swift */,
 				2172396B22B2579600527607 /* DBQuery.swift */,
 				211A643122B6C9450079FAE8 /* DBPersist.swift */,
 				211A643322B6DB960079FAE8 /* DBUpdate.swift */,
@@ -1657,7 +1657,7 @@
 				21EBE35A20139A61005FE6B2 /* UIViewController+Extension.swift in Sources */,
 				21FD71012122246700A36543 /* NSEntityDescription+Extension.swift in Sources */,
 				21E145001F489CCB00879F01 /* HistoryTablesTableViewCell.swift in Sources */,
-				21223A2223A421A000271A8A /* ViewModel.swift in Sources */,
+				21223A2223A421A000271A8A /* DBGeneral.swift in Sources */,
 				2101CB25206171FE00AB9C49 /* CustomGuestInteractorInterface.swift in Sources */,
 				2191DF72205E678800786030 /* AddOrderDelegate.swift in Sources */,
 				215C46C41F7AF6A700595BBB /* LoadingOverlay.swift in Sources */,

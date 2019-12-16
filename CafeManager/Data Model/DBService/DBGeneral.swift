@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ViewModel {
+class DBGeneral {
     // MARK: Read data from the database
     
     /// Read user settings and menu from database. Set data to variables of UserSettings and MenuCategory/Menu classes

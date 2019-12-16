@@ -352,7 +352,6 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
                 let guest = self.guests[editActionsForRowAt.row]
                 guest.removeFromTable()
-//                self.updateGUI()
             }
             deleteButton.backgroundColor = .red
             
@@ -370,7 +369,6 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
                         newGuestName = guest.name
                     }
                     guest.renameTo(newName: newGuestName)
-//                    self.updateGUI()
                 }))
                 self.presentAlert(alert: alert, animated: true)
             }
@@ -471,7 +469,7 @@ extension TableUIViewController: OrderInTableTableViewCellDelegate {
                 return
             }
         }
-        ViewModel.updateActiveSessionsOrders(tableSession: self.currentTableSession!)
+        DBGeneral.updateActiveSessionsOrders(tableSession: self.currentTableSession!)
     }
 }
 
@@ -487,13 +485,13 @@ extension TableUIViewController: AddOrderDelegate {
     func didChoose(menuItem item: MenuItem, forGuest guest: Guest) {
         let order = Order(menuItemName: item.name, quantity: 1, price: item.price, orderedGuest: guest)
         guest.orders.append(order)
-        ViewModel.updateActiveSessionsOrders(tableSession: guest.tableSession!)
+        DBGeneral.updateActiveSessionsOrders(tableSession: guest.tableSession!)
     }
     
     func didChoose(menuItem item: MenuItem, forSession session: TableSession) {
         let order = Order(menuItemName: item.name, quantity: 1, price: item.price, orderedTable: session)
         session.orders.append(order)
-        ViewModel.updateActiveSessionsOrders(tableSession: session)
+        DBGeneral.updateActiveSessionsOrders(tableSession: session)
     }
 }
 

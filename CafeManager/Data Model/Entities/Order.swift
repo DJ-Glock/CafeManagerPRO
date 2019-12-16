@@ -63,7 +63,7 @@ class Order {
             }
         }
         
-        ViewModel.updateActiveSessionsOrders(tableSession: tableSession)
+        DBGeneral.updateActiveSessionsOrders(tableSession: tableSession)
     }
     
     // MARK: class functions

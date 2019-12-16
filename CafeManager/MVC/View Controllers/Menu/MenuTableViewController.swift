@@ -400,7 +400,7 @@ extension MenuTableViewController {
         var items = Menu.shared.menuItems[item.category] ?? []
         items.append(item)
         Menu.shared.menuItems[item.category] = items
-        ViewModel.updateMenuAndSettings()
+        DBGeneral.updateMenuAndSettings()
         
         self.updateGUI()
         self.searchBar.isHidden = false
@@ -568,7 +568,7 @@ extension MenuTableViewController {
             Menu.shared.menuItems[changedItem.category] = newItems
         }
         
-        ViewModel.updateMenuAndSettings()
+        DBGeneral.updateMenuAndSettings()
         
         self.updateGUI()
         self.searchBar.isHidden = false
@@ -633,7 +633,7 @@ extension MenuTableViewController {
             Menu.shared.menuItems[category] = items
         }
         
-        ViewModel.updateMenuAndSettings()
+        DBGeneral.updateMenuAndSettings()
         self.updateGUI()
     }
 }
