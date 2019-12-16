@@ -56,6 +56,7 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
             let order = self.guest.orders[indexPath.row]
             order.remove()
+            tableView.reloadData()
             self.didRefreshTableViewDelegate?.didRefreshGuestOrdersTableView()
         }
         deleteButton.backgroundColor = .red

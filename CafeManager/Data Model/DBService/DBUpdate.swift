@@ -88,6 +88,36 @@ class DBUpdate {
         }
         tableSessionData["Orders"] = ordersData
         
+        let guests = tableSession.guests
+        var guestsData = [[String:Any]]()
+        
+        for guest in guests {
+            let orders = guest.orders
+            var ordersData = [[String:Any]]()
+            
+            for order in orders {
+                let menuItemName = order.menuItemName
+                let quantity = order.quantity
+                let price = order.price
+                var orderData = [String:Any]()
+                orderData["name"] = menuItemName
+                orderData["quantity"] = quantity
+                orderData["price"] = price
+                ordersData.append(orderData)
+            }
+            
+            var guestData = [String:Any]()
+            guestData["name"] = guest.name
+            guestData["openTime"] = guest.openTime
+            guestData["closeTime"] = guest.closeTime
+            guestData["Orders"] = ordersData
+            guestData["amount"] = guest.amount
+            
+            guestsData.append(guestData)
+        }
+        tableSessionData["Guests"] = guestsData
+        
+        
         let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").document(tableSessionDocumentID)
         sessionDocument.updateData(tableSessionData) { (error) in
             completion(error)
