@@ -10,8 +10,7 @@ import UIKit
 
 class GuestOrderTableViewCell: UITableViewCell {
     weak var cellDelegate: GuestOrdersTableViewCellDelegate?
-    var order: GuestOrder? = nil
-    var menuItem: MenuItem? = nil
+    var order: Order? = nil
     
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemQuantityLabel: UILabel!
