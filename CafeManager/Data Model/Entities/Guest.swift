@@ -76,10 +76,17 @@ class Guest {
         DBGeneral.updateActiveSessionsOrders(tableSession: self.tableSession!)
     }
     
-    // MARK: TO BE CONTINUED
-    func move (to targetTableSesion: TableSession) {
-        // To do: must be updated
-        DBGeneral.updateActiveSessionsOrders(tableSession: self.tableSession!)
+    // MARK: TODO: TO BE CHECKED
+    func move (to targetSesion: TableSession) {
+        let sourceSession = self.tableSession!
+        self.remove()
+        DBGeneral.updateActiveSessionsOrders(tableSession: sourceSession)
+        
+        // Add to target table and update DB
+        targetSesion.guests.append(self)
+        self.tableSession = targetSesion
+        
+        DBGeneral.updateActiveSessionsOrders(tableSession: targetSesion)
     }
     
     func remove () {
