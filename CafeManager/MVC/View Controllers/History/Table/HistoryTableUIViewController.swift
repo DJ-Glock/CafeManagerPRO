@@ -421,7 +421,6 @@ extension HistoryTableUIViewController: CustomGuestDelegate {
 // Delegate of AddOrder module that allows user to choose items to order
 extension HistoryTableUIViewController: AddOrderDelegate {
     func didChoose(menuItem item: MenuItem, forGuest guest: Guest) {
-        GuestOrder.addOrIncreaseOrder(for: guest, menuItem: item)
         self.updateGUI()
     }
     
@@ -435,7 +434,7 @@ extension HistoryTableUIViewController: AddOrderDelegate {
 extension HistoryTableUIViewController:CheckoutDelegate {
     func didPerformCheckout(totalAmount: Float, discount: Int16, tips: Float) {
         do {
-            try TableSession.saveRecalculated(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
+//            try TableSession.saveRecalculated(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
         } catch {
             CommonAlert.shared.show(title: "Failed to close session", text: error.localizedDescription)
         }

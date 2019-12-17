@@ -62,29 +62,29 @@ class Guest {
     
     func renameTo (newName name: String) {
         self.name = name
-        DBGeneral.updateActiveSessionsOrders(tableSession: self.tableSession!)
+        DBGeneral.updateActiveSession(tableSession: self.tableSession!)
     }
     
     func changeTime (openTime: Date, closeTime: Date) {
         self.openTime = openTime
         self.closeTime = closeTime
-        DBGeneral.updateActiveSessionsOrders(tableSession: self.tableSession!)
+        DBGeneral.updateActiveSession(tableSession: self.tableSession!)
     }
     
     func close () {
         self.closeTime = Date()
-        DBGeneral.updateActiveSessionsOrders(tableSession: self.tableSession!)
+        DBGeneral.updateActiveSession(tableSession: self.tableSession!)
     }
     
     // MARK: TODO: TO BE CHECKED
     func move (to targetSesion: TableSession) {
         let sourceSession = self.tableSession!
         self.remove()
-        DBGeneral.updateActiveSessionsOrders(tableSession: sourceSession)
+        DBGeneral.updateActiveSession(tableSession: sourceSession)
         
         targetSesion.guests.append(self)
         self.tableSession = targetSesion
-        DBGeneral.updateActiveSessionsOrders(tableSession: targetSesion)
+        DBGeneral.updateActiveSession(tableSession: targetSesion)
     }
     
     func remove () {
@@ -97,6 +97,6 @@ class Guest {
                 break
             }
         }
-        DBGeneral.updateActiveSessionsOrders(tableSession: session)
+        DBGeneral.updateActiveSession(tableSession: session)
     }
 }

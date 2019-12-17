@@ -476,13 +476,13 @@ extension TableUIViewController: AddOrderDelegate {
     func didChoose(menuItem item: MenuItem, forGuest guest: Guest) {
         let order = Order(menuItemName: item.name, quantity: 1, price: item.price, orderedGuest: guest)
         guest.orders.append(order)
-        DBGeneral.updateActiveSessionsOrders(tableSession: guest.tableSession!)
+        DBGeneral.updateActiveSession(tableSession: guest.tableSession!)
     }
     
     func didChoose(menuItem item: MenuItem, forSession session: TableSession) {
         let order = Order(menuItemName: item.name, quantity: 1, price: item.price, orderedTable: session)
         session.orders.append(order)
-        DBGeneral.updateActiveSessionsOrders(tableSession: session)
+        DBGeneral.updateActiveSession(tableSession: session)
     }
 }
 
@@ -520,7 +520,7 @@ extension TableUIViewController: MoveGuestsDelegate {
     }
     
     func didChoose(targetTable: Table, forSession session: TableSession) {
-        TableSession.moveTableSessionTo(targetTable: targetTable, currentSession: session)
+//        TableSession.moveTableSessionTo(targetTable: targetTable, currentSession: session)
 //        self.updateGUI()
     }
 }
@@ -529,7 +529,7 @@ extension TableUIViewController: MoveGuestsDelegate {
 extension TableUIViewController: CheckoutDelegate {
     func didPerformCheckout(totalAmount: Float, discount: Int16, tips: Float) {
         do {
-            try TableSession.checkout(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
+//            try TableSession.checkout(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
         } catch {
             CommonAlert.shared.show(title: "Failed to close session", text: error.localizedDescription)
         }

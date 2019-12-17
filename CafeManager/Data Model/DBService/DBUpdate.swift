@@ -68,7 +68,7 @@ class DBUpdate {
         }
     }
     
-    class func updateOrdersOfActiveTableSessionAsync (tableSessionToUpdate tableSession: TableSession, completion: @escaping (Error?)->Void) {
+    class func updateActiveTableSession (session tableSession: TableSession, completion: @escaping (Error?)->Void) {
         guard let tableDocumentID = tableSession.table!.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: tableSession.table!.name))")); return }
         guard let tableSessionDocumentID = tableSession.firebaseID else {completion(iCafeManagerError.DatabaseError("firebaseID is null for tableSession of table: \(String(describing: tableSession.table!.name))")); return}
         

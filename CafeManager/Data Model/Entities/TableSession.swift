@@ -46,7 +46,6 @@ class TableSession {
         self.discount = discount
     }
 
-    // Supporting properties
     public var openTimeTruncatedToDay: String {
         return openTime.getTimeStrWithDayPrecision()
     }
@@ -60,60 +59,34 @@ class TableSession {
         return period
     }
     
-    
-    // MARK: functions for managing sessions
-    class func createTableSession (table: Table) -> TableSession? {
-        return TableSession(firebaseID: nil, table: table, openTime: Date())
+    // MARK: Methods
+    public func close (tableSession: TableSession, totalAmount: Float, discount: Int16, tips: Float) throws {
+        self.amount = totalAmount
+        self.discount = discount
+        self.tips = tips
+        self.closeTime = Date()
+        
+        DBGeneral.updateActiveSession(tableSession: self)
     }
     
-    class func saveRecalculated (tableSession: TableSession, totalAmount: Float, discount: Int16, tips: Float) throws {
-//        tableSession.totalAmount = totalAmount
-//        tableSession.discount = discount
-//        tableSession.totalTips = tips
-//        do {
-//            try viewContext.save()
-//        } catch {
-//            throw (iCafeManagerError.CoreDataException("Error during saveAmountAndDiscount \(error)"))
-//        }
+    public func remove() {
+        
     }
     
-    class func checkout (tableSession: TableSession, totalAmount: Float, discount: Int16, tips: Float) throws {
-//        GuestsTable.closeAllGuestsForTable(tableSession: tableSession)
-//        tableSession.totalAmount = totalAmount
-//        tableSession.discount = discount
-//        tableSession.totalTips = tips
-//        tableSession.closeTime = Date() as NSDate
-//        do {
-//            try viewContext.save()
-//        } catch {
-//            throw (iCafeManagerError.CoreDataException("Error during closeTableSession \(error)"))
-//        }
-    }
     
-    class func getCurrentTableSession (table: Table) -> TableSession? {
-        return nil
-    }
     
-    class func moveTableSessionTo (targetTable: Table, currentSession: TableSession) {
-    }
     
-    private static func removeSession(_ session: TableSession) {
-    }
-    
-    class func removeTableSessionsForTable (table: Table) {
-    }
-    
-    // MARK: functions for amount calculation
+    // MARK: Amount calculation
     class func calculateAmountForTime(tableSession: TableSession) -> Float {
-        var amount: Float = 0
-        guard UserSettings.shared.isTimeCafe == true else {return amount}
+//        var amount: Float = 0
+        guard UserSettings.shared.isTimeCafe == true else {return 0}
         
 //        let guestsTable = Guest.getAllGuestsForTableSorted(tableSession: tableSession)
 //        for guest in guestsTable {
 //            let closeOrCurrentTime = guest.closeTime ?? Date()
 //            amount = amount + roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.shared.pricePerMinute
 //        }
-        return amount
+        return 0
     }
     
     class func calculateActualTotalAmount (for currentTableSession: TableSession?) -> Float {
@@ -151,9 +124,9 @@ class TableSession {
 //
 //        guard let sessions = try? viewContext.fetch(request) else { return ([],[],[]) }
         
-        var dates: [Date] = []
-        var durations: [Double] = []
-        var amounts: [Double] = []
+//        var dates: [Date] = []
+//        var durations: [Double] = []
+//        var amounts: [Double] = []
         
 //        for session in sessions {
 //            dates.append(session.openTime! as Date)
@@ -161,6 +134,7 @@ class TableSession {
 //            amounts.append(Double(session.totalAmount))
 //        }
         
-        return (dates, durations, amounts)
+//        return (dates, durations, amounts)
+        return ([],[],[])
     }
 }

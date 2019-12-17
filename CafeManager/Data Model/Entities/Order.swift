@@ -41,13 +41,13 @@ class Order {
     func increaseQuantity() {
         self.quantity += 1
         let tableSession = self.tableSession!
-        DBGeneral.updateActiveSessionsOrders(tableSession: tableSession)
+        DBGeneral.updateActiveSession(tableSession: tableSession)
     }
     
     func decreaseQuantity() {
         self.quantity -= 1
         let tableSession = self.tableSession!
-        DBGeneral.updateActiveSessionsOrders(tableSession: tableSession)
+        DBGeneral.updateActiveSession(tableSession: tableSession)
     }
     
     func remove() {
@@ -72,6 +72,6 @@ class Order {
                 }
             }
         }
-        DBGeneral.updateActiveSessionsOrders(tableSession: tableSession)
+        DBGeneral.updateActiveSession(tableSession: tableSession)
     }
 }
