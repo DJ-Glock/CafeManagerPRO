@@ -143,7 +143,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     // MARK: GUI update functions
     private func updateLabels() {
         tableCapacityLabel.text = String(describing: currentTable!.capacity)
-        tableCountOfGuestsLabel.text = String(describing: countOfGuests)
+        tableCountOfGuestsLabel.text = String(describing: countOfActiveGuests)
         if currentTableSession != nil, currentTableSession?.openTime != nil {
             tableOpenTimeLabel.text = currentTableSession!.openTime.convertToString()
         } else {
@@ -350,7 +350,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         if tableView == self.guestsTableView {
             let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
                 let guest = self.guests[editActionsForRowAt.row]
-                guest.removeFromTable()
+                guest.remove()
             }
             deleteButton.backgroundColor = .red
             
@@ -515,7 +515,7 @@ extension TableUIViewController: CustomGuestDelegate {
 // Delegate of MoveGuests module that allows user to choose target table/table session to move session/guest
 extension TableUIViewController: MoveGuestsDelegate {
     func didChoose(targetTableSession: TableSession, forGuest guest: Guest) {
-        guest.moveGuest(to: targetTableSession)
+        guest.move(to: targetTableSession)
 //        self.updateGUI()
     }
     

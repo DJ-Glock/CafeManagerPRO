@@ -108,11 +108,11 @@ class TableSession {
         var amount: Float = 0
         guard UserSettings.shared.isTimeCafe == true else {return amount}
         
-        let guestsTable = Guest.getAllGuestsForTableSorted(tableSession: tableSession)
-        for guest in guestsTable {
-            let closeOrCurrentTime = guest.closeTime ?? Date()
-            amount = amount + roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.shared.pricePerMinute
-        }
+//        let guestsTable = Guest.getAllGuestsForTableSorted(tableSession: tableSession)
+//        for guest in guestsTable {
+//            let closeOrCurrentTime = guest.closeTime ?? Date()
+//            amount = amount + roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.shared.pricePerMinute
+//        }
         return amount
     }
     

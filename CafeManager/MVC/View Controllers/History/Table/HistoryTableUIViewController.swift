@@ -36,14 +36,15 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     private var guestNameTextField: UITextField!
     private var guests: [Guest] {
         if currentTableSession != nil {
-            return Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!)
+            return []
         } else {
             return []
         }
     }
     private var orders: [Order] {
         if currentTableSession != nil {
-            return Order.getOrdersFor(tableSession: currentTableSession!)
+            return []
+//            return Order.getOrdersFor(tableSession: currentTableSession!)
         } else {
             return []
         }
@@ -77,7 +78,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     private var countOfGuests: Int {
         get {
             guard currentTableSession != nil else {return 0}
-            return Guest.getAllGuestsForTableSorted(tableSession: currentTableSession!).count
+            return 0
         }
     }
     
@@ -182,7 +183,6 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
     
     
     private func addQuickGuest () {
-        Guest.addNewGuestHistorical(tableSession: currentTableSession!, openTime: (currentTableSession?.openTime ?? Date()), closeTime: (currentTableSession?.closeTime)!)
         updateGuestsTableView()
         updateLabels()
     }
@@ -303,7 +303,7 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
         if tableView == self.guestsTableView {
             let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
                 let guest = self.guests[editActionsForRowAt.row]
-                guest.removeFromTable()
+                guest.remove()
                 self.updateLabels()
                 self.updateGuestsTableView()
             }
@@ -414,7 +414,6 @@ extension HistoryTableUIViewController: PeriodPickerDelegate {
 // Delegate of CustomGuest module that allows user to choose custom guest name
 extension HistoryTableUIViewController: CustomGuestDelegate {
     func didChooseCustomGuest(name: String) {
-        Guest.addNewCustomGuestHistorical(guestName: name, tableSession: currentTableSession!, openTime: currentTableSession!.openTime, closeTime: currentTableSession!.closeTime!)
         updateGUI()
     }
 }

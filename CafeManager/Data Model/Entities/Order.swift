@@ -13,6 +13,9 @@ class Order {
     public var menuItemName: String
     public var quantity: Int16
     public var price: Float
+    public var amount: Float {
+        return price * Float(quantity)
+    }
     public weak var orderedTable: TableSession?
     public weak var orderedGuest: Guest?
     private var tableSession: TableSession? {
@@ -69,13 +72,6 @@ class Order {
                 }
             }
         }
-        
         DBGeneral.updateActiveSessionsOrders(tableSession: tableSession)
-    }
-    
-    // MARK: class functions
-    
-    class func getOrdersFor (tableSession: TableSession) -> [Order] {
-        return []
     }
 }
