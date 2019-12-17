@@ -82,10 +82,8 @@ class Guest {
         self.remove()
         DBGeneral.updateActiveSessionsOrders(tableSession: sourceSession)
         
-        // Add to target table and update DB
         targetSesion.guests.append(self)
         self.tableSession = targetSesion
-        
         DBGeneral.updateActiveSessionsOrders(tableSession: targetSesion)
     }
     
