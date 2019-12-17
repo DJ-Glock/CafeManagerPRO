@@ -15,6 +15,9 @@ class Order {
     public var price: Float
     public weak var orderedTable: TableSession?
     public weak var orderedGuest: Guest?
+    private var tableSession: TableSession? {
+        self.orderedTable ?? self.orderedGuest?.tableSession
+    }
     
     init (menuItemName: String, quantity: Int16, price: Float, orderedTable: TableSession) {
         self.menuItemName = menuItemName
@@ -34,14 +37,18 @@ class Order {
     // MARK: methods
     func increaseQuantity() {
         self.quantity += 1
+        let tableSession = self.tableSession!
+        DBGeneral.updateActiveSessionsOrders(tableSession: tableSession)
     }
     
     func decreaseQuantity() {
         self.quantity -= 1
+        let tableSession = self.tableSession!
+        DBGeneral.updateActiveSessionsOrders(tableSession: tableSession)
     }
     
     func remove() {
-        guard let tableSession = self.orderedTable ?? self.orderedGuest?.tableSession else {return}
+        let tableSession = self.tableSession!
         
         if let session = self.orderedTable {
             let count = session.orders.count

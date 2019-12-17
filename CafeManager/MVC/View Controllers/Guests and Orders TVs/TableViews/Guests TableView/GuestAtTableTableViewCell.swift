@@ -11,7 +11,6 @@ import UIKit
 class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource {
     
     weak var cellDelegate: GuestAtTableTableViewCellDelegate?
-    weak var didRefreshTableViewDelegate: GuestOrdersTableViewRefreshDelegate?
     var guest: Guest!
     
     @IBOutlet weak var addGuestOrderButton: UIButton!
@@ -57,7 +56,6 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
             let order = self.guest.orders[indexPath.row]
             order.remove()
             tableView.reloadData()
-            self.didRefreshTableViewDelegate?.didRefreshGuestOrdersTableView()
         }
         deleteButton.backgroundColor = .red
         return [deleteButton]
@@ -84,6 +82,7 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
     }
 }
 
+// MARK: GuestOrders TVC Delegate
 extension GuestAtTableTableViewCell:GuestOrdersTableViewCellDelegate {
     func didPressOrderIncreaseOrDecreaseButton(order: Order, action: String) {
         if action == "+" {
@@ -95,6 +94,5 @@ extension GuestAtTableTableViewCell:GuestOrdersTableViewCellDelegate {
                 return
             }
         }
-        didRefreshTableViewDelegate?.didRefreshGuestOrdersTableView()
     }
 }

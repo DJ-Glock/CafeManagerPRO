@@ -257,7 +257,6 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             let guest = guests[indexPath.row]
             
             cell.cellDelegate = self
-            cell.didRefreshTableViewDelegate = self
             cell.guest = guest
             cell.guestOrdersTableView.delegate = cell
             cell.guestOrdersTableView.dataSource = cell
@@ -450,13 +449,6 @@ extension TableUIViewController: GuestAtTableTableViewCellDelegate {
     }
 }
 
-// Delegate for GuestOrders table view refresh - to refresh Table GUI
-extension TableUIViewController: GuestOrdersTableViewRefreshDelegate {
-    func didRefreshGuestOrdersTableView() {
-//        self.updateGUI()
-    }
-}
-
 // MARK: Delegate of OrdersTableView
 extension TableUIViewController: OrderInTableTableViewCellDelegate {
     func didPressIncreaseOrDecreaseOrderQuantityButton(order: Order, action: String) {
@@ -469,7 +461,6 @@ extension TableUIViewController: OrderInTableTableViewCellDelegate {
                 return
             }
         }
-        DBGeneral.updateActiveSessionsOrders(tableSession: self.currentTableSession!)
     }
 }
 

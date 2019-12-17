@@ -221,7 +221,6 @@ class HistoryTableUIViewController: ParentViewController, UITableViewDataSource,
             let guest = guests[indexPath.row]
             
             cell.cellDelegate = self
-            cell.didRefreshTableViewDelegate = self
             cell.guest = guest
             cell.guestOrdersTableView.delegate = cell
             cell.guestOrdersTableView.dataSource = cell
@@ -385,13 +384,6 @@ extension HistoryTableUIViewController: GuestAtTableTableViewCellDelegate {
     }
     
     func didPressCloseGuestButton(guest: Guest) {
-    }
-}
-
-// Delegate for GuestOrders table view refresh - to refresh Table GUI
-extension HistoryTableUIViewController: GuestOrdersTableViewRefreshDelegate {
-    func didRefreshGuestOrdersTableView() {
-        self.updateGUI()
     }
 }
 

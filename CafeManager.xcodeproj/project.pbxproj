@@ -194,7 +194,6 @@
 		21F92D241FE10F5D004A4201 /* GuestOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F92D231FE10F5D004A4201 /* GuestOrderTableViewCell.swift */; };
 		21F92D261FE11606004A4201 /* GuestOrdersTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F92D251FE11606004A4201 /* GuestOrdersTableViewCellDelegate.swift */; };
 		21F92D291FE19512004A4201 /* GuestOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F92D281FE19512004A4201 /* GuestOrder.swift */; };
-		21F92D2B1FE402F4004A4201 /* GuestOrdersTableViewRefreshDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F92D2A1FE402F4004A4201 /* GuestOrdersTableViewRefreshDelegate.swift */; };
 		21FD71012122246700A36543 /* NSEntityDescription+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FD71002122246700A36543 /* NSEntityDescription+Extension.swift */; };
 		E7EBEEE482B50D44184DE719 /* Pods_CafeManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1DBCD2573CE6465BD6417D /* Pods_CafeManager.framework */; };
 /* End PBXBuildFile section */
@@ -435,7 +434,6 @@
 		21F92D231FE10F5D004A4201 /* GuestOrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestOrderTableViewCell.swift; sourceTree = "<group>"; };
 		21F92D251FE11606004A4201 /* GuestOrdersTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestOrdersTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		21F92D281FE19512004A4201 /* GuestOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestOrder.swift; sourceTree = "<group>"; };
-		21F92D2A1FE402F4004A4201 /* GuestOrdersTableViewRefreshDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestOrdersTableViewRefreshDelegate.swift; sourceTree = "<group>"; };
 		21FD71002122246700A36543 /* NSEntityDescription+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSEntityDescription+Extension.swift"; sourceTree = "<group>"; };
 		4D1DBCD2573CE6465BD6417D /* Pods_CafeManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CafeManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AED9D279FF04925FEE922B0 /* Pods-CafeManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CafeManager.release.xcconfig"; path = "Pods/Target Support Files/Pods-CafeManager/Pods-CafeManager.release.xcconfig"; sourceTree = "<group>"; };
@@ -986,7 +984,6 @@
 			children = (
 				21F92D231FE10F5D004A4201 /* GuestOrderTableViewCell.swift */,
 				21F92D251FE11606004A4201 /* GuestOrdersTableViewCellDelegate.swift */,
-				21F92D2A1FE402F4004A4201 /* GuestOrdersTableViewRefreshDelegate.swift */,
 			);
 			path = "GuestOrders TableView";
 			sourceTree = "<group>";
@@ -1721,7 +1718,6 @@
 				218C6CE320221F79003CCE6D /* AppRater.swift in Sources */,
 				21386EDF2056FF4D00A14D30 /* CheckoutRouterInterface.swift in Sources */,
 				213B451F205490F900D04CF8 /* PeriodPickerRouterInterface.swift in Sources */,
-				21F92D2B1FE402F4004A4201 /* GuestOrdersTableViewRefreshDelegate.swift in Sources */,
 				218C6CDF201FA943003CCE6D /* iCafeManagerError.swift in Sources */,
 				2123063C205D90D500F89C03 /* MoveGuestsRouter.swift in Sources */,
 				21922EEC206408B600DF4CF5 /* LineChartViewController.swift in Sources */,
