@@ -48,8 +48,28 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             return self.currentTableSession?.orders ?? []
         }
     }
-    private var actualAmount: Float = 0
-    private var amount: Float = 0
+    private var actualAmount: Float {
+        var actualAmount: Float = 0
+        for guest in self.guests {
+            if guest.closeTime == nil {
+                actualAmount += guest.currentAmount
+            }
+        }
+        for order in self.orders {
+            actualAmount += order.amount
+        }
+        return actualAmount
+    }
+    private var amount: Float {
+        var amount: Float = 0
+        for guest in self.guests {
+            amount += guest.currentAmount
+        }
+        for order in self.orders {
+            amount += order.amount
+        }
+        return amount
+    }
     private var countOfGuests: Int {
         get {
             return guests.count
@@ -111,7 +131,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         updateGUI()
     }
     
-    //MARK: System functions for View loading/appearing
+    //MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewDidLoad()
@@ -140,7 +160,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
-    // MARK: GUI update functions
+    // MARK: GUI update
     private func updateLabels() {
         tableCapacityLabel.text = String(describing: currentTable!.capacity)
         tableCountOfGuestsLabel.text = String(describing: countOfActiveGuests)
@@ -162,7 +182,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         
     }
     
-    // MARK: Functions for managing table, orders, guests
+    // MARK: Add Quick Guest
     private func addQuickGuest(sender: Any) {
         guard tableCapacity > countOfActiveGuests else {return}
         
@@ -190,6 +210,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         }
     }
     
+    // MARK: Add Custom Guest
     private func addCustomGuest(sender: AnyObject) {
         guard tableCapacity > countOfActiveGuests else {return}
         
@@ -198,6 +219,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         customGuest.chooseCustomGuest(sender: sender)
     }
     
+    // MARK: Add Order
     private func addOrder(sender: AnyObject) {
         guard currentTableSession != nil else {return}
         
@@ -206,7 +228,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         addOrder.showMenuItemsToAddOrder(forSession: currentTableSession!, sender: sender)
     }
     
-    // To be refactored
+    // MARK: Move Table Session
     private func moveTableSession (sender: AnyObject) {
         if let session = currentTableSession {
             let move = MoveGuestsAssembly.assembleModule()
@@ -223,25 +245,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         }
     }
     
-    // MARK: functions for tables update
-    private func updateGuestsTableView() {
-        let tableView = guestsTableView
-        if currentTableSession != nil {
-            tableView?.reloadData()
-            if tableView?.numberOfRows(inSection: 0) != 0 {
-                tableView?.scrollToRow(at: [0,0], at: UITableViewScrollPosition.top, animated: true)
-            }
-        } else {
-            tableView?.reloadData()
-        }
-    }
-    
-    private func updateOrdersTableView() {
-        let tableView = ordersTableView
-        tableView?.reloadData()
-    }
-    
-    // MARK: Functions for Alert window for changing guest
+    // MARK: Changing guest alert
     private func configureTableNameTextField (textField: UITextField!) {
         textField.tintColor = UIColor.darkGray
         textField.backgroundColor = UIColor.white
@@ -250,7 +254,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         guestNameTextField = textField
     }
     
-    // MARK: Functions for tableViews
+    // MARK: UITableView functions
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.guestsTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "guestCell", for: indexPath) as! GuestAtTableTableViewCell
@@ -272,7 +276,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             cell.openTimeLabel.textColor = ColorThemes.textColorNormal
             cell.guestAmountLabel.textColor = ColorThemes.textColorNormal
             
-            cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: Guest.calculateCurrentAmount(forGuest: guest)), number: .decimal) + UserSettings.currencySymbol
+            cell.guestAmountLabel.text = NSLocalizedString("amount", comment: "") + ": " + NumberFormatter.localizedString(from: NSNumber(value: guest.currentAmount), number: .decimal) + UserSettings.currencySymbol
             if guest.closeTime != nil {
                 cell.addGuestOrderButton.isEnabled = false
                 cell.closeGuestButton.isEnabled = false
@@ -304,7 +308,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         }
     }
     
-    // MARK: Functions for adding orders into Guests table view.
+    // MARK: Adding Guests
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.guestsTableView {
             if indexPath == self.selectedCellIndexPath {
@@ -337,7 +341,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     }
     
     
-    //MARK: Function for swipe buttons
+    //MARK: Swipe buttons
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         if tableView == self.ordersTableView {
             let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in

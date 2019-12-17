@@ -16,6 +16,30 @@ class Guest {
     public var amount: Float = 0.0
     public var orders: [Order] = []
     
+    public var sessionDurationMinutes: Double {
+        let closeOrCurrentTime = self.closeTime ?? Date()
+        let period = closeOrCurrentTime.timeIntervalSince(self.openTime as Date)/60
+        return period
+    }
+    
+    public var currentAmount: Float {
+        var totalAmount: Float = 0.0
+        
+        if UserSettings.shared.isTimeCafe {
+            let amountForTime = roundf(Float(self.sessionDurationMinutes) * UserSettings.shared.pricePerMinute)
+            totalAmount += amountForTime
+        }
+        
+        let orders = self.orders
+        for order in orders {
+            let price = order.price
+            let quantity = order.quantity
+            let amount = price * Float(quantity)
+            totalAmount += amount
+        }
+        return totalAmount
+    }
+    
     init (name: String, openTime: Date, tableSession: TableSession) {
         self.name = name
         self.openTime = openTime
@@ -32,34 +56,7 @@ class Guest {
         self.amount = totalAmount
     }
     
-    public var guestSessionDurationInSeconds: Double {
-        let currentCloseTime = closeTime ?? Date()
-        let period = currentCloseTime.timeIntervalSince1970 - openTime.timeIntervalSince1970
-        return period
-    }
-    
-    
     // MARK: Methods
-    class func calculateCurrentAmount(forGuest guest: Guest) -> Float {
-        var totalAmount: Float = 0.0
-        
-        if UserSettings.shared.isTimeCafe {
-            let closeOrCurrentTime = guest.closeTime ?? Date()
-            let amountForTime = roundf(Float(closeOrCurrentTime.timeIntervalSince(guest.openTime as Date))/60) * UserSettings.shared.pricePerMinute
-            totalAmount += amountForTime
-        }
-        
-        let orders = guest.orders
-        for order in orders {
-            let price = order.price
-            let quantity = order.quantity
-            let amount = price * Float(quantity)
-            totalAmount += amount
-        }
-        return totalAmount
-    }
-    
-    
     func renameTo (newName name: String) {
         self.name = name
         DBGeneral.updateActiveSession(tableSession: self.tableSession!)

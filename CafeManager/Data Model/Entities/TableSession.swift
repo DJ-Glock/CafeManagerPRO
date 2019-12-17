@@ -104,7 +104,7 @@ class TableSession {
         
         let currentGuests = currentTableSession?.guests ?? []
         for guest in currentGuests {
-            let guestAmount = Guest.calculateCurrentAmount(forGuest: guest)
+            let guestAmount = guest.currentAmount
             totalAmount += guestAmount
         }
         
