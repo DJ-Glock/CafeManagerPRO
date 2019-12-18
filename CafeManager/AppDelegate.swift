@@ -25,6 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+        let settings = FirestoreSettings()
+        // Enable offline persistence
+        settings.isPersistenceEnabled = true
+        
         self.db = Firestore.firestore()
         self.auth = Auth.auth()
         DBGeneral.readUserSettingsFromDB()

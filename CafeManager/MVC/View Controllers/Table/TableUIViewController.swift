@@ -532,12 +532,14 @@ extension TableUIViewController: MoveGuestsDelegate {
 // Delegate of Checkout module that allows user to calculate final check
 extension TableUIViewController: CheckoutDelegate {
     func didPerformCheckout(totalAmount: Float, discount: Int16, tips: Float) {
-        do {
-//            try TableSession.checkout(tableSession: currentTableSession!, totalAmount: totalAmount, discount: discount, tips: tips)
-        } catch {
-            CommonAlert.shared.show(title: "Failed to close session", text: error.localizedDescription)
+        if let session = self.currentTableSession {
+            session.amount = totalAmount
+            session.discount = discount
+            session.tips = tips
+            session.closeTime = Date()
+            
+            DBGeneral.moveActiveSessionToArchive(tableSession: session)
         }
-//        self.updateGUI()
         self.navigationController?.popViewController(animated: true)
     }
 }

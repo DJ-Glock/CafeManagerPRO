@@ -40,4 +40,12 @@ class DBGeneral {
             
         }
     }
+    
+    class func moveActiveSessionToArchive(tableSession: TableSession) {
+        DBUpdate.moveTableSessionToArchiveAsync(tableSession: tableSession) { (tableSession, error) in
+            if let error = error {
+                CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while moving session data to archive in the Firestore: \(String(describing: error))")
+            }
+        }
+    }
 }

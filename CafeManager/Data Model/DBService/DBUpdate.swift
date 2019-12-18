@@ -124,6 +124,73 @@ class DBUpdate {
         }
     }
     
+    class func moveTableSessionToArchiveAsync (tableSession session: TableSession, completion: @escaping (TableSession?, Error?) -> Void) {
+        guard let tableDocumentID = session.table?.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: session.table!.name))")); return }
+        guard let sessionDocumentID = session.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for session of table: \(String(describing: session.table!.name))")); return }
+        
+        let documentReference = userData
+            .collection("Tables")
+            .document(tableDocumentID)
+            .collection("ActiveSession")
+            .document(sessionDocumentID)
+        
+        documentReference.getDocument { (document, error) in
+            if let error = error {
+                completion(session, error)
+            }
+            
+            if let document = document {
+                let documentId = document.documentID
+                guard documentId == sessionDocumentID else {completion(session, iCafeManagerError.DatabaseError("firebaseID of session did not match with existing documentID: \(String(describing: session.table!.name))")); return
+                }
+                guard var data = document.data() else {completion(session, iCafeManagerError.DatabaseError("No data found for session of table \(String(describing: session.table!.name))")); return
+                }
+                
+                data["closeTime"] = session.closeTime
+                
+                let newSessionDocument = userData
+                    .collection("Tables")
+                    .document(tableDocumentID)
+                    .collection("ArchiveSessions")
+                    .document()
+                
+                newSessionDocument.setData(data) { error in
+                    if let error = error {
+                        completion(session, iCafeManagerError.DatabaseError("Unable to save session to archive for table  \(String(describing: session.table!.name)). Cause: \(error)"))
+                        return
+                    } else {
+                        self.removeTableSessionAsync(tableSession: session) { (session, error) in
+                            if let error = error {
+                                completion(session, error)
+                            } else {
+                                session?.firebaseID = newSessionDocument.documentID
+                                completion(session, nil)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    class func removeTableSessionAsync (tableSession session: TableSession, completion: @escaping (TableSession?, Error?)-> Void) {
+        guard let tableDocumentID = session.table?.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: session.table!.name))")); return }
+        guard let sessionDocumentID = session.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for session of table: \(String(describing: session.table!.name))")); return }
+        
+        userData
+            .collection("Tables")
+            .document(tableDocumentID)
+            .collection("ActiveSession")
+            .document(sessionDocumentID)
+            .delete() { error in
+                if let error = error {
+                    completion(session, iCafeManagerError.DatabaseError("Unable to remove session document for table: \(String(describing: session.table!.name)). Cause: \(error)"));
+                    return
+                } else {
+                    completion(session, nil)
+                }
+        }
+    }
     
     class func updateUserSettingsAndMenuAsync (completion: @escaping (Error?)-> Void) {
         var settings = [String:Any]()
