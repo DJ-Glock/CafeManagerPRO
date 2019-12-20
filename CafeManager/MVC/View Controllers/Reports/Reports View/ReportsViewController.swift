@@ -263,15 +263,15 @@ class ReportsViewController: UITableViewController {
         let queue = DispatchQueue.global(qos: .userInitiated)
         queue.async {
             [ weak self ] in
-            guard self != nil else { return }
-            self!.model.startDate = self!.startDate
-            self!.model.endDate = self!.endDate
-            self!.model.generateDataForReport()
+            guard let self = self else { return }
+            self.model.startDate = self.startDate
+            self.model.endDate = self.endDate
+            self.model.generateDataForReport()
             
             //Back to MainQueue to update GUI and chart
             DispatchQueue.main.async {
                 // Update GUI
-                self?.updateLabels()
+                self.updateLabels()
                 LoadingOverlay.shared.hideOverlayView()
             }
         }

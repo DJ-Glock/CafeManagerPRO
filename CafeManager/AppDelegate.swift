@@ -13,6 +13,8 @@ import FirebaseUI
 
 // Global constants
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
+let userId: String! = appDelegate.auth?.currentUser?.uid
+var userData: DocumentReference! = nil
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -23,11 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+        let settings = FirestoreSettings()
+        // Enable offline persistence
+        settings.isPersistenceEnabled = true
+        
         self.db = Firestore.firestore()
         self.auth = Auth.auth()
+        DBGeneral.readUserSettingsFromDB()
         
-        // AppRater for rating app
-        let _ = AppRater.sharedInstance
+        // AppRater for rating app - needs to be fixed.
+        //let _ = AppRater.sharedInstance
         
         /// UIAppearance configuration
         ChangeGUITheme.configureThemeForApplication()
@@ -41,6 +49,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // Handle Google Authentication URL
     func application(_ app: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication ?? "") ?? false
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
+        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
+            DBGeneral.readUserSettingsFromDB()
+            return true
+        }
+        return false
     }
     
     // Remote notification

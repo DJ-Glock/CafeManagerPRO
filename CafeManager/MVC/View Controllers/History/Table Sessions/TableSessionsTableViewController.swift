@@ -12,8 +12,8 @@ import CoreData
 class TableSessionsTableViewController: FetchedResultsTableViewController {
     
     //MARK: Variables
-    var currentTable: TablesTable? = nil
-    private var currentTableSession: TableSessionTable?
+    var currentTable: Table? = nil
+    private var currentTableSession: TableSession?
 //    private var fetchedResultsController: NSFetchedResultsController<TableSessionTable>?
     private var overlayView = UIView()
     private var activityIndicator = UIActivityIndicatorView()
@@ -25,7 +25,7 @@ class TableSessionsTableViewController: FetchedResultsTableViewController {
         let queue = DispatchQueue.global(qos: .userInitiated)
         queue.async {
             [ weak self] in
-            guard self != nil else { return }
+            guard let self = self else { return }
             //Get data
 //            var predicates: [NSPredicate] = []
 //            let originalPredicate = NSPredicate(format: "closeTime <> %@", NSNull() as CVarArg)
@@ -46,7 +46,7 @@ class TableSessionsTableViewController: FetchedResultsTableViewController {
             //Back to MainQueue to update tableView
             DispatchQueue.main.async {
                 // Update GUI
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
                 LoadingOverlay.shared.hideOverlayView()
             }
         }
@@ -98,8 +98,8 @@ class TableSessionsTableViewController: FetchedResultsTableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showTableHistory" {
             if let tableTVC = segue.destination as? HistoryTableUIViewController {
-                tableTVC.title = self.currentTable!.tableName!
-                tableTVC.tableName = self.currentTable!.tableName!
+                tableTVC.title = self.currentTable!.name
+                tableTVC.tableName = self.currentTable!.name
                 tableTVC.currentTable = self.currentTable!
                 tableTVC.currentTableSession = self.currentTableSession
             }

@@ -1,6 +1,7 @@
 //Generic stuff
 "alertNoCanDo" = "Unable to complete";
 "paramsNotFilledProperly" = "Fields were not filled properly";
+"tableNameAlreadyExists" = "This table name is already in use";
 "alertUnableToSaveData" = "Unable to save data";
 "checkInputParameters" = "Chek input parameters";
 "Import of menu performed successfully!" = "Import of menu performed successfully!";
@@ -44,7 +45,7 @@
 "itemPrice" = "Price";
 "alertMenuItemAddingInputParameters" = "Enter menu item parameters";
 "alertConfirmDeletionOfItem" = "Plese confirm deletion";
-"alertConfirmDeletionOfItemMessage" = "Warning! Once menu item is deleted, all orders of this item will be deleted from database and not available in History and Reports.";
+"alertConfirmDeletionOfItemMessage" = "Warning! After deleting a menu item, it will never be available for orders. It will only appear in reports.";
 "Please choose an option" = "Please choose an option";
 "Add manually" = "Add manually";
 "Add from catalogue (English)" = "Add from catalogue (English)";

@@ -8,8 +8,8 @@
 
 protocol MoveGuestsDelegate: class {
     /// Method is getting called when target table session was chosen. It returns guest and session entities for futher processing
-    func didChoose (targetTableSession: TableSessionTable, forGuest: GuestsTable)
+    func didChoose (targetTableSession: TableSession, forGuest: Guest)
     
     /// Method is getting called when target table was chosen. It returns table and session entities for futher processing
-    func didChoose (targetTable: TablesTable, forSession: TableSessionTable)
+    func didChoose (targetTable: Table, forSession: TableSession)
 }

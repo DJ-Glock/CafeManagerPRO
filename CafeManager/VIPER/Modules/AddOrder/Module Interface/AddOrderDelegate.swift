@@ -8,8 +8,8 @@
 
 protocol AddOrderDelegate: class {
     /// Method is getting called when menu item was chosen
-    func didChoose(menuItem: MenuTable, forGuest: GuestsTable)
+    func didChoose(menuItem: MenuItem, forGuest: Guest)
     
     /// Method is getting called when menu item was chosen
-    func didChoose(menuItem: MenuTable, forSession: TableSessionTable)
+    func didChoose(menuItem: MenuItem, forSession: TableSession)
 }

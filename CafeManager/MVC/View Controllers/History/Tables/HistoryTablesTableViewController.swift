@@ -12,7 +12,7 @@ import CoreData
 class HistoryTablesTableViewController: FetchedResultsTableViewController {
     //MARK: variables
     //private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
-    private var currentTable: TablesTable?
+    private var currentTable: Table?
     private var tableNameTextField: UITextField!
     
     //MARK: system functions for view
@@ -68,7 +68,7 @@ class HistoryTablesTableViewController: FetchedResultsTableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showTableSessions" {
             if let tableSessionsTVC = segue.destination as? TableSessionsTableViewController {
-                tableSessionsTVC.title = self.currentTable!.tableName!
+                tableSessionsTVC.title = self.currentTable!.name
                 tableSessionsTVC.currentTable = self.currentTable!
             }
         }
@@ -77,7 +77,7 @@ class HistoryTablesTableViewController: FetchedResultsTableViewController {
 
 // MARK: Delegates
 extension HistoryTablesTableViewController: HistoryTablesTableViewCellDelegate {
-    func didPressTablesCellButton(table: TablesTable) {
+    func didPressTablesCellButton(table: Table) {
         currentTable = table
     }
 }

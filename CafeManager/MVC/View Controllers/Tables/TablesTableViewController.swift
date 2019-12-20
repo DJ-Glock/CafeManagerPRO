@@ -10,23 +10,32 @@ import UIKit
 import CoreData
 
 class TablesTableViewController: FetchedResultsTableViewController {
+    
+    /// To do:
+    /// Table deletion function
+    
+    
     // MARK: variables
-//    private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
-    private var currentTable: TablesTable?
-    private var currentTableSession: TableSessionTable?
+    private var currentTable: Table?
+    private var currentTableSession: TableSession?
+    private var tablesArray: [Table] = []
     private var tableNameTextField: UITextField!
     private var tableCapacityTextField: UITextField!
     internal var tableViewRefreshControl: UIRefreshControl?
+    private weak var currentTableViewController: TableUIViewController?
     
     // MARK: IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
     // MARK: IBFunctions
-    @IBAction func addTableBarButtonPressed(_ sender: UIBarButtonItem) { addTable() }
+    @IBAction func addTableBarButtonPressed(_ sender: UIBarButtonItem) {
+        addTable()
+    }
+    
     
     //MARK: system functions for view
     override func viewWillAppear(_ animated: Bool) {
-        updateGUI()
+//        updateGUI()
     }
     
     // MARK: Functions
@@ -35,9 +44,10 @@ class TablesTableViewController: FetchedResultsTableViewController {
         super.viewDidLoad()
         sideMenu()
         configureRefreshControl()
+        updateGUI()
     }
     
-    // Menu
+    // MARK: Side Menu
     private func sideMenu() {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -46,8 +56,25 @@ class TablesTableViewController: FetchedResultsTableViewController {
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
     }
+
+    // MARK: UI Update
+    @objc private func updateGUI() {
+        DBQuery.getTablesWithActiveSessionAsync { [weak self] (tables, error) in
+            guard let self = self else {return}
+            
+            if let error = error {
+                CommonAlert.shared.show(title: "Error occurred", text: "An error occurred while retrieving data from DB: \(error)")
+            }
+            
+            self.tablesArray = tables
+            Global.shared.tables = tables
+            self.tableView.reloadData()
+            self.tableViewRefreshControl?.endRefreshing()
+        }
+    }
     
-    // TableView refresh control
+    
+    // MARK: UITableView Refresh control
     func configureRefreshControl () {
      self.tableViewRefreshControl = UIRefreshControl()
     
@@ -60,7 +87,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
     }
     
-    //Functions for Alert window for adding table
+    // MARK: Alerts for adding table
     private func configureTableNameTextField (textField: UITextField!) {
         textField.keyboardType = .default
         textField.backgroundColor = UIColor.white
@@ -84,13 +111,19 @@ class TablesTableViewController: FetchedResultsTableViewController {
         self.presentAlert(alert: alertNoCanDo, animated: true)
     }
     
+    private func showAlertTableNameAlreadyExists() {
+        let alertNoCanDo = UIAlertController(title: NSLocalizedString("alertNoCanDo", comment: ""), message: NSLocalizedString("tableNameAlreadyExists", comment: ""), preferredStyle: .alert)
+        alertNoCanDo.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .cancel, handler: nil))
+        self.presentAlert(alert: alertNoCanDo, animated: true)
+    }
+    
     private func showAlertUnableToSave() {
         let alertNoCanDo = UIAlertController(title: NSLocalizedString("alertUnableToSaveData", comment: ""), message: NSLocalizedString("checkInputParameters", comment: ""), preferredStyle: .alert)
         alertNoCanDo.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .cancel, handler: nil))
         self.presentAlert(alert: alertNoCanDo, animated: true)
     }
     
-    //Functions for managing tables
+    // MARK: Add table
     private func addTable() {
         let alert = UIAlertController(title: NSLocalizedString("inputTableParams", comment: ""), message: nil, preferredStyle: .alert)
         alert.addTextField(configurationHandler: configureTableNameTextField)
@@ -103,27 +136,37 @@ class TablesTableViewController: FetchedResultsTableViewController {
                 self.showAlertParamsNotFilledProperly()
                 return
             }
-            if let capacity = self.tableCapacityTextField.text!.getIntNumber() {
-                let newTable = Table(tableName: self.tableNameTextField.text!, tableCapacity: capacity)
-                let result = try? TablesTable.getOrCreateTable(table: newTable)
-                if result != nil {
-                    self.updateGUI()
+            
+            let tableName = self.tableNameTextField.text!
+            for table in self.tablesArray {
+                if table.name == tableName {
+                    self.showAlertTableNameAlreadyExists()
+                    return
                 }
-            } else {
-                self.showAlertParamsNotFilledProperly()
-                return
             }
+            
+            guard let capacityInt = self.tableCapacityTextField.text!.getIntNumber() else {self.showAlertParamsNotFilledProperly(); return}
+            let capacity = Int16(capacityInt)
+            
+            let newTable = Table(firebaseID: nil, tableName: tableName, tableCapacity: capacity)
+            DBPersist.createTableAsync(newTable: newTable, completion: { (error) in
+                if let error = error {
+                    CommonAlert.shared.show(title: "Error occurred while saving table data in the database", text: error as! String)
+                }
+            })
+            
         }))
         self.presentAlert(alert: alert, animated: true)
     }
     
-    private func editTable (table: TablesTable) {
+    // MARK: Edit table
+    private func editTable (table: Table) {
         let alert = UIAlertController(title: NSLocalizedString("inputTableParams", comment: ""), message: nil, preferredStyle: .alert)
         alert.addTextField(configurationHandler: configureTableNameTextField)
-        alert.textFields?[0].text = table.tableName
+        alert.textFields?[0].text = table.name
         alert.textFields?[0].autocapitalizationType = .sentences
         alert.addTextField(configurationHandler: configureTableCapacityTextField)
-        alert.textFields?[1].text = String(describing: table.tableCapacity)
+        alert.textFields?[1].text = String(describing: table.capacity)
         alert.textFields?[1].autocapitalizationType = .sentences
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertCancel", comment: ""), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .default, handler: { (UIAlertAction) in
@@ -131,47 +174,56 @@ class TablesTableViewController: FetchedResultsTableViewController {
                 self.showAlertParamsNotFilledProperly()
                 return
             }
-            if let capacity = self.tableCapacityTextField.text!.getIntNumber() {
-                let changedTable = Table(tableName: self.tableNameTextField.text!, tableCapacity: capacity)
-                table.changeTable(to: changedTable)
-                self.updateGUI()
-            } else {
-                self.showAlertParamsNotFilledProperly()
-                return
+            
+            let oldName = table.name
+            let oldCapacity = table.capacity
+            
+            let newName = self.tableNameTextField.text!
+            for table in self.tablesArray {
+                if table.name == newName {
+                    self.showAlertTableNameAlreadyExists()
+                    return
+                }
             }
+            
+            guard let capacityInt = self.tableCapacityTextField.text!.getIntNumber() else {self.showAlertParamsNotFilledProperly(); return}
+            let newCapacity = Int16(capacityInt)
+            
+            table.name = newName
+            table.capacity = newCapacity
+            
+            DBUpdate.updateTableAsync(tableToChange: table, completion: { (error) in
+                if let error = error {
+                    CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving table data in the database: \(error)")
+                    table.name = oldName
+                    table.capacity = oldCapacity
+                }
+            })
         }))
         self.presentAlert(alert: alert, animated: true)
     }
 
     
-    //MARK: functions for table update
-    @objc private func updateGUI () {
-//        let request : NSFetchRequest<TablesTable> = TablesTable.fetchRequest()
-//        request.sortDescriptors = [NSSortDescriptor(key: "tableName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))]
-//        fetchedResultsController = NSFetchedResultsController<TablesTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: nil, cacheName: nil)
-//        try? fetchedResultsController?.performFetch()
-        tableView.reloadData()
-        self.tableViewRefreshControl?.endRefreshing()
-    }
-    
+    //MARK: UITableView
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TablesTableViewCell
-//        if let tablesTable = fetchedResultsController?.object(at: indexPath) {
-//            currentTableSession = TableSessionTable.getCurrentTableSession(table: tablesTable)
-//            cell.tableNameLabel.text = tablesTable.tableName
-//            if currentTableSession != nil {
-//                cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
-//                cell.tableStatusLabel.text = NSLocalizedString("tableOpened", comment: "") + "\(currentTableSession!.openTime!.convertToString())"
-//                cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSessionTable.calculateTotalAmount(currentTableSession: currentTableSession)))" + UserSettings.currencySymbol
-//            } else {
-//                cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
-//                cell.tableStatusLabel.text = NSLocalizedString("tableIsClosed", comment: "")
-//                cell.currentAmountLabel.text = ""
-//            }
-//        }
+        
+        let table = self.tablesArray[indexPath.row]
+        let tableSession = table.tableSession
+        cell.tableNameLabel.text = table.name
+        
+        if tableSession != nil {
+            cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
+            cell.tableStatusLabel.text = NSLocalizedString("tableOpened", comment: "") + "\(tableSession!.openTime.convertToString())"
+            cell.currentAmountLabel.text = NSLocalizedString("amount", comment: "") + " \(String(describing: TableSession.calculateActualTotalAmount(for: tableSession)))" + UserSettings.currencySymbol
+        } else {
+            cell.tableStatusLabel.textColor = ColorThemes.textColorNormal
+            cell.tableStatusLabel.text = NSLocalizedString("tableIsClosed", comment: "")
+            cell.currentAmountLabel.text = ""
+        }
         return cell
     }
-    //Functions for Edit/Delete swipe buttons
+    // MARK: Swipe actions
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
 //            let table = self.fetchedResultsController?.object(at: editActionsForRowAt)
@@ -186,8 +238,8 @@ class TablesTableViewController: FetchedResultsTableViewController {
         deleteButton.backgroundColor = .red
         
         let editButton = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-//            let table = self.fetchedResultsController?.object(at: editActionsForRowAt)
-//            self.editTable(table: table!)
+            let table = self.tablesArray[editActionsForRowAt.row]
+            self.editTable(table: table)
         }
         editButton.backgroundColor = .lightGray
         
@@ -195,62 +247,47 @@ class TablesTableViewController: FetchedResultsTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = tableView.cellForRow(at: indexPath as IndexPath)
-//        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-//        currentTable = fetchedResultsController?.object(at: indexPath)
-//        currentTableSession = TableSessionTable.getCurrentTableSession(table: currentTable!)
-//        performSegue(withIdentifier: "openTableSegue", sender: cell)
+        let cell = tableView.cellForRow(at: indexPath as IndexPath)
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+        currentTable = self.tablesArray[indexPath.row]
+        currentTableSession = currentTable?.tableSession
+        performSegue(withIdentifier: "openTableSegue", sender: cell)
     }
     
     
-    //MARK: prepare for segue
+    //MARK: Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openTableSegue" {
             if let tableTVC = segue.destination as? TableUIViewController {
-                tableTVC.title = currentTable!.tableName!
-                tableTVC.tableName = currentTable!.tableName!
+                tableTVC.title = currentTable!.name
+                tableTVC.tableName = currentTable!.name
                 tableTVC.currentTable = currentTable!
                 tableTVC.currentTableSession = currentTableSession
+                self.currentTableViewController = tableTVC
             }
         }
     }
 }
 
-
-// Common extension for fetchedResultsController
+// MARK: UITableView numbers
 extension TablesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-//        return fetchedResultsController?.sections?.count ?? 1
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-//            return sections[section].numberOfObjects
-//        }
-//        else {
-//            return 0
-//        }
-        return 0
+        return self.tablesArray.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-//            return sections[section].name
-//        }
-//        else {
-//            return nil
-//        }
         return nil
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-//        return fetchedResultsController?.sectionIndexTitles
         return []
     }
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-//        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
         return 0
     }
 }

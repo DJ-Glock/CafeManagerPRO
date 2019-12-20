@@ -15,14 +15,15 @@ class MoveGuestsRouter: NSObject, MoveGuestsInterface, MoveGuestsRouterInterface
     
     
     // Incoming
-    func chooseTargetTableSession(forGuest guest: GuestsTable, sender: AnyObject) {
+    func chooseTargetTableSession(forGuest guest: Guest, sender: AnyObject) {
         showView(sender: sender)
         
         state.currentGuest = guest
+        state.currentTableSession = guest.tableSession
         presenter.configureViewToSelectTableForGuest()
     }
     
-    func chooseTargetTable(forSession session: TableSessionTable, sender: AnyObject) {
+    func chooseTargetTable(forSession session: TableSession, sender: AnyObject) {
         showView(sender: sender)
         
         state.currentTableSession = session
@@ -53,6 +54,9 @@ class MoveGuestsRouter: NSObject, MoveGuestsInterface, MoveGuestsRouterInterface
                     let imageView = button?.imageView
                     view.popoverPresentationController?.sourceView = imageView
         }
-        appDelegate.window?.rootViewController?.present(view!, animated: true, completion: nil)
+        
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.present(view, animated: true, completion: nil)
+        }        
     }
 }

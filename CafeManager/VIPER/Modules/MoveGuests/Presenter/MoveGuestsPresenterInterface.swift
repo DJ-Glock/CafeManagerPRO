@@ -17,7 +17,7 @@ protocol MoveGuestsPresenterInterface: class {
     func configureViewToSelectTableForGuest()
     
     /// Method is called when table is chosen. It calls interactor to get required entity
-    func didChooseTable(tableName: String)
+    func didChooseTable(indexPath: IndexPath)
     
     /// Method is called when table entity is received from db. It calls respective method in router to close view
     func didChooseTableForSession()

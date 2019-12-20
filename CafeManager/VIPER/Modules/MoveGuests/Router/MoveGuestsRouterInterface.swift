@@ -8,10 +8,10 @@
 
 protocol MoveGuestsRouterInterface: class {
     /// Method calls presenter to show view for moving guest
-    func chooseTargetTableSession(forGuest guest: GuestsTable, sender: AnyObject)
+    func chooseTargetTableSession(forGuest guest: Guest, sender: AnyObject)
     
     /// Method calls presenter to show view for moving session
-    func chooseTargetTable(forSession session: TableSessionTable, sender: AnyObject)
+    func chooseTargetTable(forSession session: TableSession, sender: AnyObject)
     
     /// Method is getting called when table was chosen. It calls respective delegate method.
     func didChooseTableForSession()

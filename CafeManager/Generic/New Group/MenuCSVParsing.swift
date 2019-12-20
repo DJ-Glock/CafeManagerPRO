@@ -88,16 +88,16 @@ class MenuCSVParsing {
         }
     }
     
-    class func parseExportedMenuCSVFile (contentsOfURL: URL, encoding: String.Encoding) throws -> [Menu]? {
-        var items:[Menu] = []
+    class func parseExportedMenuCSVFile (contentsOfURL: URL, encoding: String.Encoding) throws -> [MenuItem]? {
+    var items: [MenuItem] = []
         
         do {
             let parsedStrings = try MenuCSVParsing.parseCSVFile(contentsOfURL: contentsOfURL, delimiter: ";", encoding: encoding)
             for array in parsedStrings {
                 guard array.count == 4 else { continue }
                 let price = array[3].getFloatNumber() ?? 0
-                let menuItem = Menu(itemName: array[0], itemDescription: array[1], itemPrice: price, itemCategory: array[2])
-                items.append(menuItem)
+//                let menuItem = MenuStruct(itemName: array[0], itemDescription: array[1], itemPrice: price, itemCategory: array[2])
+//                items.append(menuItem)
             }
             return items
             

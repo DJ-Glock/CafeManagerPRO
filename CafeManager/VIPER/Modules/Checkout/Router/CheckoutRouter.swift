@@ -27,8 +27,11 @@ class CheckoutRouter: NSObject, CheckoutRouterInterface, CheckoutInterface {
                     let imageView = button?.imageView
                     view.popoverPresentationController?.sourceView = imageView
         }
-        appDelegate.window?.rootViewController?.present(view!, animated: true, completion: nil)
-        presenter.configureViewWithParams(session: session, originalTotalAmount: originalTotalAmount)
+        
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.present(view, animated: true, completion: nil)
+            presenter.configureViewWithParams(session: session, originalTotalAmount: originalTotalAmount)
+        }
     }
     
     // Outgoing

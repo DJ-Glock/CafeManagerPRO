@@ -14,26 +14,26 @@ import CloudKit
 class SettingsTableViewController: UITableViewController {
     // Variables and constants
     private let pricePerHour: Float = 0
-    private let defaults = UserDefaults.standard
-    private let currencies = ["USD", "EUR", "RUR", "UAH", "BYN", "NIS"]
+    private let currencies = ["USD", "EUR", "RUB", "UAH", "BYN", "NIS", "INS"]
     private var selectedCellIndexPath: IndexPath?
     private var skipCellsFromGestureRecognition = [IndexPath]()
     private let selectedCellHeight: CGFloat = 122.0
     private let unselectedCellHeight: CGFloat = 44.0
+    internal var tableViewRefreshControl: UIRefreshControl?
     
     // IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var isTimeCafeSwitch: UISwitch!
     @IBOutlet weak var isDarkThemeEnabled: UISwitch!
-    //@IBOutlet weak var isAutoSyncEnabled: UISwitch!
     @IBOutlet weak var pricePerHourTextField: UITextField!
+    @IBOutlet weak var cafeNameTextField: UITextField!
     @IBOutlet var currencyPicker: UIPickerView!
-    @IBOutlet weak var syncStatusLabel: UILabel!
     
     // IBActions
     // UISwitches
     @IBAction func isTimeCafeSwitchValueChanged(_ sender: UISwitch) {
-        UserSettings.isTimeCafe = sender.isOn
+        UserSettings.shared.isTimeCafe = sender.isOn
+        DBGeneral.updateMenuAndSettings()
     }
     
     @IBAction func isDarkThemeEnabledValueChanged(_ sender: UISwitch) {
@@ -44,16 +44,17 @@ class SettingsTableViewController: UITableViewController {
         }))
         self.presentAlert(alert: alert, animated: true)
     }
-//    @IBAction func isAutoSyncEnabledValueChanged(_ sender: UISwitch) {
-//        UserSettings.isAutosyncEnabled = sender.isOn
-//    }
-    
+
     @IBAction func pricePerHourTextFieldDidEdit(_ sender: UITextField) {
-        UserSettings.pricePerMinute = pricePerHourTextField.text!.getFloatNumber() ?? 0
+        UserSettings.shared.pricePerMinute = pricePerHourTextField.text!.getFloatNumber() ?? 0
+        DBGeneral.updateMenuAndSettings()
     }
-    @IBAction func runSyncButtonPressed(_ sender: UIButton) {
-        //self.showSyncAlert()
+    
+    @IBAction func cafeNameTextFieldDidEdit(_ sender: UITextField) {
+        UserSettings.shared.cafeName = cafeNameTextField.text ?? ""
+        DBGeneral.updateMenuAndSettings()
     }
+    
     
     // LifeCycle functions
     override func viewDidLoad() {
@@ -63,7 +64,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        configureViewWillAppear()
+        updateGUI()
     }
 
     // MARK: Functions
@@ -84,39 +85,37 @@ class SettingsTableViewController: UITableViewController {
         currencyPicker.isUserInteractionEnabled = false
         currencyPicker.alpha = 0.6
         
+        // TableView refresh control
+        configureRefreshControl()
+        
         // To dismiss keyboard
         self.addGestureRecognizer()
-        
-        // Refresh sync status
-//        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: appDelegate.syncDidFinishNotification), object: nil, queue: nil) { notification in
-//            self.syncStatusLabel.text = UserSettings.syncStatus
-//        }
     }
     
     // Configure view before it appears
-    private func configureViewWillAppear() {
-        currencyPicker.selectRow(currencies.index(of: UserSettings.currency)!, inComponent: 0, animated: true)
-        pricePerHourTextField.text = NumberFormatter.localizedString(from: NSNumber(value: UserSettings.pricePerMinute), number: .decimal)
-        isTimeCafeSwitch.isOn = UserSettings.isTimeCafe
+    @objc private func updateGUI() {
+        currencyPicker.selectRow(currencies.index(of: UserSettings.shared.currencyCode)!, inComponent: 0, animated: true)
+        pricePerHourTextField.text = NumberFormatter.localizedString(from: NSNumber(value: UserSettings.shared.pricePerMinute), number: .decimal)
+        cafeNameTextField.text = UserSettings.shared.cafeName
+        isTimeCafeSwitch.isOn = UserSettings.shared.isTimeCafe
         isDarkThemeEnabled.isOn = UserSettings.isDarkThemeEnabled
-        //isAutoSyncEnabled.isOn = UserSettings.isAutosyncEnabled
-        syncStatusLabel.text = UserSettings.syncStatus
-    }
-    
-    // Alert window to warn user about synchronization process.
-    private func showSyncAlert() {
-        let alert = UIAlertController(title: NSLocalizedString("synchronizationWarningTitle", comment: ""), message: NSLocalizedString("synchronizationWarningText", comment: ""), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("synchronizationWarningDeny", comment: ""), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("synchronizationWarningConfirm", comment: ""), style: .default, handler: {(UIAlertAction) in
-            
-            //appDelegate.validateCloudKitAnd(runSync: true){}
-            UserSettings.syncUserDefaults()
-            self.configureViewWillAppear()
-        }))
-        self.presentAlert(alert: alert, animated: true)
+        self.tableViewRefreshControl?.endRefreshing()
     }
     
     // TableView functions
+    // TableView refresh control
+    func configureRefreshControl () {
+        self.tableViewRefreshControl = UIRefreshControl()
+        
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = tableViewRefreshControl
+        } else {
+            tableView.addSubview(tableViewRefreshControl!)
+        }
+        tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
             let reuseIdentifier = cell.reuseIdentifier
@@ -150,15 +149,6 @@ class SettingsTableViewController: UITableViewController {
             return self.unselectedCellHeight
         }
     }
-    
-    //Prepare for segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showHelpAboutSync" {
-            if let helpVC = segue.destination as? HelpViewController {
-                helpVC.predefinedSection = "#Sync"
-            }
-        }
-    }
 }
 
 // Extension for currency UIPicker
@@ -172,7 +162,8 @@ extension SettingsTableViewController: UIPickerViewDelegate, UIPickerViewDataSou
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        UserSettings.currency = currencies[row]
+        UserSettings.shared.currencyCode = currencies[row]
+        DBGeneral.updateMenuAndSettings()
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {

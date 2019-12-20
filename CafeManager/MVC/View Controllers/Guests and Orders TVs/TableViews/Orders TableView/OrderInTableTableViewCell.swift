@@ -10,8 +10,8 @@ import UIKit
 
 class OrderInTableTableViewCell: UITableViewCell {
     weak var cellDelegate: OrderInTableTableViewCellDelegate?
-    var order: OrdersTable? = nil
-    var menuItem: MenuTable? = nil
+    var order: Order? = nil
+    var menuItem: MenuItem? = nil
     
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemQuantityLabel: UILabel!
@@ -21,6 +21,6 @@ class OrderInTableTableViewCell: UITableViewCell {
     @IBOutlet weak var minusButton: UIButton!
     
     @IBAction func didPressOrderCellButton(_ sender: UIButton) {
-        cellDelegate?.didPressIncreaseOrDecreaseOrderQuantityButton(order: order!, menuItem: menuItem!, action: sender.accessibilityIdentifier!)
+        cellDelegate?.didPressIncreaseOrDecreaseOrderQuantityButton(order: order!, action: sender.accessibilityIdentifier!)
     }
 }

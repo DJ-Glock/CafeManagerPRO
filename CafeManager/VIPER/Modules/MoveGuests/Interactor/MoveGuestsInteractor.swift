@@ -11,60 +11,43 @@ class MoveGuestsInteractor: NSObject, MoveGuestsInteractorInterface {
     weak var state: MoveGuestsState!
     weak var presenter: MoveGuestsPresenterInterface!
     
-    func didChooseTable(tableName: String) {
-        if let _ = state.currentTableSession {
-            state.targetTable = getTableForSession(tableName: tableName)
+    func didChooseTable(indexPath: IndexPath) {
+        if let _ = state.currentGuest {
+            state.targetTableSession = state.tableSessions[indexPath.row]
+            presenter.didChooseTableSessionForGuest()
+        } else if let _ = state.currentTableSession {
+            state.targetTable = state.tablesWithoutSession[indexPath.row]
             presenter.didChooseTableForSession()
         }
-        if let _ = state.currentGuest {
-            state.targetTableSession = getTableSessionForGuest(tableName: tableName)
-            presenter.didChooseTableSessionForGuest()
-        }
+        
     }
     
     func getTablesArrayForMovingSession() -> [String] {
-        if let tables = TablesTable.getAllTables() {
-            var tablesNames: [String] = []
-            
-            for table in tables {
-                let session = TableSessionTable.getCurrentTableSession(table: table)
-                if session == nil {
-                    tablesNames.append(table.tableName!)
-                }
+        var tableNames = [String]()
+        self.state.tablesWithoutSession = []
+        
+        for table in Global.shared.tables {
+            let session = table.tableSession
+            if session == nil {
+                self.state.tablesWithoutSession.append(table)
+                tableNames.append(table.name)
             }
-            return tablesNames
         }
-        return []
+        
+        return tableNames
     }
     
     func getTablesArrayForMovingGuest() -> [String] {
-        if let tables = TablesTable.getAllTables() {
-            var tablesNames: [String] = []
-            
-            for table in tables {
-                if let _ = TableSessionTable.getCurrentTableSession(table: table) {
-                    tablesNames.append(table.tableName!)
-                }
-            }
-            return tablesNames
-        }
-        return []
-    }
-    
-    // Private functions
-    private func getTableForSession (tableName: String) -> TablesTable? {
-        if let table = TablesTable.getTable(withName: tableName) {
-            return table
-        }
-        return nil
-    }
-    
-    private func getTableSessionForGuest (tableName: String) -> TableSessionTable? {
-        if let table = TablesTable.getTable(withName: tableName) {
-            if let session = TableSessionTable.getCurrentTableSession(table: table) {
-                return session
+        var tableNames = [String]()
+        self.state.tablesWithoutSession = []
+        
+        for table in Global.shared.tables {
+            if table !== self.state.currentTableSession.table, let session = table.tableSession {
+                self.state.tableSessions.append(session)
+                tableNames.append(table.name)
             }
         }
-        return nil
+        
+        return tableNames
     }
 }

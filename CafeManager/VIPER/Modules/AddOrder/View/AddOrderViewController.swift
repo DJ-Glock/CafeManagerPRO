@@ -60,12 +60,7 @@ class AddOrderViewController: ParentViewController, AddOrderViewControllerInterf
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let rowData = presenter.getRowData(forSectionIndex: indexPath.section, andRowIndex: indexPath.row)
-        let name = rowData.name
-        let description = rowData.description
-        guard name != nil && description != nil else {return}
-        
-        presenter.didChoose(itemName: name!, withDescription: description!)
+        presenter.didChoose(indexPath: indexPath)
     }
 }
 

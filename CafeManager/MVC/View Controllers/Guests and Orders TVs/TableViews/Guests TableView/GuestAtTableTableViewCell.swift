@@ -11,9 +11,7 @@ import UIKit
 class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource {
     
     weak var cellDelegate: GuestAtTableTableViewCellDelegate?
-    weak var didRefreshTableViewDelegate: GuestOrdersTableViewRefreshDelegate?
-    var guest: GuestsTable? = nil
-    var guestOrders: [GuestOrdersTable] = []
+    var guest: Guest!
     
     @IBOutlet weak var addGuestOrderButton: UIButton!
     @IBOutlet weak var closeGuestButton: UIButton!
@@ -30,31 +28,21 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
         cellDelegate?.didPressAddGuestOrderButton(guest: self.guest!, sender: sender)
     }
     
-    private func reloadDataFromCoreData() {
-        if guest == nil {
-            self.guestOrders = []
-        } else {
-            self.guestOrders = GuestOrdersTable.getOrders(for: self.guest!)
-        }
-    }
-    
     func updateGUI() {
-        self.reloadDataFromCoreData()
         self.guestOrdersTableView.reloadData()
     }
     
     // MARK: Table view that contain current guest orders
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "guestOrderCell", for: indexPath) as! GuestOrderTableViewCell
-        let order = self.guestOrders[indexPath.row]
+        let order = self.guest.orders[indexPath.row]
         
         cell.cellDelegate = self
         cell.order = order
-        cell.menuItem = order.menuItem
         
-        cell.itemNameLabel.text = order.menuItem?.itemName
-        cell.itemQuantityLabel.text = String(describing: order.quantityOfItems)
-        cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantityOfItems) * (order.menuItem?.itemPrice)!), number: .decimal) + UserSettings.currencySymbol
+        cell.itemNameLabel.text = order.menuItemName
+        cell.itemQuantityLabel.text = String(describing: order.quantity)
+        cell.itemsPrice.text = NumberFormatter.localizedString(from: NSNumber(value: Float(order.quantity) * (order.price)), number: .decimal) + UserSettings.currencySymbol
         
         // Change cell buttons color theme
         cell.plusButton = ChangeGUITheme.setColorThemeFor(button: cell.plusButton)
@@ -65,9 +53,9 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
-            let order = self.guestOrders[indexPath.row]
+            let order = self.guest.orders[indexPath.row]
             order.remove()
-            self.didRefreshTableViewDelegate?.didRefreshGuestOrdersTableView()
+            tableView.reloadData()
         }
         deleteButton.backgroundColor = .red
         return [deleteButton]
@@ -78,7 +66,7 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return guestOrders.count
+        return self.guest.orders.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -94,18 +82,17 @@ class GuestAtTableTableViewCell: UITableViewCell, UITableViewDelegate, UITableVi
     }
 }
 
+// MARK: GuestOrders TVC Delegate
 extension GuestAtTableTableViewCell:GuestOrdersTableViewCellDelegate {
-    func didPressOrderIncreaseOrDecreaseButton(order: GuestOrdersTable, action: String) {
+    func didPressOrderIncreaseOrDecreaseButton(order: Order, action: String) {
         if action == "+" {
             order.increaseQuantity()
         } else {
-            if action == "-", order.quantityOfItems > 1 {
+            if action == "-", order.quantity > 1 {
                 order.decreaseQuantity()
             } else {
                 return
             }
         }
-        self.updateGUI()
-        didRefreshTableViewDelegate?.didRefreshGuestOrdersTableView()
     }
 }

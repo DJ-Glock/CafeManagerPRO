@@ -1,6 +1,7 @@
 //Generic stuff
 "alertNoCanDo" = "Невозможно выполнить";
 "paramsNotFilledProperly" = "Поля были заполнены некорректно";
+"tableNameAlreadyExists" = "Имя столика уже занято";
 "alertUnableToSaveData" = "Невозможно сохранить данные";
 "checkInputParameters" = "Проверьте введенные параметры";
 "Import of menu performed successfully!" = "Импорт выполнен успешно!";
@@ -44,7 +45,7 @@
 "itemPrice" = "Стоимость";
 "alertMenuItemAddingInputParameters" = "Введите параметры";
 "alertConfirmDeletionOfItem" = "Подтвердите удаление";
-"alertConfirmDeletionOfItemMessage" = "Внимание! При удалении пункта меню будут удалены все заказы этой позиции из базы данных и недоступны в отчетах.";
+"alertConfirmDeletionOfItemMessage" = "Внимание! При удалении пункта меню он более не будет доступен для заказов и останется лишь в отчетах.";
 "Please choose an option" = "Пожалуйста выберите опцию";
 "Add manually" = "Добавить вручную";
 "Add from catalogue (English)" = "Добавить из каталога (Английский)";

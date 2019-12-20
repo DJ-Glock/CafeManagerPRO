@@ -11,8 +11,8 @@ protocol MoveGuestsInterface: class {
     var delegate: MoveGuestsDelegate! {get set}
     
     /// Method shows view with available table sessions for guest to move. Once selected, module will return selected session entity and guest entity
-    func chooseTargetTableSession (forGuest: GuestsTable, sender: AnyObject)
+    func chooseTargetTableSession (forGuest: Guest, sender: AnyObject)
     
     /// Method shows view with available tables for session to move. Once selected, module will return selected session entity and table entity
-    func chooseTargetTable (forSession: TableSessionTable, sender: AnyObject)
+    func chooseTargetTable (forSession: TableSession, sender: AnyObject)
 }

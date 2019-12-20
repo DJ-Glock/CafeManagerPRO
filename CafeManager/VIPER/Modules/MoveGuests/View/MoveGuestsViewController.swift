@@ -38,8 +38,7 @@ class MoveGuestsViewController: ParentViewController, MoveGuestsViewControllerIn
     
     // Function for tapping on row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let name = presenter.tableNames[indexPath.row]
-        presenter.didChooseTable(tableName: name)
+        presenter.didChooseTable(indexPath: indexPath)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

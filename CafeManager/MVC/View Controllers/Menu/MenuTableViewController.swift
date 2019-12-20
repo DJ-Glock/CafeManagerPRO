@@ -12,26 +12,6 @@ import NotificationCenter
 import SearchTextField
 
 class MenuTableViewController: FetchedResultsTableViewController {
-    // MARK: variables
-//    private var fetchedResultsController: NSFetchedResultsController<MenuTable>?
-    private var itemNameTextField: UITextField!
-    private var itemDescriptionTextField: UITextField!
-    private var itemPriceTextField: UITextField!
-    internal var tableViewRefreshControl: UIRefreshControl?
-    private var isSearchActive : Bool = false
-    private var filtered:[MenuTable] = []
-    private var selectedLanguage = GenericStuff.MenuLanguage.english
-    private var menuCategories: [String] {
-        return MenuCategoryTable.getAllCategories()
-    }
-    private var addingItemView = UIView()
-    
-    // Variable is used for adding or changing menuItem
-    private var menuItem = Menu(itemName: "", itemDescription: nil, itemPrice: -1, itemCategory: nil)
-    // Flag for disabling actions with tableView while adding or changing menuItem
-    private var isAddingOrChangingMenuItem = false
-    private var currentMenuItem: MenuTable?
-    
     // MARK: IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -41,6 +21,59 @@ class MenuTableViewController: FetchedResultsTableViewController {
         showActionSheet()
     }
     
+    // MARK: UI variables
+    private var itemNameTextField: UITextField!
+    private var itemDescriptionTextField: UITextField!
+    private var itemPriceTextField: UITextField!
+    private var addingItemView = UIView()
+    internal var tableViewRefreshControl: UIRefreshControl?
+    
+    // MARK: Variables
+    private var selectedLanguage = GenericStuff.MenuLanguage.english
+    private var isFilterApplied : Bool = false
+    private var filteredMenuCategories: [String] = []
+    private var filteredMenuItems: [String : [MenuItem]] = [:]
+    private var menuCategories: [String] {
+        return Global.shared.menuItems.keys.sorted()
+    }
+    private var menuItems: [String : [MenuItem]] {
+        return Global.shared.menuItems
+    }
+    // Flag for disabling actions with tableView while adding or changing menuItem
+    private var isAddingOrChangingMenuItem = false
+    private var currentMenuItem: MenuItem?
+    private var currentMenuItemOriginal: MenuItem?
+    
+    // MARK: Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCommonMenu" {
+            let targetVC = segue.destination as! CommonMenuTableViewController
+            targetVC.selectedLanguage = self.selectedLanguage
+        }
+    }
+    
+    // MARK: View lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sideMenu()
+        updateGUI()
+        self.searchBar.delegate = self
+        
+        configureRefreshControl()
+        
+        // To dismiss keyboard
+        self.addGestureRecognizer()
+        
+        // To move view when keyboard appears/hides
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateGUI()
+    }
+    
+    // MARK: Action Sheet
     private func showActionSheet () {
         guard self.isAddingOrChangingMenuItem == false else {return}
         
@@ -59,68 +92,14 @@ class MenuTableViewController: FetchedResultsTableViewController {
             self.selectedLanguage = .russian
             self.performSegue(withIdentifier: "showCommonMenu", sender: self)
         }))
-        actionSheet.addAction(UIAlertAction.init(title: NSLocalizedString("Export menu", comment: ""), style: UIAlertActionStyle.default, handler: { (action) in
-            do {
-                let path = try self.exportMenuToCSV()
-                let vc = UIActivityViewController(activityItems: [path], applicationActivities: [])
-                vc.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-                
-                vc.excludedActivityTypes = [
-                    UIActivityType.assignToContact,
-                    UIActivityType.saveToCameraRoll,
-                    UIActivityType.postToFlickr,
-                    UIActivityType.postToVimeo,
-                    UIActivityType.postToTencentWeibo,
-                    UIActivityType.postToTwitter,
-                    UIActivityType.postToFacebook,
-                    UIActivityType.openInIBooks,
-                    UIActivityType.message
-                ]
-                self.presentActivityVC(vc: vc, animated: true)
-            } catch {
-                let alertNoCanDo = UIAlertController(title: NSLocalizedString("Export of menu failed!", comment: ""), message: "Error: \(error)", preferredStyle: .alert)
-                alertNoCanDo.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .cancel, handler: nil))
-                self.presentAlert(alert: alertNoCanDo, animated: true)
-            }
-        }))
         actionSheet.addAction(UIAlertAction.init(title: NSLocalizedString("alertCancel", comment: ""), style: UIAlertActionStyle.cancel, handler: { (action) in
         }))
-        // Present the controller
-        actionSheet.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         
+        actionSheet.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         self.presentAlert(alert: actionSheet, animated: true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showCommonMenu" {
-            let targetVC = segue.destination as! CommonMenuTableViewController
-            targetVC.selectedLanguage = self.selectedLanguage
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        sideMenu()
-        updateGUI()
-        self.searchBar.delegate = self
-        
-        // To dismiss keyboard
-        self.addGestureRecognizer()
-        
-        // Configure refresh control for TableView
-        configureRefreshControl()
-        
-        // To move view when keyboard appears/hides
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        updateGUI()
-    }
-    
-    // MARK: Functions
-    // Menu
+    // MARK: Side Menu
     private func sideMenu() {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -130,94 +109,59 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }
     }
     
-    // TableView refresh control
-    func configureRefreshControl () {
-        self.tableViewRefreshControl = UIRefreshControl()
-        
-        // Add Refresh Control to Table View
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = tableViewRefreshControl
-        } else {
-            tableView.addSubview(tableViewRefreshControl!)
-        }
-        tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
-    }
-    
-    private func removeMenuItem(menuItem: MenuTable) {
-        menuItem.remove()
-        self.updateGUI()
-    }
-    
-    // MARK: Functioms for table view update
+    // MARK: GUI Update
     @objc private func updateGUI () {
-        //Load all in background
-        let queue = DispatchQueue.global(qos: .userInitiated)
-        queue.async {
-            [ weak self ] in
-            guard self != nil else { return }
-            //Get data
-//            let request : NSFetchRequest<MenuTable> = MenuTable.fetchRequest()
-//            let theFirstSortDescriptor = NSSortDescriptor(key: "category.categoryName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
-//            let theSecondSortDescriptor = NSSortDescriptor(key: "itemName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
-//            request.sortDescriptors = [theFirstSortDescriptor, theSecondSortDescriptor]
-//            self!.fetchedResultsController = NSFetchedResultsController<MenuTable>(fetchRequest: request, managedObjectContext: viewContext, sectionNameKeyPath: "category.categoryName", cacheName: nil)
-//            self!.fetchedResultsController?.delegate = self
-//            try? self!.fetchedResultsController?.performFetch()
-            
-            //Back to MainQueue to update GUI
-            DispatchQueue.main.async {
-                // Update GUI
-                self?.tableView.reloadData()
-                self?.tableViewRefreshControl?.endRefreshing()
-            }
-        }
+        self.tableView.reloadData()
+        self.tableViewRefreshControl?.endRefreshing()
     }
     
     // MARK: TableView functions
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell
-        var menuItem: MenuTable!
+        var menuItem: MenuItem!
         
-        if isSearchActive {
-            menuItem = filtered[indexPath.row]
+        if isFilterApplied {
+            let menuCategoryName = self.filteredMenuCategories[indexPath.section]
+            guard let menuItems = self.filteredMenuItems[menuCategoryName] else {return cell}
+            menuItem = menuItems[indexPath.row]
         } else {
-//            menuItem = fetchedResultsController!.object(at: indexPath)
+            let menuCategoryName = self.menuCategories[indexPath.section]
+            guard let menuItems = self.menuItems[menuCategoryName] else {return cell}
+            menuItem = menuItems[indexPath.row]
         }
         
-        if menuItem.isHidden {
-            cell.menuItemNameLabel.textColor = ColorThemes.textColorDisabled
-            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorDisabled
-            cell.menuItemPriceLabel.textColor = ColorThemes.textColorDisabled
-        } else {
-            cell.menuItemNameLabel.textColor = ColorThemes.textColorNormal
-            cell.menuItemDescriptionLabel.textColor = ColorThemes.textColorNormal
-            cell.menuItemPriceLabel.textColor = ColorThemes.textColorNormal
-        }
-        
-        cell.menuItemNameLabel.text = menuItem!.itemName
-        cell.menuItemDescriptionLabel.text = menuItem!.itemDescription
-        cell.menuItemPriceLabel.text = NumberFormatter.localizedString(from: NSNumber(value: menuItem!.itemPrice), number: .decimal) + UserSettings.currencySymbol
+        cell.menuItemNameLabel.text = menuItem.name
+        cell.menuItemDescriptionLabel.text = menuItem.description
+        cell.menuItemPriceLabel.text = NumberFormatter.localizedString(from: NSNumber(value: menuItem!.price), number: .decimal) + UserSettings.currencySymbol
         cell.menuItem = menuItem
         
         return cell
     }
     
-    //Functions for Edit/Delete swipe buttons
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        let indexPath = editActionsForRowAt
+        var menuItem: MenuItem!
         guard self.isAddingOrChangingMenuItem == false else {return []}
-        var menuItem: MenuTable!
-        if self.isSearchActive {
-            menuItem = self.filtered[editActionsForRowAt.row]
+        
+        if self.isFilterApplied {
+            let category = self.filteredMenuCategories[indexPath.section]
+            let menuItems = self.filteredMenuItems[category]
+            if let item = menuItems?[indexPath.row] {
+                menuItem = item
+            }
         } else {
-//            menuItem = self.fetchedResultsController?.object(at: editActionsForRowAt)
+            let category = self.menuCategories[indexPath.section]
+            let menuItems = self.menuItems[category]
+            if let item = menuItems?[indexPath.row] {
+                menuItem = item
+            }
         }
         
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
             let alert = UIAlertController(title: NSLocalizedString("alertConfirmDeletionOfItem", comment: "") , message: NSLocalizedString("alertConfirmDeletionOfItemMessage", comment: ""), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("alertCancel", comment: ""), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: NSLocalizedString("alertDelete", comment: ""), style: .destructive, handler: { (UIAlertAction) in
-                menuItem.remove()
-                self.updateGUI()
+                self.removeMenuItem(menuItem: menuItem)
             }))
             self.presentAlert(alert: alert, animated: true)
         }
@@ -232,163 +176,124 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }
         editButton.backgroundColor = .lightGray
         
-        let isMenuItemAlreadyHidden = menuItem.isHidden
-        let showHideButtonText = isMenuItemAlreadyHidden ? "Activate" : "Deactivate"
-        
-        let showHideButton = UITableViewRowAction(style: .normal, title: showHideButtonText) { action, index in
-            if isMenuItemAlreadyHidden {
-                menuItem.showMenuItem()
-            } else {
-                menuItem.hideMenuItem()
-            }
-            self.updateGUI()
-        }
-        showHideButton.backgroundColor = UIColor.blue
-        
-        return [deleteButton, editButton, showHideButton]
+        return [deleteButton, editButton]
     }
-}
-
-extension MenuTableViewController {
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if isSearchActive {
-            return 1
+        if isFilterApplied {
+            return self.filteredMenuCategories.count
         }
-//        return fetchedResultsController?.sections?.count ?? 1
-        return 1
+        return self.menuCategories.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isSearchActive {
-            return filtered.count
+        if isFilterApplied {
+            let category = self.filteredMenuCategories[section]
+            let items = self.filteredMenuItems[category]
+            return items?.count ?? 0
         }
         
-//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-//            return sections[section].numberOfObjects
-//        }
-//        else {
-//            return 0
-//        }
-        return 0
+        let categoryName = menuCategories[section]
+        return self.menuItems[categoryName]?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if isSearchActive {
-            return nil
+        if isFilterApplied {
+            return self.filteredMenuCategories[section]
         }
         
-//        if let sections = fetchedResultsController?.sections, sections.count > 0 {
-//            return sections[section].name
-//        }
-//        else {
-//            return nil
-//        }
-        return nil
+        return menuCategories[section]
     }
     
-    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-//        return fetchedResultsController?.section(forSectionIndexTitle: title, at: index) ?? 0
-        return 1
+    private func configureRefreshControl () {
+        self.tableViewRefreshControl = UIRefreshControl()
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = tableViewRefreshControl
+        } else {
+            tableView.addSubview(tableViewRefreshControl!)
+        }
+        tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
     }
+    
 }
 
-// UISearchBar delegate
+// MARK: UISearchBar
 extension MenuTableViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        isSearchActive = true
+        isFilterApplied = true
         self.tableView.reloadData()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        if self.filtered.count == 0 {
-            isSearchActive = false
+        if self.filteredMenuItems.count == 0 {
+            isFilterApplied = false
             self.tableView.reloadData()
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        isSearchActive = false
+        isFilterApplied = false
         self.tableView.reloadData()
         self.view.endEditing(false)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if self.filtered.count == 0 {
-            isSearchActive = false
-            self.tableView.reloadData()
-        }
         self.view.endEditing(false)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        self.filtered = []
-//        if let objects = self.fetchedResultsController?.fetchedObjects {
-//            for object in objects {
-//                let tmp: String = object.itemName!
-//                if tmp.range(of: searchText, options: String.CompareOptions.caseInsensitive, range: nil, locale: nil) != nil {
-//                    self.filtered.append(object)
-//                }
-//            }
-//            if self.filtered.count == 0 {
-//                self.isSearchActive = false
-//            } else {
-//                self.isSearchActive = true
-//            }
-//        }
+        let searchTextLower = searchText.lowercased()
+        let searchForPrice = searchText.getFloatNumber() ?? 0
+        self.filteredMenuCategories = []
+        self.filteredMenuItems = [:]
+        
+        // Filter menu items by name, description or price
+        for category in self.menuCategories {
+            guard let items = self.menuItems[category] else {continue}
+            for item in items {
+                let name = item.name.lowercased()
+                let description = item.description?.lowercased() ?? ""
+                let price = item.price
+                
+                if name.contains(searchTextLower) || description.contains(searchTextLower) || price == searchForPrice {
+                    let alreadyIn = self.filteredMenuCategories.contains(category)
+                    if (!alreadyIn) {
+                        self.filteredMenuCategories.append(category)
+                    }
+                    var filtered = self.filteredMenuItems[category] ?? []
+                    filtered.append(item)
+                    self.filteredMenuItems[category] = filtered
+                }
+            }
+        }
+        
+        // Filter categories by name if no items were filtered
+        if self.filteredMenuCategories.count == 0 {
+            for category in self.menuCategories {
+                let name = category.lowercased()
+                if name.contains(searchTextLower) {
+                    self.filteredMenuCategories.append(category)
+                    self.filteredMenuItems[category] = self.menuItems[category]
+                }
+            }
+        }
+        
         self.tableView.reloadData()
     }
 }
 
 extension MenuTableViewController {
-    private func exportMenuToCSV() throws -> URL {
-        var items: [MenuTable]
-        if isSearchActive {
-            items = self.filtered
-        } else {
-//            items = fetchedResultsController?.fetchedObjects ?? []
-        }
-
-        let originalFileName = "iCafeManager_MenuExport_\(Date().convertToString()).csv"
-        // Replace slashes to dots to avoid issues with saving file path.
-        let fileName = originalFileName.replacingOccurrences(of: "/", with: ".")
-        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-
-        var csvFile = ""
-        // Adding Byte Order Mark / separator for Excel. Excel is unable to handle both marks
-        //let BOM = "\u{FEFF}"
-        let BOM = "sep=;\n"
-        let header = "Item name;Description;Category;Price\n"
-        csvFile.append(BOM)
-        csvFile.append(header)
-
-//        for item in items {
-//            let itemName = item.itemName!
-//            let description = item.itemDescription ?? ""
-//            let category = item.category?.categoryName ?? ""
-//            let price = item.itemPrice
-//            csvFile.append("\(itemName);\(description);\(category);\(price)\n")
-//        }
-
-        do {
-            try csvFile.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
-            return path!
-        } catch {
-            let message = "Failed to create file. Error: \(error)"
-            throw iCafeManagerError.ExportError(message)
-        }
-    }
-}
-
-// MARK: Alerts for adding and changing menu items
-extension MenuTableViewController {
+    // MARK: Adding item subview
     private func addSubViewForAddingMenuItem () {
         self.isAddingOrChangingMenuItem = true
-        self.menuItem = Menu(itemName: "", itemDescription: "", itemPrice: -1, itemCategory: nil)
+        self.currentMenuItem = MenuItem(name: "", description: nil, price: 0, category: "")
+        
         let viewWidth = self.view.myCustomAlertViewWidth()
         let viewHeight = 200
         addingItemView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
         let centerX = self.view.center.x
-        let centerY = self.view.center.y //(self.navigationController?.navigationBar.bounds.height)! + CGFloat(viewHeight/2)
+        let centerY = self.view.center.y
         let center = CGPoint(x: centerX, y: centerY)
         addingItemView.center = center
         addingItemView.backgroundColor = ColorThemes.backgroundColor
@@ -413,7 +318,7 @@ extension MenuTableViewController {
         itemNameTextField.clearButtonMode = .whileEditing
         itemNameTextField.adjustsFontSizeToFitWidth = true
         itemNameTextField.addTarget(self, action: #selector(assignValueToItemName), for: .editingDidEnd)
-
+        
         let itemDescriptionTextField = UITextField(frame: CGRect(x: 20, y: 70, width: textFieldWidth, height: 25))
         itemDescriptionTextField.placeholder = NSLocalizedString("itemDescription", comment: "")
         itemDescriptionTextField.keyboardType = .default
@@ -484,11 +389,18 @@ extension MenuTableViewController {
     @objc private func addMenuItemDoneButtonPressed (sender: UIButton) {
         let senderView = sender.superview
         senderView?.endEditing(true)
-        if self.menuItem.itemName == "" || self.menuItem.itemPrice < 0 {
+        guard let item = self.currentMenuItem else {return}
+        
+        if item.name == "" || item.price < 0 || item.category == "" {
             self.showAlertParamsNotFilledProperly()
             return
         }
-        MenuTable.addMenuItem(item: self.menuItem)
+        
+        var items = Global.shared.menuItems[item.category] ?? []
+        items.append(item)
+        Global.shared.menuItems[item.category] = items
+        DBGeneral.updateMenuAndSettings()
+        
         self.updateGUI()
         self.searchBar.isHidden = false
         Overlay.shared.hideOverlayView()
@@ -505,15 +417,13 @@ extension MenuTableViewController {
         UIView.transition(with: self.view, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {senderView?.removeFromSuperview()}, completion: nil)
         self.isAddingOrChangingMenuItem = false
     }
-
-    private func addSubViewForChangingMenuItem (menuItem: MenuTable) {
+    
+    // MARK: Changing item subview
+    private func addSubViewForChangingMenuItem (menuItem: MenuItem) {
         self.isAddingOrChangingMenuItem = true
-        let itemName = menuItem.itemName!
-        let itemDescription = menuItem.itemDescription
-        let itemPrice = menuItem.itemPrice
-        let itemCategory = menuItem.category?.categoryName
-        self.menuItem = Menu(itemName: itemName, itemDescription: itemDescription, itemPrice: itemPrice, itemCategory: itemCategory)
-        self.currentMenuItem = menuItem
+        self.currentMenuItem = MenuItem(name: menuItem.name, description: menuItem.description, price: menuItem.price, category: menuItem.category)
+        self.currentMenuItemOriginal = menuItem
+        
         let viewWidth = self.view.myCustomAlertViewWidth()
         let viewHeight = 200
         addingItemView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
@@ -535,7 +445,7 @@ extension MenuTableViewController {
         let itemNameTextField = UITextField(frame: CGRect(x: 20, y: 40, width: textFieldWidth, height: 25))
         itemNameTextField.becomeFirstResponder()
         itemNameTextField.placeholder = NSLocalizedString("itemName", comment: "")
-        itemNameTextField.text = menuItem.itemName
+        itemNameTextField.text = menuItem.name
         itemNameTextField.keyboardType = .default
         itemNameTextField.autocorrectionType = .no
         itemNameTextField.backgroundColor = ColorThemes.uiTextFieldBackgroundColor
@@ -546,7 +456,7 @@ extension MenuTableViewController {
         
         let itemDescriptionTextField = UITextField(frame: CGRect(x: 20, y: 70, width: textFieldWidth, height: 25))
         itemDescriptionTextField.placeholder = NSLocalizedString("itemDescription", comment: "")
-        itemDescriptionTextField.text = menuItem.itemDescription ?? ""
+        itemDescriptionTextField.text = menuItem.description ?? ""
         itemDescriptionTextField.keyboardType = .default
         itemDescriptionTextField.autocorrectionType = .no
         itemDescriptionTextField.backgroundColor = ColorThemes.uiTextFieldBackgroundColor
@@ -557,7 +467,7 @@ extension MenuTableViewController {
         
         let itemPriceTextField = UITextField(frame: CGRect(x: 20, y: 100, width: textFieldWidth, height: 25))
         itemPriceTextField.placeholder = NSLocalizedString("itemPrice", comment: "")
-        itemPriceTextField.text = NumberFormatter.localizedString(from: NSNumber(value: menuItem.itemPrice), number: .decimal)
+        itemPriceTextField.text = NumberFormatter.localizedString(from: NSNumber(value: menuItem.price), number: .decimal)
         itemPriceTextField.keyboardType = .decimalPad
         itemPriceTextField.autocorrectionType = .no
         itemPriceTextField.backgroundColor = ColorThemes.uiTextFieldBackgroundColor
@@ -568,7 +478,7 @@ extension MenuTableViewController {
         
         let itemCategorySearchTextField = SearchTextField(frame: CGRect(x: 20, y: 130, width: textFieldWidth, height: 25))
         itemCategorySearchTextField.placeholder = NSLocalizedString("category", comment: "")
-        itemCategorySearchTextField.text = menuItem.category?.categoryName ?? ""
+        itemCategorySearchTextField.text = menuItem.category
         itemCategorySearchTextField.keyboardType = .default
         itemCategorySearchTextField.autocorrectionType = .no
         itemCategorySearchTextField.backgroundColor = ColorThemes.uiTextFieldBackgroundColor
@@ -617,11 +527,48 @@ extension MenuTableViewController {
     @objc private func changeMenuItemDoneButtonPressed (sender: UIButton) {
         let senderView = sender.superview
         senderView?.endEditing(true)
-        if self.menuItem.itemName == "" || self.menuItem.itemPrice < 0 {
+        guard let changedItem = self.currentMenuItem else {return}
+        guard let originalItem = self.currentMenuItemOriginal else {return}
+        
+        if changedItem.name == "" || changedItem.price < 0 || changedItem.category == "" {
             self.showAlertParamsNotFilledProperly()
             return
         }
-        currentMenuItem!.changeMenuItemTo(newMenuItem: self.menuItem)
+        
+        var items = Global.shared.menuItems[originalItem.category] ?? []
+        
+        // If category was changed - remove item from old category
+        if originalItem.category == changedItem.category {
+            for i in 0..<items.count {
+                let item = items[i]
+                if item === originalItem {
+                    items[i] = changedItem
+                    break
+                }
+            }
+            Global.shared.menuItems[originalItem.category] = items
+        } else {
+            for i in 0..<items.count {
+                let item = items[i]
+                if item === originalItem {
+                    items.remove(at: i)
+                    break
+                }
+            }
+            // If no items left, remove category
+            if items.count == 0 {
+                Global.shared.menuItems.removeValue(forKey: originalItem.category)
+            } else {
+                Global.shared.menuItems[originalItem.category] = items
+            }
+            
+            var newItems = Global.shared.menuItems[changedItem.category] ?? []
+            newItems.append(changedItem)
+            Global.shared.menuItems[changedItem.category] = newItems
+        }
+        
+        DBGeneral.updateMenuAndSettings()
+        
         self.updateGUI()
         self.searchBar.isHidden = false
         Overlay.shared.hideOverlayView()
@@ -639,32 +586,58 @@ extension MenuTableViewController {
         self.isAddingOrChangingMenuItem = false
     }
     
-    // TextField handlers for adding or changing menuItems
+    // MARK: TextField handlers for subviews
     @objc private func assignValueToItemName (sender: UITextField) {
         if let name = sender.text {
-            self.menuItem.itemName = name
+            self.currentMenuItem?.name = name
         }
     }
     
     @objc private func assignValueToItemDescription (sender: UITextField) {
         if let description = sender.text {
-            self.menuItem.itemDescription = description
+            self.currentMenuItem?.description = description
         }
     }
     
     @objc private func assignValueToItemPrice (sender: UITextField) {
         if let number = sender.text?.getFloatNumber() {
-            self.menuItem.itemPrice = number
+            self.currentMenuItem?.price = number
         }
     }
     
     @objc private func assignValueToItemCategory (sender: UITextField) {
-        self.menuItem.itemCategory = sender.text
+        if let category = sender.text {
+            self.currentMenuItem?.category = category
+        }
     }
 }
 
+// MARK: Removing menu item
+extension MenuTableViewController {
+    private func removeMenuItem(menuItem: MenuItem) {
+        let category = menuItem.category
+        var items = Global.shared.menuItems[category] ?? []
+        
+        for i in 0..<items.count {
+            let item = items[i]
+            if item === menuItem {
+                items.remove(at: i)
+                break
+            }
+        }
+        
+        if items.count == 0 {
+            Global.shared.menuItems.removeValue(forKey: category)
+        } else {
+            Global.shared.menuItems[category] = items
+        }
+        
+        DBGeneral.updateMenuAndSettings()
+        self.updateGUI()
+    }
+}
 
-// Alert window for wrong params
+// MARK: Alert window for wrong params
 extension MenuTableViewController {
     private func showAlertParamsNotFilledProperly() {
         let alertNoCanDo = UIAlertController(title: NSLocalizedString("alertNoCanDo", comment: ""), message: NSLocalizedString("paramsNotFilledProperly", comment: ""), preferredStyle: .alert)
@@ -673,8 +646,9 @@ extension MenuTableViewController {
     }
 }
 
+// MARK: Keyboard handle
 extension MenuTableViewController {
-    // Function to scroll view when keyboard appears/disappears
+    /// Function to scroll view when keyboard appears/disappears
     @objc func keyboardWillChangeFrame (notification: NSNotification) {
         let mainViewFrame = self.view.frame
         if let userInfo = notification.userInfo {
@@ -710,6 +684,7 @@ extension MenuTableViewController {
     }
 }
 
+// MARK: Gesture Recognizer
 extension MenuTableViewController {
     func addGestureRecognizerForSubView() {
         if let gestureRecognizers = self.addingItemView.gestureRecognizers {
