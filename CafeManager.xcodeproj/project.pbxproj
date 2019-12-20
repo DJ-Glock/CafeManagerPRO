@@ -110,7 +110,6 @@
 		215044121FB7A9300046AD25 /* RefreshDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 212995891FB7A442000BDBB0 /* RefreshDarkTheme.png */; };
 		2156E08321065BD7004D5647 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2156E08221065BD7004D5647 /* Double+Extension.swift */; };
 		215C46C41F7AF6A700595BBB /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215C46C31F7AF6A700595BBB /* LoadingOverlay.swift */; };
-		2172396422AD9EC700527607 /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */; };
 		2172396622ADAF4E00527607 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396522ADAF4E00527607 /* LogInViewController.swift */; };
 		2172396922AE3F8D00527607 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2172396822AE3F8D00527607 /* GoogleService-Info.plist */; };
 		2172396C22B2579600527607 /* DBQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396B22B2579600527607 /* DBQuery.swift */; };
@@ -341,7 +340,6 @@
 		214943541EDCCDAE0046CBD3 /* GenericStuff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericStuff.swift; sourceTree = "<group>"; };
 		2156E08221065BD7004D5647 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		215C46C31F7AF6A700595BBB /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
-		2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
 		2172396522ADAF4E00527607 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = "../New Group/LogInViewController.swift"; sourceTree = "<group>"; };
 		2172396822AE3F8D00527607 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2172396B22B2579600527607 /* DBQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBQuery.swift; sourceTree = "<group>"; };
@@ -840,7 +838,6 @@
 		21386F0D205706DD00A14D30 /* Generic Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */,
 				2118EFF32018DDE6008BC6CE /* ParentViewController.swift */,
 				214943541EDCCDAE0046CBD3 /* GenericStuff.swift */,
 				21ED04DA1FE81071002671A7 /* MenuCSVParsing.swift */,
@@ -892,14 +889,6 @@
 		21386F112057090700A14D30 /* MVC */ = {
 			isa = PBXGroup;
 			children = (
-				21386F122057091400A14D30 /* View Controllers */,
-			);
-			path = MVC;
-			sourceTree = "<group>";
-		};
-		21386F122057091400A14D30 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
 				21D760E31EBA8B8000E72A8F /* MainViewController.swift */,
 				2172396722ADAF5900527607 /* LogIn */,
 				21386F132057092000A14D30 /* SWRevealViewController */,
@@ -913,7 +902,7 @@
 				21386F2520570A5000A14D30 /* Help */,
 				21386F142057095C00A14D30 /* Guests and Orders TVs */,
 			);
-			path = "View Controllers";
+			path = MVC;
 			sourceTree = "<group>";
 		};
 		21386F132057092000A14D30 /* SWRevealViewController */ = {
@@ -1073,7 +1062,8 @@
 			children = (
 				2172396522ADAF4E00527607 /* LogInViewController.swift */,
 			);
-			path = LogIn;
+			name = LogIn;
+			path = "View Controllers/LogIn";
 			sourceTree = "<group>";
 		};
 		2172396A22B177AC00527607 /* DBService */ = {
@@ -1712,7 +1702,6 @@
 				21230668205DD4E000F89C03 /* CustomGuestDelegate.swift in Sources */,
 				2191DF6E205E675600786030 /* AddOrderRouterInterface.swift in Sources */,
 				21C28946206940A400CA0CA8 /* OrdersStatisticsTableViewCell.swift in Sources */,
-				2172396422AD9EC700527607 /* FetchedResultsTableViewController.swift in Sources */,
 				2118EFF42018DDE6008BC6CE /* ParentViewController.swift in Sources */,
 				21D760B11EBA60FE00E72A8F /* AppDelegate.swift in Sources */,
 				21EBE34D20123D42005FE6B2 /* Date+NSDate+Extension.swift in Sources */,

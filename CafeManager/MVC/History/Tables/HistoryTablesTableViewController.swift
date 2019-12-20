@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class HistoryTablesTableViewController: FetchedResultsTableViewController {
+class HistoryTablesTableViewController: UITableViewController {
     //MARK: variables
     //private var fetchedResultsController: NSFetchedResultsController<TablesTable>?
     private var currentTable: Table?

@@ -32,13 +32,13 @@ class MoveGuestsRouter: NSObject, MoveGuestsInterface, MoveGuestsRouterInterface
     
     // Outgoing
     func didChooseTableForSession() {
-        delegate.didChoose(targetTable: state.targetTable, forSession: state.currentTableSession)
         view?.dismiss(animated: true, completion: nil)
+        delegate.didChoose(targetTable: state.targetTable, forSession: state.currentTableSession)
     }
     
     func didChooseTableSessionForGuest() {
-        delegate.didChoose(targetTableSession: state.targetTableSession, forGuest: state.currentGuest)
         view?.dismiss(animated: true, completion: nil)
+        delegate.didChoose(targetTableSession: state.targetTableSession, forGuest: state.currentGuest)
     }
     
     private func showView(sender: AnyObject) {

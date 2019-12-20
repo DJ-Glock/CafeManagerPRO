@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class TablesTableViewController: FetchedResultsTableViewController {
+class TablesTableViewController: UITableViewController {
     
     /// To do:
     /// Table deletion function

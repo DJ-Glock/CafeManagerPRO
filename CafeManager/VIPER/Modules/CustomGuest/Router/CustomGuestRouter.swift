@@ -34,8 +34,8 @@ class CustomGuestRouter: NSObject, CustomGuestInterface, CustomGuestRouterInterf
     }
     
     func didChooseCustomGuest(name: String) {
-        delegate.didChooseCustomGuest(name: name)
         view?.dismiss(animated: true, completion: nil)
+        delegate.didChooseCustomGuest(name: name)
     }
     
     func dismissView() {

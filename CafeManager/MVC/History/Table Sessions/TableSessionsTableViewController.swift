@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class TableSessionsTableViewController: FetchedResultsTableViewController {
+class TableSessionsTableViewController: UITableViewController {
     
     //MARK: Variables
     var currentTable: Table? = nil

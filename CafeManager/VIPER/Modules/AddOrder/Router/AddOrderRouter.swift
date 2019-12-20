@@ -28,6 +28,7 @@ class AddOrderRouter: NSObject, AddOrderInterface, AddOrderRouterInterface {
     
     // Outgoing
     func didChooseMenuItem() {
+        view?.dismiss(animated: true, completion: nil)
         if let guest = state.currentGuest {
             delegate.didChoose(menuItem: state.selectedMenuItem, forGuest: guest)
         } else {
@@ -35,7 +36,6 @@ class AddOrderRouter: NSObject, AddOrderInterface, AddOrderRouterInterface {
                 delegate.didChoose(menuItem: state.selectedMenuItem, forSession: session)
             }
         }
-        view?.dismiss(animated: true, completion: nil)
     }
     
     private func showView(sender: AnyObject) {

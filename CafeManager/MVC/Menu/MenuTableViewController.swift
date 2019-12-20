@@ -11,7 +11,7 @@ import CoreData
 import NotificationCenter
 import SearchTextField
 
-class MenuTableViewController: FetchedResultsTableViewController {
+class MenuTableViewController: UITableViewController {
     // MARK: IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
