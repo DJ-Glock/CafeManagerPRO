@@ -160,7 +160,7 @@ class DBUpdate {
                 
                 data["closeTime"] = session.closeTime
                 
-                let targetTableDocumentID = targetTable?.firebaseID ?? documentId
+                let targetTableDocumentID = targetTable?.firebaseID ?? tableDocumentID
                 let newSessionDocument = userData
                     .collection("Tables")
                     .document(targetTableDocumentID)
