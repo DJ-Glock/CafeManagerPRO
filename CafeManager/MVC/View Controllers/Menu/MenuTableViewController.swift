@@ -30,15 +30,14 @@ class MenuTableViewController: FetchedResultsTableViewController {
     
     // MARK: Variables
     private var selectedLanguage = GenericStuff.MenuLanguage.english
-    private let menu = Menu.shared
     private var isFilterApplied : Bool = false
     private var filteredMenuCategories: [String] = []
     private var filteredMenuItems: [String : [MenuItem]] = [:]
     private var menuCategories: [String] {
-        return menu.menuItems.keys.sorted()
+        return Global.shared.menuItems.keys.sorted()
     }
     private var menuItems: [String : [MenuItem]] {
-        return menu.menuItems
+        return Global.shared.menuItems
     }
     // Flag for disabling actions with tableView while adding or changing menuItem
     private var isAddingOrChangingMenuItem = false
@@ -195,7 +194,7 @@ class MenuTableViewController: FetchedResultsTableViewController {
         }
         
         let categoryName = menuCategories[section]
-        return menu.menuItems[categoryName]?.count ?? 0
+        return self.menuItems[categoryName]?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -397,9 +396,9 @@ extension MenuTableViewController {
             return
         }
         
-        var items = Menu.shared.menuItems[item.category] ?? []
+        var items = Global.shared.menuItems[item.category] ?? []
         items.append(item)
-        Menu.shared.menuItems[item.category] = items
+        Global.shared.menuItems[item.category] = items
         DBGeneral.updateMenuAndSettings()
         
         self.updateGUI()
@@ -536,7 +535,7 @@ extension MenuTableViewController {
             return
         }
         
-        var items = Menu.shared.menuItems[originalItem.category] ?? []
+        var items = Global.shared.menuItems[originalItem.category] ?? []
         
         // If category was changed - remove item from old category
         if originalItem.category == changedItem.category {
@@ -547,7 +546,7 @@ extension MenuTableViewController {
                     break
                 }
             }
-            Menu.shared.menuItems[originalItem.category] = items
+            Global.shared.menuItems[originalItem.category] = items
         } else {
             for i in 0..<items.count {
                 let item = items[i]
@@ -558,14 +557,14 @@ extension MenuTableViewController {
             }
             // If no items left, remove category
             if items.count == 0 {
-                Menu.shared.menuItems.removeValue(forKey: originalItem.category)
+                Global.shared.menuItems.removeValue(forKey: originalItem.category)
             } else {
-                Menu.shared.menuItems[originalItem.category] = items
+                Global.shared.menuItems[originalItem.category] = items
             }
             
-            var newItems = Menu.shared.menuItems[changedItem.category] ?? []
+            var newItems = Global.shared.menuItems[changedItem.category] ?? []
             newItems.append(changedItem)
-            Menu.shared.menuItems[changedItem.category] = newItems
+            Global.shared.menuItems[changedItem.category] = newItems
         }
         
         DBGeneral.updateMenuAndSettings()
@@ -617,7 +616,7 @@ extension MenuTableViewController {
 extension MenuTableViewController {
     private func removeMenuItem(menuItem: MenuItem) {
         let category = menuItem.category
-        var items = Menu.shared.menuItems[category] ?? []
+        var items = Global.shared.menuItems[category] ?? []
         
         for i in 0..<items.count {
             let item = items[i]
@@ -628,9 +627,9 @@ extension MenuTableViewController {
         }
         
         if items.count == 0 {
-            Menu.shared.menuItems.removeValue(forKey: category)
+            Global.shared.menuItems.removeValue(forKey: category)
         } else {
-            Menu.shared.menuItems[category] = items
+            Global.shared.menuItems[category] = items
         }
         
         DBGeneral.updateMenuAndSettings()

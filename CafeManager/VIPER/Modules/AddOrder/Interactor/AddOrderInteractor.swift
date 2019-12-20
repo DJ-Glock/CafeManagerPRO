@@ -18,7 +18,7 @@ class AddOrderInteractor: NSObject, AddOrderInteractorInterface {
     }
     
     func getMenuItems (withText text: String?) -> [String : [[String : String]]] {
-        let menu = Menu.shared
+        let menu = Global.shared
         let menuItems = menu.menuItems
         let categories = menu.menuItems.keys.sorted()
         var finalCategories: [String] = []

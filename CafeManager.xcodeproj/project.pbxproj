@@ -17,7 +17,7 @@
 		2118EFF42018DDE6008BC6CE /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2118EFF32018DDE6008BC6CE /* ParentViewController.swift */; };
 		211A643222B6C9450079FAE8 /* DBPersist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211A643122B6C9450079FAE8 /* DBPersist.swift */; };
 		211A643422B6DB960079FAE8 /* DBUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211A643322B6DB960079FAE8 /* DBUpdate.swift */; };
-		211A643722B8E8E10079FAE8 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211A643622B8E8E10079FAE8 /* Menu.swift */; };
+		211A643722B8E8E10079FAE8 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211A643622B8E8E10079FAE8 /* Global.swift */; };
 		211ABAED1FF56D3F008A0AE7 /* SearchTextField.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211ABAEE1FF56D3F008A0AE7 /* SearchTextField.framework */; };
 		211D2A481F1FE74900A67186 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211D2A4A1F1FE74900A67186 /* InfoPlist.strings */; };
 		211D2A521F1FE74A00A67186 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211D2A541F1FE74A00A67186 /* InfoPlist.strings */; };
@@ -238,7 +238,7 @@
 		2118EFF32018DDE6008BC6CE /* ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		211A643122B6C9450079FAE8 /* DBPersist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPersist.swift; sourceTree = "<group>"; };
 		211A643322B6DB960079FAE8 /* DBUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUpdate.swift; sourceTree = "<group>"; };
-		211A643622B8E8E10079FAE8 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		211A643622B8E8E10079FAE8 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		211ABAEE1FF56D3F008A0AE7 /* SearchTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SearchTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		211D2A431F1FDD9200A67186 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		211D2A441F1FE74800A67186 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -848,7 +848,6 @@
 		21386F0D205706DD00A14D30 /* Generic Classes */ = {
 			isa = PBXGroup;
 			children = (
-				21EBE35320124B34005FE6B2 /* UserSettings.swift */,
 				2172396322AD9EC600527607 /* FetchedResultsTableViewController.swift */,
 				2118EFF32018DDE6008BC6CE /* ParentViewController.swift */,
 				214943541EDCCDAE0046CBD3 /* GenericStuff.swift */,
@@ -864,12 +863,13 @@
 		21386F0E205707D200A14D30 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				211A643622B8E8E10079FAE8 /* Global.swift */,
+				21EBE35320124B34005FE6B2 /* UserSettings.swift */,
 				21C7330B1ED5D58F0051AF77 /* Table.swift */,
 				21C733091ED5D57C0051AF77 /* TableSession.swift */,
 				21C733011ED5D4E40051AF77 /* Guest.swift */,
 				21C733071ED5D54F0051AF77 /* Order.swift */,
 				21C733051ED5D5370051AF77 /* MenuItem.swift */,
-				211A643622B8E8E10079FAE8 /* Menu.swift */,
 				21ED04D81FE80F7E002671A7 /* CommonMenuItem.swift */,
 			);
 			path = Entities;
@@ -1673,7 +1673,7 @@
 				21356D9A1FEBB1400052E897 /* CommonMenuTableViewCell.swift in Sources */,
 				21EBE35220124548005FE6B2 /* DispatchQueue+Extension.swift in Sources */,
 				218FB4811FFE7C9400F54C2A /* Overlay.swift in Sources */,
-				211A643722B8E8E10079FAE8 /* Menu.swift in Sources */,
+				211A643722B8E8E10079FAE8 /* Global.swift in Sources */,
 				21356D981FEAB8990052E897 /* CommonMenuTableViewController.swift in Sources */,
 				21C7330C1ED5D58F0051AF77 /* Table.swift in Sources */,
 				21230683205E5A3500F89C03 /* MoveGuestsRouterInterface.swift in Sources */,

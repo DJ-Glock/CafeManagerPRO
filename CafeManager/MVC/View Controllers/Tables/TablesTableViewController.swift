@@ -47,7 +47,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         updateGUI()
     }
     
-    // Menu
+    // MARK: Side Menu
     private func sideMenu() {
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -57,7 +57,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         }
     }
 
-    // UI Update
+    // MARK: UI Update
     @objc private func updateGUI() {
         DBQuery.getTablesWithActiveSessionAsync { [weak self] (tables, error) in
             guard let self = self else {return}
@@ -67,13 +67,14 @@ class TablesTableViewController: FetchedResultsTableViewController {
             }
             
             self.tablesArray = tables
+            Global.shared.tables = tables
             self.tableView.reloadData()
             self.tableViewRefreshControl?.endRefreshing()
         }
     }
     
     
-    // TableView refresh control
+    // MARK: UITableView Refresh control
     func configureRefreshControl () {
      self.tableViewRefreshControl = UIRefreshControl()
     
@@ -86,7 +87,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         tableViewRefreshControl?.addTarget(self, action: #selector(self.updateGUI), for: .valueChanged)
     }
     
-    //Functions for Alert window for adding table
+    // MARK: Alerts for adding table
     private func configureTableNameTextField (textField: UITextField!) {
         textField.keyboardType = .default
         textField.backgroundColor = UIColor.white
@@ -122,7 +123,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         self.presentAlert(alert: alertNoCanDo, animated: true)
     }
     
-    //Functions for managing tables
+    // MARK: Add table
     private func addTable() {
         let alert = UIAlertController(title: NSLocalizedString("inputTableParams", comment: ""), message: nil, preferredStyle: .alert)
         alert.addTextField(configurationHandler: configureTableNameTextField)
@@ -158,6 +159,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         self.presentAlert(alert: alert, animated: true)
     }
     
+    // MARK: Edit table
     private func editTable (table: Table) {
         let alert = UIAlertController(title: NSLocalizedString("inputTableParams", comment: ""), message: nil, preferredStyle: .alert)
         alert.addTextField(configurationHandler: configureTableNameTextField)
@@ -202,7 +204,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
     }
 
     
-    //MARK: functions for table update
+    //MARK: UITableView
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TablesTableViewCell
         
@@ -221,7 +223,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
         }
         return cell
     }
-    //Functions for Edit/Delete swipe buttons
+    // MARK: Swipe actions
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
 //            let table = self.fetchedResultsController?.object(at: editActionsForRowAt)
@@ -253,7 +255,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
     }
     
     
-    //MARK: prepare for segue
+    //MARK: Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openTableSegue" {
             if let tableTVC = segue.destination as? TableUIViewController {
@@ -267,6 +269,7 @@ class TablesTableViewController: FetchedResultsTableViewController {
     }
 }
 
+// MARK: UITableView numbers
 extension TablesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

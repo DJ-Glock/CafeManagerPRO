@@ -11,4 +11,6 @@ class MoveGuestsState: NSObject {
     var currentTableSession: TableSession!
     var targetTable: Table!
     var targetTableSession: TableSession!
+    var tablesWithoutSession: [Table] = []
+    var tableSessions: [TableSession] = []
 }

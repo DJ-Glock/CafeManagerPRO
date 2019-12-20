@@ -14,5 +14,5 @@ protocol MoveGuestsInteractorInterface: class {
     func getTablesArrayForMovingGuest() -> [String]
     
     /// Method is getting called when table/session entity was received from database. It calls respective method in presenter to dismiss view
-    func didChooseTable(tableName: String)
+    func didChooseTable(indexPath: IndexPath)
 }

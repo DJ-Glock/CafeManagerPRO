@@ -19,6 +19,7 @@ class MoveGuestsRouter: NSObject, MoveGuestsInterface, MoveGuestsRouterInterface
         showView(sender: sender)
         
         state.currentGuest = guest
+        state.currentTableSession = guest.tableSession
         presenter.configureViewToSelectTableForGuest()
     }
     

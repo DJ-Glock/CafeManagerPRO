@@ -28,8 +28,8 @@ class MoveGuestsPresenter: NSObject, MoveGuestsPresenterInterface {
     
     
     // Outgoing
-    func didChooseTable(tableName: String) {
-        interactor.didChooseTable(tableName: tableName)
+    func didChooseTable(indexPath: IndexPath) {
+        interactor.didChooseTable(indexPath: indexPath)
     }
     
     func didChooseTableForSession() {

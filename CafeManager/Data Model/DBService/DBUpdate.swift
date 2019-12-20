@@ -200,9 +200,9 @@ class DBUpdate {
         settings["pricePerMinute"] = UserSettings.shared.pricePerMinute
         
         var menu = [String:[[String:Any]]]()
-        let categories = Menu.shared.menuItems.keys
+        let categories = Global.shared.menuItems.keys
         for category in categories {
-            if let items = Menu.shared.menuItems[category] {
+            if let items = Global.shared.menuItems[category] {
                 for item in items {
                     let name = item.name
                     let description = item.description

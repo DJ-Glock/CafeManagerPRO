@@ -162,7 +162,7 @@ class DBQuery {
                 UserSettings.shared.isTimeCafe = isTimeCafe
                 UserSettings.shared.pricePerMinute = pricePerMinute
                 
-                let menu = Menu.shared
+                let menu = Global.shared
                 let menuData = data["Menu"] as? [String:Any] ?? [:]
                 for (category, items) in menuData {
                     let items = items as? [[String:Any]] ?? []

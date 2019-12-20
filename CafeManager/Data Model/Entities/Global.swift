@@ -8,9 +8,11 @@
 
 import Foundation
 
-class Menu {
+class Global {
     var menuItems: [String:[MenuItem]] = [:]
-    static let shared = Menu()
+    var tables: [Table] = []
+    
+    static let shared = Global()
     
     private init (){}
 }
