@@ -60,6 +60,10 @@ class TableSession {
     }
     
     // MARK: Methods
+    func move (to targetTable: Table) {
+        DBGeneral.moveActiveSession(tableSession: self, targetTable: targetTable)
+    }
+    
     public func close (tableSession: TableSession, totalAmount: Float, discount: Int16, tips: Float) throws {
         self.amount = totalAmount
         self.discount = discount

@@ -10,6 +10,11 @@ import Foundation
 import Firebase
 
 class DBUpdate {
+    enum TableSessionCollection: String {
+        case Active
+        case Archive
+    }
+    
     class func updateTableAsync (tableToChange table: Table, completion: @escaping (Error?)-> Void) {
         guard let documentID = table.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(table.name)")); return }
         
@@ -124,14 +129,21 @@ class DBUpdate {
         }
     }
     
-    class func moveTableSessionToArchiveAsync (tableSession session: TableSession, completion: @escaping (TableSession?, Error?) -> Void) {
+    class func moveTableSessionToCollectionAsync (tableSession session: TableSession, sourceCollection source:TableSessionCollection, targetCollection target: TableSessionCollection, targetTable: Table?, completion: @escaping (TableSession?, Error?) -> Void) {
         guard let tableDocumentID = session.table?.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: session.table!.name))")); return }
         guard let sessionDocumentID = session.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for session of table: \(String(describing: session.table!.name))")); return }
         
+        if target == .Active && targetTable == nil {
+            completion(session, iCafeManagerError.DatabaseError("target table is not provided for moving session from table \(String(describing: session.table!.name))"))
+            return
+        }
+        
+        let sourceCollection = "\(source)Session"
+        let targetCollection = "\(target)Session"
         let documentReference = userData
             .collection("Tables")
             .document(tableDocumentID)
-            .collection("ActiveSession")
+            .collection(sourceCollection)
             .document(sessionDocumentID)
         
         documentReference.getDocument { (document, error) in
@@ -148,10 +160,11 @@ class DBUpdate {
                 
                 data["closeTime"] = session.closeTime
                 
+                let targetTableDocumentID = targetTable?.firebaseID ?? documentId
                 let newSessionDocument = userData
                     .collection("Tables")
-                    .document(tableDocumentID)
-                    .collection("ArchiveSessions")
+                    .document(targetTableDocumentID)
+                    .collection(targetCollection)
                     .document()
                 
                 newSessionDocument.setData(data) { error in

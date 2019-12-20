@@ -520,12 +520,11 @@ extension TableUIViewController: CustomGuestDelegate {
 extension TableUIViewController: MoveGuestsDelegate {
     func didChoose(targetTableSession: TableSession, forGuest guest: Guest) {
         guest.move(to: targetTableSession)
-//        self.updateGUI()
     }
     
     func didChoose(targetTable: Table, forSession session: TableSession) {
-//        TableSession.moveTableSessionTo(targetTable: targetTable, currentSession: session)
-//        self.updateGUI()
+        session.move(to: targetTable)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

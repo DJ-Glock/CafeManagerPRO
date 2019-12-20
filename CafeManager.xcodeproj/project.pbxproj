@@ -793,7 +793,6 @@
 			isa = PBXGroup;
 			children = (
 				21386F0D205706DD00A14D30 /* Generic Classes */,
-				21386F0C205706D800A14D30 /* Structs */,
 				21386F0B205706D200A14D30 /* GUI Stuff */,
 				21386F0A205706CC00A14D30 /* Extensions */,
 				21386F09205706C500A14D30 /* Color Themes */,
@@ -836,13 +835,6 @@
 				21386F302057EF4B00A14D30 /* CommonAlert.swift */,
 			);
 			path = "GUI Stuff";
-			sourceTree = "<group>";
-		};
-		21386F0C205706D800A14D30 /* Structs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Structs;
 			sourceTree = "<group>";
 		};
 		21386F0D205706DD00A14D30 /* Generic Classes */ = {

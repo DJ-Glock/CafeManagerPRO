@@ -73,7 +73,6 @@ class Guest {
         DBGeneral.updateActiveSession(tableSession: self.tableSession!)
     }
     
-    // MARK: TODO: TO BE CHECKED
     func move (to targetSesion: TableSession) {
         let sourceSession = self.tableSession!
         self.remove()
