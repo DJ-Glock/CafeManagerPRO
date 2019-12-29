@@ -20,8 +20,21 @@ class CommonAlert {
         let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("alertDone", comment: ""), style: .cancel, handler: nil))
         
-        if let topController = UIApplication.topViewController() {
-            topController.presentAlert(alert: alert, animated: true)
+        guard var topController = UIApplication.topViewController() else { return }
+        
+        let queue = DispatchQueue.global(qos: .userInitiated)
+        queue.async {
+            var isBeingDismissed = topController.isBeingDismissed
+            while isBeingDismissed {
+                if let controller = UIApplication.topViewController() {
+                    isBeingDismissed = controller.isBeingDismissed
+                    topController = controller
+                }
+            }
+            
+            DispatchQueue.main.async {
+                topController.presentAlert(alert: alert, animated: true)
+            }
         }
     }
 }
