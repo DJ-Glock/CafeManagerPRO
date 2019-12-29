@@ -52,6 +52,7 @@
 		21230687205E5B3200F89C03 /* CustomGuestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21230686205E5B3200F89C03 /* CustomGuestTableViewCell.swift */; };
 		2127BD972066FD1600E94E71 /* Charts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127BD962066FD1600E94E71 /* Charts+Extension.swift */; };
 		2129957A1FB6EBAF000BDBB0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 212995791FB6EB3E000BDBB0 /* SWRevealViewController.m */; };
+		212AC80923B9461600C0534F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212AC80823B9461600C0534F /* LogInViewController.swift */; };
 		2132012F201F50270096CDB5 /* csv.png in Resources */ = {isa = PBXBuildFile; fileRef = 2132012E201F50270096CDB5 /* csv.png */; };
 		21356D981FEAB8990052E897 /* CommonMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21356D971FEAB8990052E897 /* CommonMenuTableViewController.swift */; };
 		21356D9A1FEBB1400052E897 /* CommonMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21356D991FEBB1400052E897 /* CommonMenuTableViewCell.swift */; };
@@ -110,7 +111,6 @@
 		215044121FB7A9300046AD25 /* RefreshDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 212995891FB7A442000BDBB0 /* RefreshDarkTheme.png */; };
 		2156E08321065BD7004D5647 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2156E08221065BD7004D5647 /* Double+Extension.swift */; };
 		215C46C41F7AF6A700595BBB /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215C46C31F7AF6A700595BBB /* LoadingOverlay.swift */; };
-		2172396622ADAF4E00527607 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396522ADAF4E00527607 /* LogInViewController.swift */; };
 		2172396922AE3F8D00527607 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2172396822AE3F8D00527607 /* GoogleService-Info.plist */; };
 		2172396C22B2579600527607 /* DBQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172396B22B2579600527607 /* DBQuery.swift */; };
 		2177F93B1EEBFC62007DE102 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2177F93A1EEBFC62007DE102 /* Images.xcassets */; };
@@ -296,6 +296,7 @@
 		212995911FB7A568000BDBB0 /* ReportsDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ReportsDarkTheme.png; sourceTree = "<group>"; };
 		212995921FB7A568000BDBB0 /* SettingsDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsDarkTheme.png; sourceTree = "<group>"; };
 		212995931FB7A568000BDBB0 /* MenuDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuDarkTheme.png; sourceTree = "<group>"; };
+		212AC80823B9461600C0534F /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = "CafeManager/Data Model/Entities/LogInViewController.swift"; sourceTree = SOURCE_ROOT; };
 		2132012E201F50270096CDB5 /* csv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = csv.png; sourceTree = "<group>"; };
 		21356D971FEAB8990052E897 /* CommonMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMenuTableViewController.swift; sourceTree = "<group>"; };
 		21356D991FEBB1400052E897 /* CommonMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -340,7 +341,6 @@
 		214943541EDCCDAE0046CBD3 /* GenericStuff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericStuff.swift; sourceTree = "<group>"; };
 		2156E08221065BD7004D5647 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		215C46C31F7AF6A700595BBB /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
-		2172396522ADAF4E00527607 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = "../New Group/LogInViewController.swift"; sourceTree = "<group>"; };
 		2172396822AE3F8D00527607 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2172396B22B2579600527607 /* DBQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBQuery.swift; sourceTree = "<group>"; };
 		2177F93A1EEBFC62007DE102 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -1060,7 +1060,7 @@
 		2172396722ADAF5900527607 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
-				2172396522ADAF4E00527607 /* LogInViewController.swift */,
+				212AC80823B9461600C0534F /* LogInViewController.swift */,
 			);
 			name = LogIn;
 			path = "View Controllers/LogIn";
@@ -1693,7 +1693,7 @@
 				21922EEC206408B600DF4CF5 /* LineChartViewController.swift in Sources */,
 				21E145051F489E1500879F01 /* TableSessionsTableViewController.swift in Sources */,
 				2101CB27206172A900AB9C49 /* CustomGuestViewControllerInterface.swift in Sources */,
-				2172396622ADAF4E00527607 /* LogInViewController.swift in Sources */,
+				212AC80923B9461600C0534F /* LogInViewController.swift in Sources */,
 				21EBE34A20123C12005FE6B2 /* UIView+Extension.swift in Sources */,
 				21F749871ED9911F00C75436 /* OrderInTableTableViewCell.swift in Sources */,
 				21C7330A1ED5D57C0051AF77 /* TableSession.swift in Sources */,
