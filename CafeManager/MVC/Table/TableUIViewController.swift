@@ -173,7 +173,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
     }
     
     private func updateGUI() {
-        DBQuery.getActiveTableSessionAsync(forTable: self.currentTable!) { (tableSession, error) in
+        DBQuery.getTableSessionAsync(forTable: self.currentTable!, sessionType: .Active) { (tableSession, error) in
             self.currentTableSession = tableSession
             self.updateLabels()
             self.guestsTableView.reloadData()
@@ -194,7 +194,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
             tableSession.guests.append(newGuest)
             self.currentTableSession = tableSession
             
-            DBPersist.createActiveTableSessionAsync(newTableSession: tableSession) {(error) in
+            DBPersist.createTableSessionAsync(newTableSession: tableSession) {(error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving session data in the database: \(error)")
                 }
@@ -202,7 +202,7 @@ class TableUIViewController: ParentViewController, UITableViewDataSource, UITabl
         } else {
             let newGuest = Guest(name: name, openTime: Date(), tableSession: self.currentTableSession!)
             self.currentTableSession?.guests.append(newGuest)
-            DBUpdate.updateGuestsOfActiveTableSessionAsync(tableSessionToUpdate: self.currentTableSession!) {(error) in
+            DBUpdate.updateGuestsOfTableSessionAsync(tableSessionToUpdate: self.currentTableSession!, type: .Active) {(error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving guests data in the database: \(error)")
                 }
@@ -499,7 +499,7 @@ extension TableUIViewController: CustomGuestDelegate {
             tableSession.guests.append(newGuest)
             self.currentTableSession = tableSession
             
-            DBPersist.createActiveTableSessionAsync(newTableSession: tableSession) {(error) in
+            DBPersist.createTableSessionAsync(newTableSession: tableSession) {(error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving session data in the database: \(error)")
                 }
@@ -507,7 +507,7 @@ extension TableUIViewController: CustomGuestDelegate {
         } else {
             let newGuest = Guest(name: name, openTime: Date(), tableSession: self.currentTableSession!)
             self.currentTableSession?.guests.append(newGuest)
-            DBUpdate.updateGuestsOfActiveTableSessionAsync(tableSessionToUpdate: self.currentTableSession!) {(error) in
+            DBUpdate.updateGuestsOfTableSessionAsync(tableSessionToUpdate: self.currentTableSession!, type: .Active) {(error) in
                 if let error = error {
                     CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while saving guests data in the database: \(error)")
                 }

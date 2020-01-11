@@ -166,6 +166,7 @@
 		21C7330A1ED5D57C0051AF77 /* TableSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733091ED5D57C0051AF77 /* TableSession.swift */; };
 		21C7330C1ED5D58F0051AF77 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C7330B1ED5D58F0051AF77 /* Table.swift */; };
 		21C733251ED621A90051AF77 /* TableUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C733241ED621A90051AF77 /* TableUIViewController.swift */; };
+		21CB886823CA08EE00A625A3 /* DBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CB886723CA08EE00A625A3 /* DBEnums.swift */; };
 		21D055D91EE9C92E00620E28 /* ReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D055D81EE9C92E00620E28 /* ReportsViewController.swift */; };
 		21D760B11EBA60FE00E72A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D760B01EBA60FE00E72A8F /* AppDelegate.swift */; };
 		21D760B61EBA60FE00E72A8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21D760B41EBA60FE00E72A8F /* Main.storyboard */; };
@@ -397,6 +398,7 @@
 		21C733091ED5D57C0051AF77 /* TableSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSession.swift; sourceTree = "<group>"; };
 		21C7330B1ED5D58F0051AF77 /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		21C733241ED621A90051AF77 /* TableUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableUIViewController.swift; sourceTree = "<group>"; };
+		21CB886723CA08EE00A625A3 /* DBEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBEnums.swift; sourceTree = "<group>"; };
 		21D055D81EE9C92E00620E28 /* ReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsViewController.swift; sourceTree = "<group>"; };
 		21D760AD1EBA60FD00E72A8F /* CafeManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CafeManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D760B01EBA60FE00E72A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1073,6 +1075,7 @@
 				2172396B22B2579600527607 /* DBQuery.swift */,
 				211A643122B6C9450079FAE8 /* DBPersist.swift */,
 				211A643322B6DB960079FAE8 /* DBUpdate.swift */,
+				21CB886723CA08EE00A625A3 /* DBEnums.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -1722,6 +1725,7 @@
 				2123066C205DD56B00F89C03 /* CustomGuestInterface.swift in Sources */,
 				2127BD972066FD1600E94E71 /* Charts+Extension.swift in Sources */,
 				21922F0120640B3800DF4CF5 /* LineChartDelegate.swift in Sources */,
+				21CB886823CA08EE00A625A3 /* DBEnums.swift in Sources */,
 				21230672205DD60900F89C03 /* CustomGuestPresenter.swift in Sources */,
 				2191DF68205E671F00786030 /* AddOrderInteractor.swift in Sources */,
 				213B451720548A4D00D04CF8 /* PeriodPickerViewController.swift in Sources */,

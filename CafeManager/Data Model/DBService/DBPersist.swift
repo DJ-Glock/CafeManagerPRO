@@ -27,7 +27,7 @@ class DBPersist {
         table.firebaseID = tableDocumentRef.documentID
     }
 
-    class func createActiveTableSessionAsync (newTableSession tableSession: TableSession, completion: @escaping (Error?)-> Void) {
+    class func createTableSessionAsync (newTableSession tableSession: TableSession, completion: @escaping (Error?)-> Void) {
         guard let tableDocumentID = tableSession.table?.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: tableSession.table!.name))")); return }
         
         var tableSessionData = [String:Any]()
@@ -66,7 +66,8 @@ class DBPersist {
         }
         tableSessionData["Guests"] = guestsData
         
-        let tableSessionDocumentRef = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").addDocument(data: tableSessionData) { (error) in
+        let activeSessionCollection = "\(TableSessionCollection.Active)Session"
+        let tableSessionDocumentRef = userData.collection("Tables").document(tableDocumentID).collection(activeSessionCollection).addDocument(data: tableSessionData) { (error) in
             if let error = error {
                 completion(error)
                 return

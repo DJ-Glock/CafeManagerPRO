@@ -41,7 +41,7 @@ class DBQuery {
             var counter = tables.count
             
             for table in tables {
-                DBQuery.getActiveTableSessionAsync(forTable: table, completion: { (tableSession, error) in
+                DBQuery.getTableSessionAsync(forTable: table, sessionType: .Active, completion: { (tableSession, error) in
                     if let error = error {
                         completion([], error)
                         return
@@ -58,11 +58,11 @@ class DBQuery {
     }
     
     /// Async function returns table session for table or nil if no active session is opened.
-    class func getActiveTableSessionAsync (forTable table: Table, completion: @escaping (TableSession?, Error?) -> Void) {
+    class func getTableSessionAsync (forTable table: Table, sessionType type: TableSessionCollection, completion: @escaping (TableSession?, Error?) -> Void) {
         let tableSessionCollection = userData
             .collection("Tables")
             .document(table.firebaseID!)
-            .collection("ActiveSession")
+            .collection("\(type)Session")
         
         tableSessionCollection.addSnapshotListener { (snapshot, error) in
             if let error = error {
@@ -130,7 +130,7 @@ class DBQuery {
                 tableSession.guests = guests
                 
                 // Check if database contains more than one active session for table (INCORRECT!!!) and throw an error
-                if snapshot.documents.count > 1 {
+                if type == .Active && snapshot.documents.count > 1 {
                     let myError = iCafeManagerError.DatabaseError("Ambiguous sessions for table \(table.name) found. Notify iCafeManager support. UserID: \(String(describing: userId))")
                     completion(tableSession, myError)
                     return

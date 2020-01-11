@@ -10,10 +10,6 @@ import Foundation
 import Firebase
 
 class DBUpdate {
-    enum TableSessionCollection: String {
-        case Active
-        case Archive
-    }
     
     class func updateTableAsync (tableToChange table: Table, completion: @escaping (Error?)-> Void) {
         guard let documentID = table.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(table.name)")); return }
@@ -29,7 +25,7 @@ class DBUpdate {
         }
     }
     
-    class func updateGuestsOfActiveTableSessionAsync (tableSessionToUpdate tableSession: TableSession, completion: @escaping (Error?)->Void) {
+    class func updateGuestsOfTableSessionAsync (tableSessionToUpdate tableSession: TableSession, type: TableSessionCollection, completion: @escaping (Error?)->Void) {
         guard let tableDocumentID = tableSession.table?.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: tableSession.table!.name))")); return }
         guard let tableSessionDocumentID = tableSession.firebaseID else {completion(iCafeManagerError.DatabaseError("firebaseID is null for tableSession of table: \(String(describing: tableSession.table!.name))")); return}
         
@@ -67,13 +63,13 @@ class DBUpdate {
         }
         tableSessionData["Guests"] = guestsData
         
-        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").document(tableSessionDocumentID)
+        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("\(type)Session").document(tableSessionDocumentID)
         sessionDocument.updateData(tableSessionData) { (error) in
             completion(error)
         }
     }
     
-    class func updateActiveTableSession (session tableSession: TableSession, completion: @escaping (Error?)->Void) {
+    class func updateTableSessionAsync (session tableSession: TableSession, type: TableSessionCollection, completion: @escaping (Error?)->Void) {
         guard let tableDocumentID = tableSession.table!.firebaseID else { completion(iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: tableSession.table!.name))")); return }
         guard let tableSessionDocumentID = tableSession.firebaseID else {completion(iCafeManagerError.DatabaseError("firebaseID is null for tableSession of table: \(String(describing: tableSession.table!.name))")); return}
         
@@ -123,13 +119,13 @@ class DBUpdate {
         tableSessionData["Guests"] = guestsData
         
         
-        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("ActiveSession").document(tableSessionDocumentID)
+        let sessionDocument = userData.collection("Tables").document(tableDocumentID).collection("\(type)Session").document(tableSessionDocumentID)
         sessionDocument.updateData(tableSessionData) { (error) in
             completion(error)
         }
     }
     
-    class func moveTableSessionToCollectionAsync (tableSession session: TableSession, sourceCollection source:TableSessionCollection, targetCollection target: TableSessionCollection, targetTable: Table?, completion: @escaping (TableSession?, Error?) -> Void) {
+    class func moveTableSessionToCollectionAsync (tableSession session: TableSession, sourceCollection source: TableSessionCollection, targetCollection target: TableSessionCollection, targetTable: Table?, completion: @escaping (TableSession?, Error?) -> Void) {
         guard let tableDocumentID = session.table?.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: session.table!.name))")); return }
         guard let sessionDocumentID = session.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for session of table: \(String(describing: session.table!.name))")); return }
         
@@ -167,33 +163,27 @@ class DBUpdate {
                     .collection(targetCollection)
                     .document()
                 
-                newSessionDocument.setData(data) { error in
+                newSessionDocument.setData(data)
+                self.removeTableSessionAsync(tableSession: session, type: source) { (session, error) in
                     if let error = error {
-                        completion(session, iCafeManagerError.DatabaseError("Unable to save session to archive for table  \(String(describing: session.table!.name)). Cause: \(error)"))
-                        return
+                        completion(session, error)
                     } else {
-                        self.removeTableSessionAsync(tableSession: session) { (session, error) in
-                            if let error = error {
-                                completion(session, error)
-                            } else {
-                                session?.firebaseID = newSessionDocument.documentID
-                                completion(session, nil)
-                            }
-                        }
+                        session?.firebaseID = newSessionDocument.documentID
+                        completion(session, nil)
                     }
                 }
             }
         }
     }
     
-    class func removeTableSessionAsync (tableSession session: TableSession, completion: @escaping (TableSession?, Error?)-> Void) {
+    class func removeTableSessionAsync (tableSession session: TableSession, type: TableSessionCollection, completion: @escaping (TableSession?, Error?)-> Void) {
         guard let tableDocumentID = session.table?.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for table: \(String(describing: session.table!.name))")); return }
         guard let sessionDocumentID = session.firebaseID else { completion(session, iCafeManagerError.DatabaseError("firebaseID is null for session of table: \(String(describing: session.table!.name))")); return }
         
         userData
             .collection("Tables")
             .document(tableDocumentID)
-            .collection("ActiveSession")
+            .collection("\(type)Session")
             .document(sessionDocumentID)
             .delete() { error in
                 if let error = error {

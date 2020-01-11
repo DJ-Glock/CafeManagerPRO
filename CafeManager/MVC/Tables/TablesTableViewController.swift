@@ -18,7 +18,7 @@ class TablesTableViewController: UITableViewController {
     // MARK: variables
     private var currentTable: Table?
     private var currentTableSession: TableSession?
-    private var tablesArray: [Table] = []
+//    private var tablesArray: [Table] = []
     private var tableNameTextField: UITextField!
     private var tableCapacityTextField: UITextField!
     internal var tableViewRefreshControl: UIRefreshControl?
@@ -66,7 +66,7 @@ class TablesTableViewController: UITableViewController {
                 CommonAlert.shared.show(title: "Error occurred", text: "An error occurred while retrieving data from DB: \(error)")
             }
             
-            self.tablesArray = tables
+//            self.tablesArray = tables
             Global.shared.tables = tables
             self.tableView.reloadData()
             self.tableViewRefreshControl?.endRefreshing()
@@ -138,7 +138,7 @@ class TablesTableViewController: UITableViewController {
             }
             
             let tableName = self.tableNameTextField.text!
-            for table in self.tablesArray {
+            for table in Global.shared.tables {
                 if table.name == tableName {
                     self.showAlertTableNameAlreadyExists()
                     return
@@ -179,7 +179,7 @@ class TablesTableViewController: UITableViewController {
             let oldCapacity = table.capacity
             
             let newName = self.tableNameTextField.text!
-            for table in self.tablesArray {
+            for table in Global.shared.tables {
                 if table.name == newName {
                     self.showAlertTableNameAlreadyExists()
                     return
@@ -208,7 +208,7 @@ class TablesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TablesTableViewCell
         
-        let table = self.tablesArray[indexPath.row]
+        let table = Global.shared.tables[indexPath.row]
         let tableSession = table.tableSession
         cell.tableNameLabel.text = table.name
         
@@ -238,7 +238,7 @@ class TablesTableViewController: UITableViewController {
         deleteButton.backgroundColor = .red
         
         let editButton = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-            let table = self.tablesArray[editActionsForRowAt.row]
+            let table = Global.shared.tables[editActionsForRowAt.row]
             self.editTable(table: table)
         }
         editButton.backgroundColor = .lightGray
@@ -249,7 +249,7 @@ class TablesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath as IndexPath)
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        currentTable = self.tablesArray[indexPath.row]
+        currentTable = Global.shared.tables[indexPath.row]
         currentTableSession = currentTable?.tableSession
         performSegue(withIdentifier: "openTableSegue", sender: cell)
     }
@@ -276,7 +276,7 @@ extension TablesTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tablesArray.count
+        return Global.shared.tables.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

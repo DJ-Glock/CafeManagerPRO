@@ -33,7 +33,7 @@ class DBGeneral {
     }
     
     class func updateActiveSession(tableSession: TableSession) {
-        DBUpdate.updateActiveTableSession(session: tableSession) { (error) in
+        DBUpdate.updateTableSessionAsync(session: tableSession, type: .Active) { (error) in
             if let error = error {
                 CommonAlert.shared.show(title: "Error occurred", text: "Error occurred while updating active session data in the Firestore: \(String(describing: error))")
             }
